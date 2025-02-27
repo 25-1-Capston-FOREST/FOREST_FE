@@ -2,6 +2,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 
 const GoogleLoginButton = () => {
@@ -22,7 +23,7 @@ const GoogleLoginButton = () => {
       console.log("사용자 이름: " + Cookies.get("username"));
       setIsLogin(true);
       console.log("상태: 로그인");
-    } 
+    }
     else {
       setIsLogin(false);
       setUserName("");
@@ -36,9 +37,17 @@ const GoogleLoginButton = () => {
   const handleLogout = () => {
     console.log("구글 로그아웃 실행");
     Cookies.remove("jwt"); // 쿠키에서 jwt 삭제
+    
     setIsLogin(false);
     setUserName("");
+
+    console.log("로그아웃 후 상태:");
+    console.log("isLogin:", isLogin); // 로그아웃 후 상태 확인
+    console.log("userName:", userName); // 사용자 이름 확인
+
+
     router.push("/"); // 홈 페이지로 리다이렉트
+    
   };
 
   if (!clientID) {
@@ -55,7 +64,13 @@ const GoogleLoginButton = () => {
         </div>
       ) : (
         <a href={googleLoginPage}>
-          <button>Google 로그인</button>
+          <button className="flex bg-[#E2E2E2] w-[348px] h-[50px] rounded-[17px] flex-row items-center justify-between">
+            <Image src="/images/logo_google.svg" alt="logo" width={28} height={28} className="absolute ml-3">
+            </Image>
+            <h6 className="px-[3px] flex-1">
+              구글로 로그인하기
+            </h6>
+          </button>
         </a>
       )}
     </div>

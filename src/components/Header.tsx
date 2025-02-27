@@ -5,7 +5,7 @@ const Header = () => {
   const router = useRouter()
   const chatbotButtonClick = () => {
     router.push("/")
-    //챗봇페이지 구현 + 연결 필요요
+    //챗봇페이지 구현 + 연결 필요
   }
   const logoButtonClick = () => {
     router.push("/main")
