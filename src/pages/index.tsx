@@ -2,6 +2,7 @@ import GoogleLoginWrapper from "@/components/GoogleLoginButton";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import jwtDecode from "jwt-decode";
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -17,7 +18,7 @@ export default function Home() {
     if (token) {
       try {
         // JWT 토큰을 디코딩해서 사용자 정보를 추출
-        const decoded = JSON.parse(atob(token.split(".")[1]));
+        const decoded = jwtDecode(token); // 자동으로 Base64 URL-safe 처리
         setUser(decoded);
       } catch (error) {
         console.error("JWT 디코딩 실패", error);
