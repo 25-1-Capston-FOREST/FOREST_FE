@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import Leisure from "@/components/Leisure";
 
 export default function Main() {
   const router = useRouter()
@@ -16,8 +17,16 @@ export default function Main() {
     setIsCategoryPopupOpen(!isCategoryPopupOpen);
   }
 
+  const toggleDatePopup = () => {
+    setIsDatePopupOpen(!isDatePopupOpen);
+  }
+
+  const toggleSortPopup = () => {
+    setIsSortPopupOpen(!isSortPopupOpen);
+  }
+
   const deleteClick = () => {
-    
+
   }
 
 
@@ -40,17 +49,17 @@ export default function Main() {
         </div>
       </div>
 
-      <div className="font-bold mt-[20px] flex flex-row justify-between items-center px-[290px]">
+      <div className="font-bold mt-[20px] flex flex-row items-center px-[290px]">
 
         <div>
           <button
             onClick={toggleCategoryPopup}
-            className="shadow-custom w-[108px] border border-[#EBEBEB] rounded-[10px] text-[#9A9A9A] px-4 py-2">
+            className="shadow-custom w-[108px] border border-[#EBEBEB] rounded-[10px] text-[#9A9A9A] px-4 py-2 absolute left-[270px] top-[220px]">
             카테고리
           </button>
 
           {isCategoryPopupOpen && (
-            <div className="text-[15px] mt-2 w-[108px] h-[95px] bg-white border border-[#EBEBEB] rounded-[10px] shadow-custom">
+            <div className="text-[15px] mt-2 w-[108px] bg-white border border-[#EBEBEB] rounded-[10px] shadow-custom absolute left-[270px] top-[270px]">
               <div className="flex flex-row">
 
                 <div className="px-4 py-2 text-left">
@@ -90,41 +99,35 @@ export default function Main() {
 
         <div className="flex flex-row">
           <div>
-            <button className="shadow-custom w-[80px] border border-[#EBEBEB] rounded-[17%] text-[#9A9A9A] px-4 py-2 mr-[30px]">
+            <button className="shadow-custom w-[90px] border border-[#EBEBEB] rounded-[17%] text-[#9A9A9A] px-4 py-2 absolute left-[1030px] top-[220px]"
+              onClick={toggleDatePopup}>
               일정
             </button>
 
-            {isCategoryPopupOpen && (
-              <div className=" mt-2 w-[108px] bg-white border border-[#EBEBEB] rounded-[10px] shadow-custom">
-                <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                  영화
-                </button>
-                <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                  공연
-                </button>
-                <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                  전시
-                </button>
+            {isDatePopupOpen && (
+              <div className=" mt-2 w-[300px] bg-gray-100 border border-[#EBEBEB] rounded-[10px] shadow-custom absolute left-[820px] top-[270px]">
+                캘린더 보일 예정
               </div>
             )}
           </div>
 
           <div>
 
-            <button className="shadow-custom w-[80px] border border-[#EBEBEB] rounded-[17%] text-[#9A9A9A] px-4 py-2">
+            <button className="shadow-custom w-[90px] border border-[#EBEBEB] rounded-[17%] text-[#9A9A9A] px-4 py-2 absolute left-[1160px] top-[220px]"
+              onClick={toggleSortPopup}>
               정렬
             </button>
 
-            {isCategoryPopupOpen && (
-              <div className=" left-0 mt-2 w-[108px] bg-white border border-gray-300 rounded-lg shadow-custom">
+            {isSortPopupOpen && (
+              <div className="mt-2 w-[90px] bg-white border border-gray-300 rounded-lg shadow-custom absolute left-[1160px] top-[270px]">
                 <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                  옵션 1
+                  추천순
                 </button>
                 <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                  옵션 2
+                  시간순
                 </button>
                 <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                  옵션 3
+                  거리순
                 </button>
               </div>
             )}
@@ -133,6 +136,21 @@ export default function Main() {
 
         </div>
 
+        <div>
+          <div className="flex flex-row mt-[70px] grid grid-cols-4">
+
+            <Leisure />
+            <Leisure />
+            <Leisure />
+            <Leisure />
+            <Leisure />
+            <Leisure />
+            {/* 여가 아이콘 배치 */}
+
+            {/* gap = 66 */}
+          </div>
+
+        </div>
       </div>
 
 
