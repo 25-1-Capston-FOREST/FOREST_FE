@@ -1,0 +1,68 @@
+[
+  {
+    "activity_id": 1,
+    "activity_type": "MOVIE",
+    "title": "인셉션",
+    "image_url": "/images/temp_poster.svg"
+  },
+  {
+    "activity_id": 2,
+    "activity_type": "PERFORMANCE",
+    "title": "라이온킹 뮤지컬",
+    "image_url": "/images/temp_poster.svg"
+  },
+  {
+    "activity_id": 3,
+    "activity_type": "EXHIBITION",
+    "title": "반 고흐 전시회",
+    "image_url": "/images/temp_poster.svg"
+  },
+  {
+    "activity_id": 4,
+    "activity_type": "MOVIE",
+    "title": "ddd",
+    "image_url": "/images/temp_poster.svg"
+  },
+  {
+    "activity_id": 5,
+    "activity_type": "MOVIE",
+    "title": "인셉션",
+    "image_url": "/images/temp_poster.svg"
+  },
+  {
+    "activity_id": 6,
+    "activity_type": "PERFORMANCE",
+    "title": "라이온킹 뮤지컬",
+    "image_url": "/images/temp_poster.svg"
+  },
+  {
+    "activity_id": 7,
+    "activity_type": "EXHIBITION",
+    "title": "반 고흐 전시회",
+    "image_url": "/images/temp_poster.svg"
+  },
+  {
+    "activity_id": 6,
+    "activity_type": "PERFORMANCE",
+    "title": "라이온킹 뮤지컬",
+    "image_url": "/images/temp_poster.svg"
+  },
+  {
+    "activity_id": 7,
+    "activity_type": "EXHIBITION",
+    "title": "반 고흐 전시회",
+    "image_url": "/images/temp_poster.svg"
+  },
+  {
+    "activity_id": 6,
+    "activity_type": "PERFORMANCE",
+    "title": "라이온킹 뮤지컬",
+    "image_url": "/images/temp_poster.svg"
+  },
+  {
+    "activity_id": 7,
+    "activity_type": "EXHIBITION",
+    "title": "반 고흐 전시회",
+    "image_url": "/images/temp_poster.svg"
+  }
+]

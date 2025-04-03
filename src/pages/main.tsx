@@ -4,6 +4,7 @@ import { useState } from "react";
 import Leisure from "@/components/Leisure";
 import { useEffect } from "react";
 
+
 interface Activity {
   activity_id: number;
   activity_type: string;
@@ -64,13 +65,12 @@ export default function Main() {
   }
 
   const deleteClick = () => {
-
   }
 
 
   return (
     <div>
-      <h2 className="flex flex-row justify-center mt-[20px] text-[18px] text-green-900">
+      <h2 className="flex flex-row justify-center mt-[40px] text-[18px] text-green-900">
         ㅇㅇㅇ 님을 위해 준비했습니다!
       </h2>
 
@@ -87,17 +87,17 @@ export default function Main() {
         </div>
       </div>
 
-      <div className="font-bold mt-[20px] flex flex-row items-center px-[290px]">
+      <div className="font-bold mt-[20px] flex flex-row items-center justify-center px-[290px]">
 
-        <div>
+        <div className="absolute left-[270px] top-[230px]">
           <button
             onClick={toggleCategoryPopup}
-            className="shadow-custom w-[108px] border border-[#EBEBEB] rounded-[10px] text-[#9A9A9A] px-4 py-2 absolute left-[270px] top-[220px]">
+            className="shadow-custom w-[108px] border border-[#EBEBEB] rounded-[10px] text-[#9A9A9A] px-4 py-2 ">
             카테고리
           </button>
 
           {isCategoryPopupOpen && (
-            <div className="text-[15px] mt-2 w-[108px] bg-white border border-[#EBEBEB] rounded-[10px] shadow-custom absolute left-[270px] top-[270px]">
+            <div className="text-[15px] mt-2 w-[108px] bg-white border border-[#EBEBEB] rounded-[10px] shadow-custom">
               <div className="flex flex-row">
 
                 <div className="px-4 py-2 text-left">
@@ -137,7 +137,7 @@ export default function Main() {
 
         <div className="flex flex-row">
           <div>
-            <button className="shadow-custom w-[90px] border border-[#EBEBEB] rounded-[17%] text-[#9A9A9A] px-4 py-2 absolute left-[1030px] top-[220px]"
+            <button className="shadow-custom w-[90px] border border-[#EBEBEB] rounded-[17%] text-[#9A9A9A] px-4 py-2 absolute left-[1030px] top-[230px]"
               onClick={toggleDatePopup}>
               일정
             </button>
@@ -151,7 +151,7 @@ export default function Main() {
 
           <div>
 
-            <button className="shadow-custom w-[90px] border border-[#EBEBEB] rounded-[17%] text-[#9A9A9A] px-4 py-2 absolute left-[1160px] top-[220px]"
+            <button className="shadow-custom w-[90px] border border-[#EBEBEB] rounded-[17%] text-[#9A9A9A] px-4 py-2 absolute left-[1160px] top-[230px]"
               onClick={toggleSortPopup}>
               정렬
             </button>
@@ -175,7 +175,7 @@ export default function Main() {
         </div>
 
         <div>
-          <div className="flex flex-row mt-[70px] grid grid-cols-4 gap-6">
+          <div className="flex flex-row mt-[70px] grid grid-cols-4 gap-10">
             {activities.map((activity) => (
               <Leisure
                 key={activity.activity_id}
