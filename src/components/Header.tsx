@@ -22,31 +22,49 @@ const Header = () => {
 
 
   return (
-    <div className="flex items-center justify-between mt-[40px] px-[50px]">
-      <button onClick={chatbotButtonClick}>
-        <Image src="/images/icon_chatbot.svg" alt="챗봇 아이콘" width={30} height={30}></Image>
-      </button>
+    <div className="flex flex-col">
 
-      <button className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center"
-        onClick={logoButtonClick} >
-        <Image src="/images/logo_forrest.png" alt="logo" width={50} height={50} >
-        </Image>
-        <h1 className="text-[#4C8362] font-bold text-[32px] ml-[20px]">
-          For-rest
+      <button
+        className="ml-[30px] mr-[30px] cursor-pointer flex items-center justify-center w-fit relative group p-0 leading-none"
+        onClick={logoButtonClick}
+      >
+        {/* 기본 로고 */}
+        <h1 className="absolute top-0 left-0 text-[200px] font-bold text-[#447959] z-10 leading-none">
+          F&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="opacity-0">R</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R
+        </h1>
+
+        {/* Hover 시 FOR; REST */}
+        <h1 className="absolute top-0 left-0 text-[200px] font-bold text-[#447959] flex z-20 leading-none">
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[0ms]">F</span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[20ms]">O</span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[40ms]">R</span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[60ms]">;</span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[80ms]">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[100ms]">R</span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[120ms]">E</span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[140ms]">S</span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[160ms]">T</span>
         </h1>
       </button>
 
-      <div>
-        <button className="mr-[15px]"
-        onClick={logoutButtonClick}>
-          <Image src="/images/icon_logout.svg" alt="로그아웃 아이콘" width={30} height={30}></Image>
-        </button>
+      <div className="w-full flex flex-row justify-between px-[30px] mt-[230px] text-[30px]">
+        <div>
+          <button onClick={chatbotButtonClick} className="text-[#447959]">
+            chatty!
+          </button>
+          <button onClick={mypageButtonClick} className="ml-[30px]">
+            MyPage
+          </button>
+        </div>
 
-        <button onClick={mypageButtonClick}>
-          <Image src="/images/icon_mypage.svg" alt="마이페이지 아이콘" width={30} height={30}></Image>
-        </button>
+        <div>
+          <button className="text-[#9A9A9A]" onClick={logoutButtonClick}>
+            Logout
+          </button>
+        </div>
       </div>
 
+      <div className="mt-[10px] w-full mx-[30px] justify-between border-t border-black" />
     </div>
   );
 }

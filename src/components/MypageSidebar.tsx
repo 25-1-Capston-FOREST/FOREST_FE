@@ -12,7 +12,7 @@ const MypageSidebar = () => {
   ];
 
   return (
-    <div className="fixed left-[50px] top-[216px] w-[207px] h-[238px] pl-[15px] rounded-[17px] text-[16px] border shadow-custom">
+    <div className="fixed left-[50px] top-[400px] w-[207px] h-[238px] pl-[15px] rounded-[17px] text-[16px] border shadow-custom">
 
 
       {menuItems.map((item, index) => (

@@ -19,16 +19,6 @@ export default function Main() {
   const [isSortPopupOpen, setIsSortPopupOpen] = useState(false);
   const [activities, setActivities] = useState<Activity[]>([]);
 
-  // useEffect(() => {
-  //   fetch("/data/activities.json") // 임시 데이터 불러오기
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log("불러온 데이터:", data); // 🛠 디버깅 로그
-  //       setActivities(data);
-  //     })
-  //     .catch((error) => console.error("Error fetching activities:", error));
-  // }, []);
-
   useEffect(() => {
     fetch("/data/activities.json")
       .then((res) => {
@@ -70,8 +60,8 @@ export default function Main() {
 
   return (
     <div>
-      <h2 className="flex flex-row justify-center mt-[40px] text-[18px] text-green-900">
-        ㅇㅇㅇ 님을 위해 준비했습니다!
+      <h2 className="flex flex-row justify-center mt-[00px] text-[18px] text-green-900">
+        
       </h2>
 
       <div className="flex flex-row items-center">
@@ -87,7 +77,7 @@ export default function Main() {
         </div>
       </div>
 
-      <div className="font-bold mt-[20px] flex flex-row items-center justify-center px-[290px]">
+      <div className="font-bold mt-[0px] flex flex-row items-center justify-center px-[290px]">
 
         <div className="absolute left-[270px] top-[230px]">
           <button

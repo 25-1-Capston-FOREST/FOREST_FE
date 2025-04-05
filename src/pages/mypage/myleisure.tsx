@@ -1,40 +1,40 @@
 import MypageSidebar from "@/components/MypageSidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getWishlist } from "@/lib/api/wish";
 
 
 
 export default function Myleisure() {
   const [selectedTab, setSelectedTab] = useState("찜 목록");
-  const bookmarkedLeisure = [
-    { id: 1, title: "해변 캠핑" },
-    { id: 2, title: "등산 여행" }
-  ];
+  const [bookmarkedLeisure, setBookmarkedLeisure] = useState([]);
 
-  const upcomingLeisure = [
-    { id: 3, title: "다이빙 체험" },
-    { id: 4, title: "요가 클래스" }
-  ];
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const res = await getWishlist();
+        setBookmarkedLeisure(res.data);
+      } catch (error) {
+        console.error("찜 목록 불러오기 실패", error);
+      }
+    };
 
-  const completedLeisure = [
-    { id: 5, title: "스키 여행" },
-    { id: 6, title: "공연 관람" }
-  ];
+    if (selectedTab === "찜 목록") {
+      fetchWishlist();
+    }
+  }, [selectedTab]);
 
   const getCurrentList = () => {
     switch (selectedTab) {
       case "찜 목록":
         return bookmarkedLeisure;
-      case "예정된 여가":
-        return upcomingLeisure;
-      case "완료된 여가":
-        return completedLeisure;
+      // 나머지 예정된 여가, 완료된 여가
       default:
         return [];
     }
   };
 
   return (
-    <div>
+    <div className=" ml-[400px] mt-[30px]">
 
       <MypageSidebar />
       <div className="p-6">
@@ -55,7 +55,11 @@ export default function Myleisure() {
         {/* 리스트 출력 */}
         <ul className="mt-4">
           {getCurrentList().length > 0 ? (
-            getCurrentList().map((item) => <li key={item.id} className="p-2 border-b">{item.title}</li>)
+            getCurrentList().map((item) => (
+              <li key={item.wish_id} className="p-2 border-b">
+                {item.detailedInfo.title}
+              </li>
+            ))
           ) : (
             <p className="text-gray-500">리스트가 비어 있습니다.</p>
           )}
