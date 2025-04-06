@@ -1,8 +1,6 @@
 import MypageSidebar from "@/components/MypageSidebar";
 import { useEffect, useState } from "react";
-import { getWishlist } from "@/lib/api/wish";
-
-
+import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 
 export default function Myleisure() {
   const [selectedTab, setSelectedTab] = useState("찜 목록");

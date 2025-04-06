@@ -30,7 +30,7 @@ const GoogleCallback = () => {
           setUserName(res.data.name || "사용자"); // 사용자 이름 설정
         }
 
-        router.push("/"); // ✅ 로그인 성공 후 홈으로 이동
+        router.push("/main"); // ✅ 로그인 성공 후 홈으로 이동
       } catch (error) {
         console.error("서버 인증 실패", error);
         router.push("/");
