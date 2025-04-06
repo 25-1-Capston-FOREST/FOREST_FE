@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import axios from "axios";
+import instance from "@/lib/axios";
 import Cookies from "js-cookie";
 
-axios.defaults.withCredentials = true; // ✅ 쿠키 포함 요청 설정
 
 const GoogleCallback = () => {
   const searchParams = useSearchParams();
@@ -14,14 +13,15 @@ const GoogleCallback = () => {
   useEffect(() => {
     const handleGoogleAuth = async () => {
       const code = searchParams.get("code");
+      console.log("구글에서 받은 code:", code);
       if (!code) {
         router.push("/"); // ❌ 인가 코드가 없으면 메인으로 이동
         return;
       }
 
       try {
-        // 백엔드로 코드 전달하여 토큰 받기
-        const res = await axios.post("http://localhost:3001/auth/google", { code });
+        const res = await instance.post("/auth/google", { code });
+        console.log("응답 결과:", res);
 
         // JWT 쿠키에서 토큰 확인
         const token = Cookies.get("jwt");
@@ -43,7 +43,7 @@ const GoogleCallback = () => {
   // 로그아웃 함수
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:3001/logout", {}, { withCredentials: true });
+      await instance.post("/logout");
 
       // JWT 삭제 및 상태 초기화
       Cookies.remove("jwt");
