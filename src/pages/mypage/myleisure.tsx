@@ -61,11 +61,10 @@ export default function Myleisure() {
             <button
               key={tab}
               onClick={() => setSelectedTab(tab)}
-              className={`px-4 py-2 text-lg font-semibold ${
-                selectedTab === tab
+              className={`px-4 py-2 text-lg font-semibold ${selectedTab === tab
                   ? "border-b-4 border-blue-500 text-blue-500"
                   : "text-gray-600"
-              }`}
+                }`}
             >
               {tab}
             </button>
@@ -74,7 +73,7 @@ export default function Myleisure() {
 
         {/* 리스트 출력 */}
         <ul className="mt-4">
-          {getCurrentList().length > 0 ? (
+          {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ? (
             getCurrentList().map((item) => (
               <li key={item.wish_id} className="p-2 border-b">
                 {renderLeisureTitle(item)}
