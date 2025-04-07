@@ -15,9 +15,9 @@ const GoogleLoginButton = () => {
 
   return (
     <a href={googleLoginPage}>
-      <button className="mt-[20px] flex bg-[#E2E2E2] w-[348px] h-[50px] rounded-[17px] flex-row items-center justify-between">
-        <Image src="/images/logo_google.svg" alt="logo" width={28} height={28} className="absolute ml-3" />
-        <h6 className="px-[3px] flex-1">구글로 로그인하기</h6>
+      <button className="text-[18px] font-semibold mt-[20px] flex bg-white w-[353px] h-[67px] rounded-[6px] flex-row items-center justify-between">
+        <Image src="/images/logo_google.svg" alt="logo" width={25} height={25} className="absolute ml-3" />
+        <h6 className="px-[3px] flex-1">        Sign in with Google</h6>
       </button>
     </a>
   );

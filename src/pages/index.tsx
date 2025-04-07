@@ -33,33 +33,28 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-[#447959] h-screen absolute top-0 w-screen">
-      <h1 className="text-white text-[40px] font-bold">
+    <div className="overflow-hidden bg-[#447959] h-screen absolute top-0 w-screen">
+      <h1 className="absolute top-[-70px] text-white text-[200px] font-bold">
         FOR;
       </h1>
-      
-      <div className="flex mt-[130px] items-center flex-col" >
-
-
-
-        <div className="mt-[30px] space-y-6">
-
-          <button className="flex bg-[#FFEB34] w-[348px] h-[50px] rounded-[17px] flex-row items-center justify-between"
-            onClick={testButtonClick}>
-            <Image src="/images/logo_kakao.svg" alt="logo" width={50} height={50} className="absolute ml-0.5">
-            </Image>
-            <h6 className="px-[3px] flex-1">
-              카카오톡으로 로그인하기
-            </h6>
-          </button>
+      <div className="flex mt-[200px] items-center flex-col" >
+        <div className="space-y-6">
           <GoogleLoginWrapper />
 
-
-          <button className="flex bg-[#00C746] w-[348px] h-[50px] rounded-[17px] flex-row items-center justify-between">
-            <Image src="/images/logo_naver.svg" alt="logo" width={40} height={40} className="absolute ml-1.5">
+          <button className="text-[18px] font-semibold mt-[20px] flex bg-white w-[353px] h-[67px] rounded-[6px] flex-row items-center justify-between"
+            onClick={testButtonClick}>
+            <Image src="/images/logo_kakao.svg" alt="logo" width={23} height={23} className="absolute ml-3.5">
             </Image>
             <h6 className="px-[3px] flex-1">
-              네이버로 로그인하기
+              Sign in with Kakao
+            </h6>
+          </button>
+
+          <button className="text-[18px] font-semibold mt-[20px] flex bg-white w-[353px] h-[67px] rounded-[6px] flex-row items-center justify-between">
+            <Image src="/images/logo_naver.svg" alt="logo" width={23} height={23} className="absolute ml-3.5">
+            </Image>
+            <h6 className="px-[3px] flex-1">
+              Sign in with Naver
             </h6>
           </button>
 
@@ -67,7 +62,7 @@ export default function Home() {
         </div>
       </div>
 
-      <h1 className="text-white text-[40px] font-bold">
+      <h1 className=" absolute bottom-[-50px] w-full text-right text-white text-[200px] font-bold ">
         REST
       </h1>
     </div>
