@@ -30,16 +30,17 @@ export default function Home() {
       .catch((err) => {
         console.error("인증 상태 확인 실패", err);
       });
-    }, []);
+  }, []);
 
-    return (
-
+  return (
+    <div className="bg-[#447959] h-screen absolute top-0 w-screen">
+      <h1 className="text-white text-[40px] font-bold">
+        FOR;
+      </h1>
+      
       <div className="flex mt-[130px] items-center flex-col" >
-        <Image src="/images/logo_forrest.png" alt="logo" width={100} height={100} >
-        </Image>
-        <h1 className="text-green-900 text-[40px] font-bold">
-          For-rest
-        </h1>
+
+
 
         <div className="mt-[30px] space-y-6">
 
@@ -62,8 +63,14 @@ export default function Home() {
             </h6>
           </button>
 
+
         </div>
       </div>
-    );
 
-  }
+      <h1 className="text-white text-[40px] font-bold">
+        REST
+      </h1>
+    </div>
+  );
+
+}
