@@ -44,7 +44,7 @@ const Leisure: React.FC<LeisureProps> = ({ activity_type, title, image_url }) =>
         <div>
           {/* 찜X일경우 */}
           <Image src="/images/icon_circleheart.png" alt="빈하트" width={24} height={24} />
-          {/* 찜O일 경우 */}
+          {/* 찜O일 경우 */}dd
           {/* <Image src="/images/icon_circleheart_color.png" alt="색칠된된하트" width={24} height={24}></Image> */}
         </div>
 
