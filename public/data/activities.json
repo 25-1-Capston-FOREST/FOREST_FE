@@ -40,29 +40,6 @@
     "activity_type": "EXHIBITION",
     "title": "반 고흐 전시회",
     "image_url": "/images/temp_poster.svg"
-  },
-  {
-    "activity_id": 6,
-    "activity_type": "PERFORMANCE",
-    "title": "라이온킹 뮤지컬",
-    "image_url": "/images/temp_poster.svg"
-  },
-  {
-    "activity_id": 7,
-    "activity_type": "EXHIBITION",
-    "title": "반 고흐 전시회",
-    "image_url": "/images/temp_poster.svg"
-  },
-  {
-    "activity_id": 6,
-    "activity_type": "PERFORMANCE",
-    "title": "라이온킹 뮤지컬",
-    "image_url": "/images/temp_poster.svg"
-  },
-  {
-    "activity_id": 7,
-    "activity_type": "EXHIBITION",
-    "title": "반 고흐 전시회",
-    "image_url": "/images/temp_poster.svg"
   }
+
 ]

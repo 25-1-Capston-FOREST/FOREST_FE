@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Leisure from "@/components/Leisure";
-import { useEffect } from "react";
-
 
 interface Activity {
   activity_id: number;
@@ -12,11 +10,11 @@ interface Activity {
   image_url: string;
 }
 
+
 export default function Main() {
   const router = useRouter()
-  const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
-  const [isDatePopupOpen, setIsDatePopupOpen] = useState(false);
   const [isSortPopupOpen, setIsSortPopupOpen] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
 
   useEffect(() => {
@@ -38,9 +36,18 @@ export default function Main() {
       .catch((error) => console.error("Error fetching activities:", error));
   }, []);
 
-  const searchButtonClick = () => {
-    router.push("/search_result")
-  }
+
+  const handleCategoryClick = (category: string) => {
+    // 동일한 카테고리를 클릭하면 전체 보기로 토글
+    setSelectedCategories((prev) =>  prev.includes(category)
+    ? prev.filter((c) => c !== category)
+    : [...prev, category]);
+  };
+
+  const filteredActivities =
+    selectedCategories.length > 0
+      ? activities.filter((a) => selectedCategories.includes(a.activity_type))
+      : activities;
 
   const toggleSortPopup = () => {
     setIsSortPopupOpen(!isSortPopupOpen);
@@ -48,24 +55,24 @@ export default function Main() {
 
   return (
     <div>
-
-      <div className="flex flex-row items-center">
-
-        <div className="ml-[30px] flex flex-row items-center">
-          <button className="px-4 py-2 text-left">
-            영화
+      {/* 카테고리 버튼 */}
+      <div className="flex flex-row items-center ml-[30px] text-[25px]">
+        {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
+          <button
+            key={category}
+            onClick={() => handleCategoryClick(category)}
+            className={`w-[108px] py-2 text-center text-left ${selectedCategories.includes(category)
+              ? "bg-blue-200 text-blue-900 font-bold"
+              : "bg-[#EBEBEB]"
+              } ${index > 0 ? "ml-[10px]" : ""}`}
+          >
+            {category === "MOVIE"
+              ? "영화"
+              : category === "PERFORMANCE"
+                ? "공연"
+                : "전시"}
           </button>
-
-
-          <button className="px-4 py-2 text-left">
-            공연
-          </button>
-
-
-          <button className="px-4 py-2 text-left">
-            전시
-          </button>
-        </div>
+        ))}
 
 
 
@@ -124,21 +131,22 @@ export default function Main() {
       </div>
 
       <div>
-        <div className="flex flex-row mt-[70px] grid grid-cols-4 gap-10">
-          {activities.map((activity) => (
-            <Leisure
-              key={activity.activity_id}
-              activity_type={activity.activity_type}
-              title={activity.title}
-              image_url={activity.image_url}
-            />
-
-          ))}
-
+        <div className="mt-[70px] grid grid-cols-4 gap-10 px-10">
+          {filteredActivities.length > 0 ? (
+            filteredActivities.map((activity) => (
+              <Leisure
+                key={activity.activity_id}
+                activity_type={activity.activity_type}
+                title={activity.title}
+                image_url={activity.image_url}
+              />
+            ))
+          ) : (
+            <p className="col-span-4 text-center text-gray-500">해당 카테고리에 활동이 없습니다.</p>
+          )}
         </div>
 
       </div>
     </div>
-
   );
 }
