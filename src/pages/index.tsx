@@ -17,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     // 로그인 상태 확인
-    fetch("http://13.124.10.41:3001/user", {
+    fetch("https://capston-forest.duckdns.org/user", {
       method: "GET",
       credentials: "include", // ← 쿠키 포함해서 요청 보내기
     })
