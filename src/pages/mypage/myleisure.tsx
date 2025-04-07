@@ -10,14 +10,13 @@ export default function Myleisure() {
     const fetchWishlist = async () => {
       try {
         const res = await getWishlist();
-        console.log("찜 목록 응답", res.data); // 이거 추가
-        setBookmarkedLeisure(res.data);
+        console.log("찜 목록 응답", res.data.data); // 여기 잘 들어오는지 확인용
+        setBookmarkedLeisure(res.data.data); // 요거 중요!
       } catch (error) {
         console.error("찜 목록 불러오기 실패", error);
       }
-
     };
-
+  
     if (selectedTab === "찜 목록") {
       fetchWishlist();
     }
