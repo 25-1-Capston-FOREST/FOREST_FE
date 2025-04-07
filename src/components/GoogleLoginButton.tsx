@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const GoogleLoginButton = () => {
   const clientID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-  const redirectURI = "http://forest-fe.vercel.app/auth/google/callback"; // 리디렉션 URI
+  const redirectURI = "https://capston-forest.duckdns.org/auth/google/callback"; // 리디렉션 URI
 
   if (!clientID) {
     console.error("NEXT_PUBLIC_GOOGLE_CLIENT_ID가 설정되지 않았습니다.");
