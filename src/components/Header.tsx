@@ -29,12 +29,12 @@ const Header = () => {
         onClick={logoButtonClick}
       >
         {/* 기본 로고 */}
-        <h1 className="absolute top-0 left-0 text-[200px] font-bold text-[#447959] z-10 leading-none">
-          F&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="opacity-0">R</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R
+        <h1 className="absolute top-0 left-0 text-[200px] text-[#447959] z-10 leading-none">
+          F<span className="opacity-0">OR;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;
         </h1>
 
         {/* Hover 시 FOR; REST */}
-        <h1 className="absolute top-0 left-0 text-[200px] font-bold text-[#447959] flex z-20 leading-none">
+        <h1 className="absolute top-0 left-0 text-[200px] text-[#447959] flex z-20 leading-none">
           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[0ms]">F</span>
           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[20ms]">O</span>
           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[40ms]">R</span>
@@ -64,7 +64,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="mt-[10px] w-full mx-[30px] justify-between border-t border-black" />
+      <div className="mt-[20px] w-full mx-[30px] justify-between border-t border-black" />
     </div>
   );
 }

@@ -38,7 +38,6 @@ export default function Main() {
 
 
   const handleCategoryClick = (category: string) => {
-    // 동일한 카테고리를 클릭하면 전체 보기로 토글
     setSelectedCategories((prev) =>  prev.includes(category)
     ? prev.filter((c) => c !== category)
     : [...prev, category]);
@@ -56,14 +55,15 @@ export default function Main() {
   return (
     <div>
       {/* 카테고리 버튼 */}
-      <div className="flex flex-row items-center ml-[30px] text-[25px]">
+      <div className="flex flex-row mt-[10px] items-center ml-[30px] text-[25px]">
         {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
           <button
             key={category}
             onClick={() => handleCategoryClick(category)}
-            className={`w-[108px] py-2 text-center text-left ${selectedCategories.includes(category)
-              ? "bg-blue-200 text-blue-900 font-bold"
-              : "bg-[#EBEBEB]"
+            className={`w-[108px] rounded-[20px] py-2 text-white text-center text-left 
+              ${selectedCategories.includes(category)
+              ? "bg-[#447959]"
+              : "bg-[#D0D0D0]"
               } ${index > 0 ? "ml-[10px]" : ""}`}
           >
             {category === "MOVIE"
