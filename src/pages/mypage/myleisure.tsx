@@ -16,7 +16,7 @@ export default function Myleisure() {
         console.error("찜 목록 불러오기 실패", error);
       }
     };
-  
+
     if (selectedTab === "찜 목록") {
       fetchWishlist();
     }
@@ -56,7 +56,7 @@ export default function Myleisure() {
           {getCurrentList().length > 0 ? (
             getCurrentList().map((item) => (
               <li key={item.wish_id} className="p-2 border-b">
-                {item.detailedInfo.title}
+                {item.detailedInfo?.title ?? "제목 없음"}
               </li>
             ))
           ) : (
