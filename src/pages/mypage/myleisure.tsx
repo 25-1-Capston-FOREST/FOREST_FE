@@ -15,18 +15,15 @@ export default function Myleisure() {
   const isWishlisted = (activityId: number) => {
     return bookmarkedLeisure.some((item) => item.activity_id === activityId);
   };
+
   const handleToggleWish = async (item) => {
     try {
-      if (isWishlisted(item.activity_id)) {
-        // 찜 삭제
+      if (item.isWished) {
         await deleteWish(item.wish_id);
-        setBookmarkedLeisure((prev) =>
-          prev.filter((i) => i.wish_id !== item.wish_id)
-        );
+        alert("찜이 해제되었습니다!");
       } else {
-        // 찜 추가
-        const newWish = await postWish(item.activity_id);
-        setBookmarkedLeisure((prev) => [...prev, newWish]);
+        await postWish(item.activity_id);
+        alert("찜에 추가되었습니다!");
       }
     } catch (error) {
       console.error("찜 처리 실패", error);
@@ -184,18 +181,18 @@ export default function Myleisure() {
                         일정 등록하기
                       </button>
 
-                      <button
-                        onClick={() => handleToggleWish(item)}
-                        className="ml-4 flex items-center gap-1"
-                      >
+                      <button onClick={() => handleToggleWish(item)}>
                         <Image
-                          src={isWishlisted(item.activity_id) ? "/images/icon_heart.svg" : "/images/icon_emptyheart.svg"}
-                          alt="찜하기"
+                          src={
+                            item.isWished
+                              ? "/images/icon_heart_filled.svg"
+                              : "/images/icon_heart.svg"
+                          }
+                          alt="하트"
                           width={27}
                           height={27}
                         />
                       </button>
-
                     </div>
                   </div>
 
