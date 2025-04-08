@@ -80,7 +80,7 @@ export default function Myleisure() {
               <li key={item.wish_id ?? item.activity_id} className="w-[1300px] mx-auto border-b flex space-x-4 items-center">
                 {/* 이미지 */}
                 {item.detailedInfo?.image_url ? (
-                  <Image
+                  <img
                     src={item.detailedInfo.image_url}
                     alt="이미지"
                     width={227}
