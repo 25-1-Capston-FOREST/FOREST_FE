@@ -11,7 +11,8 @@ export default function Myleisure() {
       try {
         const res = await getWishlist();
         console.log("찜 목록 응답", res);
-        setBookmarkedLeisure(res);
+        setBookmarkedLeisure(res.data);
+        console.log("실제 배열인가?", Array.isArray(res.data), res.data);
 
       } catch (error) {
         console.error("찜 목록 불러오기 실패", error);
