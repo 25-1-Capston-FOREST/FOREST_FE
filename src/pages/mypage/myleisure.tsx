@@ -12,21 +12,27 @@ export default function Myleisure() {
     PERFORMANCE: "공연",
     EXHIBITION: "전시",
   };
-  const isWishlisted = (activityId: number) => {
-    return bookmarkedLeisure.some((item) => item.activity_id === activityId);
-  };
+
   const handleToggleWish = async (item) => {
     try {
-      if (isWishlisted(item.activity_id)) {
-        // 찜 삭제
+      if (item.isWished) {
+        console.log("삭제할 wish_id:", item.wish_id);
         await deleteWish(item.wish_id);
-        setBookmarkedLeisure((prev) =>
-          prev.filter((i) => i.wish_id !== item.wish_id)
-        );
+        alert("찜이 해제되었습니다!");
       } else {
-        // 찜 추가
-        const newWish = await postWish(item.activity_id);
-        setBookmarkedLeisure((prev) => [...prev, newWish]);
+        console.log("추가할 activity_id:", item.activity_id);
+        await postWish(item.activity_id);
+        alert("찜에 추가되었습니다!");
+      }
+      // 목록 새로고침
+      if (selectedTab === "찜 목록") {
+        const res = await getWishlist();
+        setBookmarkedLeisure(
+          res.data.map((item) => ({
+            ...item,
+            isWished: true,
+          }))
+        );
       }
     } catch (error) {
       console.error("찜 처리 실패", error);
@@ -40,7 +46,12 @@ export default function Myleisure() {
         const res = await getWishlist();
         //const res = await fetch("/data/activities.json")
         console.log("찜 목록 응답", res);
-        setBookmarkedLeisure(res.data);
+        setBookmarkedLeisure(
+          res.data.map((item) => ({
+            ...item,
+            isWished: true,
+          }))
+        );
         //const data = await res.json();
         //setBookmarkedLeisure(data)
       } catch (error) {
@@ -179,23 +190,23 @@ export default function Myleisure() {
 
                       <button
                         onClick={() => handleBook(item.activity_id)}
-                        className="bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
+                        className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
                       >
                         일정 등록하기
                       </button>
 
-                      <button
-                        onClick={() => handleToggleWish(item)}
-                        className="ml-4 flex items-center gap-1"
-                      >
+                      <button onClick={() => handleToggleWish(item)}>
                         <Image
-                          src={isWishlisted(item.activity_id) ? "/images/icon_heart.svg" : "/images/icon_emptyheart.svg"}
-                          alt="찜하기"
+                          src={
+                            item.isWished
+                              ? "/images/icon_heart.svg"
+                              : "/images/icon_emptyheart.svg"
+                          }
+                          alt="하트"
                           width={27}
                           height={27}
                         />
                       </button>
-
                     </div>
                   </div>
 
