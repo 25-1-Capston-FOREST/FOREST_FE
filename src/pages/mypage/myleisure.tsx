@@ -6,6 +6,11 @@ import Image from "next/image";
 export default function Myleisure() {
   const [selectedTab, setSelectedTab] = useState("찜 목록");
   const [bookmarkedLeisure, setBookmarkedLeisure] = useState([]);
+  const TYPE_MAP: { [key: string]: string } = {
+    MOVIE: "영화",
+    PERFORMANCE: "공연",
+    EXHIBITION: "전시",
+  };
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -96,7 +101,9 @@ export default function Myleisure() {
                 {/* 텍스트 정보 */}
                 <div>
                   <p className="text-[36px] font-bold">{item.detailedInfo?.title ?? "제목 없음"}</p>
-                  <p className="text-sm text-gray-600">{item.activity_type}</p>
+                  <p className="text-sm text-gray-600">
+                    {TYPE_MAP[item.activity_type] ?? "기타"}
+                  </p>
                 </div>
               </li>
             ))
