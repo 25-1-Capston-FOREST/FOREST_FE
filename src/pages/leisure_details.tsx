@@ -58,8 +58,8 @@ export default function Detail() {
 
 
 
-  useEffect(() => {
-    if (!activity_id) return;
+  useEffect(() => { if (!activity_id || typeof activity_id !== "string") return; if (!activity_id) return;
+    console.log(activity_id)
     // const fetchActivity = async () => {
     //   try {
     //     const res = await fetch("/data/activities.json");
@@ -74,7 +74,7 @@ export default function Detail() {
 
     const fetchActivity = async () => {
       try {
-        const data = await getDetail(Number(activity_id));
+        const data = await getDetail(activity_id);
         setActivity(data);
       } catch (error) {
         console.error("여가 정보 불러오기 실패", error);
