@@ -1,10 +1,16 @@
 import MypageSidebar from "@/components/Mypagebar";
 import { useEffect, useState } from "react";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
+import Image from "next/image";
 
 export default function Myleisure() {
   const [selectedTab, setSelectedTab] = useState("찜 목록");
   const [bookmarkedLeisure, setBookmarkedLeisure] = useState([]);
+  const TYPE_MAP: { [key: string]: string } = {
+    MOVIE: "영화",
+    PERFORMANCE: "공연",
+    EXHIBITION: "전시",
+  };
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -76,24 +82,28 @@ export default function Myleisure() {
         <ul className="mt-4">
           {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ? (
             getCurrentList().map((item) => (
-              <li key={item.wish_id ?? item.activity_id} className="p-4 border-b flex space-x-4 items-center">
+              <li key={item.wish_id ?? item.activity_id} className="w-[1300px] mx-auto border-b flex space-x-4 items-center">
                 {/* 이미지 */}
                 {item.detailedInfo?.image_url ? (
                   <img
                     src={item.detailedInfo.image_url}
-                    alt={item.detailedInfo.title || "이미지"}
-                    className="w-20 h-28 object-cover rounded"
+                    alt="이미지"
+                    width={227}
+                    height={303}
+                    className="object-cover"
                   />
                 ) : (
-                  <div className="w-20 h-28 bg-gray-200 flex items-center justify-center text-sm text-gray-500 rounded">
+                  <div className="w-[227px] h-[303px] bg-gray-200 flex items-center justify-center text-sm text-gray-500 rounded">
                     No Image
                   </div>
                 )}
 
                 {/* 텍스트 정보 */}
                 <div>
-                  <p className="text-lg font-bold">{item.detailedInfo?.title ?? "제목 없음"}</p>
-                  <p className="text-sm text-gray-600">{item.activity_type}</p>
+                  <p className="text-[36px] font-bold">{item.detailedInfo?.title ?? "제목 없음"}</p>
+                  <p className="text-sm text-gray-600">
+                    {TYPE_MAP[item.activity_type] ?? "기타"}
+                  </p>
                 </div>
               </li>
             ))
