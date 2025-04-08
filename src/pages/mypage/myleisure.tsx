@@ -185,8 +185,8 @@ export default function Myleisure() {
                         <Image
                           src={
                             item.isWished
-                              ? "/images/icon_heart_filled.svg"
-                              : "/images/icon_heart.svg"
+                              ? "/images/icon_heart.svg"
+                              : "/images/icon_emptyheart.svg"
                           }
                           alt="하트"
                           width={27}
