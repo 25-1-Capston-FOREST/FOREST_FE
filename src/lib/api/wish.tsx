@@ -14,6 +14,10 @@ export const postWish = async (activityId: number) => {
 
 //찜삭제
 export const deleteWish = async (wishId: number) => {
-  const response = await instance.delete(`/api/wish/${wishId}`);
+  const response = await instance.delete("/api/wish", {
+    data: {
+      wish_id: wishId,
+    },
+  });
   return response.data;
 };
