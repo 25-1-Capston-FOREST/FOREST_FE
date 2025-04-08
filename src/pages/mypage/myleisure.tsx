@@ -12,9 +12,6 @@ export default function Myleisure() {
     PERFORMANCE: "공연",
     EXHIBITION: "전시",
   };
-  const isWishlisted = (activityId: number) => {
-    return bookmarkedLeisure.some((item) => item.activity_id === activityId);
-  };
 
   const handleToggleWish = async (item) => {
     try {
