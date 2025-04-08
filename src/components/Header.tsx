@@ -1,8 +1,11 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const router = useRouter()
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const chatbotButtonClick = () => {
     router.push("/chatbot")
   }
@@ -20,6 +23,13 @@ const Header = () => {
     //로그아웃 구현
   }
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50); // 50px 이상 내리면 작아짐
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="flex flex-col">
@@ -29,8 +39,15 @@ const Header = () => {
         onClick={logoButtonClick}
       >
         {/* 기본 로고 */}
-        <h1 className="absolute top-0 left-0 text-[200px] text-[#447959] z-10 leading-none">
-          F<span className="opacity-0">OR;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;
+        <h1
+          className={`flex flex-row text-[#447959] absolute top-0 left-0 z-10 leading-none transition-all duration-500 
+          ${isScrolled ? "text-[100px]" : "text-[200px]"}`}
+        >
+          {isScrolled ? (
+            <>F<span className="opacity-0">OR;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;</>
+          ) : (
+            <>F<span className="opacity-0">OR;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;</>
+          )}
         </h1>
 
         {/* Hover 시 FOR; REST */}

@@ -38,9 +38,9 @@ export default function Main() {
 
 
   const handleCategoryClick = (category: string) => {
-    setSelectedCategories((prev) =>  prev.includes(category)
-    ? prev.filter((c) => c !== category)
-    : [...prev, category]);
+    setSelectedCategories((prev) => prev.includes(category)
+      ? prev.filter((c) => c !== category)
+      : [...prev, category]);
   };
 
   const filteredActivities =
@@ -54,60 +54,33 @@ export default function Main() {
 
   return (
     <div>
-      {/* 카테고리 버튼 */}
-      <div className="flex flex-row mt-[10px] items-center ml-[30px] text-[25px]">
-        {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
-          <button
-            key={category}
-            onClick={() => handleCategoryClick(category)}
-            className={`w-[108px] rounded-[20px] py-2 text-white text-center text-left 
+
+      <div className="w-full flex flex-row mt-[10px] items-center">
+        <div className="flex flex-row items-center ml-[30px] text-[25px]">
+          {/* 카테고리 버튼 */}
+          {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
+            <button
+              key={category}
+              onClick={() => handleCategoryClick(category)}
+              className={`w-[108px] rounded-[20px] py-2 text-white text-center text-left 
               ${selectedCategories.includes(category)
-              ? "bg-[#447959]"
-              : "bg-[#D0D0D0]"
-              } ${index > 0 ? "ml-[10px]" : ""}`}
-          >
-            {category === "MOVIE"
-              ? "영화"
-              : category === "PERFORMANCE"
-                ? "공연"
-                : "전시"}
-          </button>
-        ))}
-
-
-
-
-        <div className="w-[300px] h-[59px] mx-auto flex flex-row mt-[15px] items-center bg-[#EBEBEB] pl-[10px] py-[19px] text-[14px]">
-          <textarea className="resize-none w-[200px] h-[59px] bg-transparent text-[14px] outline-none px-[30px] py-[19px] font-bold"
-            placeholder="Search">
-          </textarea>
-
-          {/* <button onClick={searchButtonClick}>
-            <Image src="/images/icon_search.svg" alt="logo" width={30} height={30} className="flex">
-            </Image>
-          </button> */}
-        </div>
-      </div>
-
-      <div className="flex flex-row items-center justify-center">
-
-
-        <div className="text-[15px] mt-2 w-[108px] bg-white border border-[#EBEBEB] rounded-[10px] shadow-custom">
-
-
-
-
+                  ? "bg-[#447959]"
+                  : "bg-[#D0D0D0]"
+                } ${index > 0 ? "ml-[10px]" : ""}`}
+            >
+              {category === "MOVIE"
+                ? "영화"
+                : category === "PERFORMANCE"
+                  ? "공연"
+                  : "전시"}
+            </button>
+          ))}
         </div>
 
-      </div>
 
-
-      <div className="flex flex-row">
-
-
-        <div>
-
-          <button className=""
+        <div className="ml-[400px]">
+          {/* 정렬버튼 */}
+          <button className="border-[#000000]  border rounded-[10px] w-[149px] h-[55px]"
             onClick={toggleSortPopup}>
             정렬
           </button>
@@ -125,11 +98,18 @@ export default function Main() {
               </button>
             </div>
           )}
-
         </div>
 
+        {/* 검색창 */}
+        <div className="w-[480px] h-[59px] items-center border border-[#000000] text-[14px] ml-[80px] mr-[30px]">
+          <textarea className="resize-none w-[450px] h-[59px] bg-transparent text-[14px] outline-none px-[30px] py-[19px]"
+            placeholder="Search">
+          </textarea>
+        </div>
       </div>
 
+
+      {/* 여가 목록  */}
       <div>
         <div className="mt-[70px] grid grid-cols-4 gap-10 px-10">
           {filteredActivities.length > 0 ? (
@@ -145,8 +125,8 @@ export default function Main() {
             <p className="col-span-4 text-center text-gray-500">해당 카테고리에 활동이 없습니다.</p>
           )}
         </div>
-
       </div>
-    </div>
+
+    </div >
   );
 }

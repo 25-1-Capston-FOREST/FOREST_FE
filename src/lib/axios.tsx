@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://13.124.10.41:3001",
+  baseURL: "https://capston-forest.duckdns.org",
   withCredentials: true, // 필요 시
 });
 
