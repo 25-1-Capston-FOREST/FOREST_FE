@@ -1,10 +1,12 @@
 import MypageSidebar from "@/components/Mypagebar";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 import Image from "next/image";
 import { postBooking } from "@/lib/api/book";
 
 export default function Myleisure() {
+  const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("찜 목록");
   const [bookmarkedLeisure, setBookmarkedLeisure] = useState([]);
   const TYPE_MAP: { [key: string]: string } = {
@@ -43,17 +45,17 @@ export default function Myleisure() {
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        const res = await getWishlist();
-        //const res = await fetch("/data/activities.json")
+        //const res = await getWishlist();
+        const res = await fetch("/data/activities.json")
         console.log("찜 목록 응답", res);
-        setBookmarkedLeisure(
-          res.data.map((item) => ({
-            ...item,
-            isWished: true,
-          }))
-        );
-        //const data = await res.json();
-        //setBookmarkedLeisure(data)
+        // setBookmarkedLeisure(
+        //   res.data.map((item) => ({
+        //     ...item,
+        //     isWished: true,
+        //   }))
+        // );
+        const data = await res.json();
+        setBookmarkedLeisure(data)
       } catch (error) {
         console.error("찜 목록 불러오기 실패", error);
       }
@@ -84,6 +86,17 @@ export default function Myleisure() {
     } catch (error) {
       console.error("예약 실패", error);
       alert("예약에 실패했어요 😢");
+    }
+  };
+
+
+
+  const handleLeisureClick = (item) => {
+    const activityId = item.detailedInfo?.activity_id;
+    if (activityId) {
+      router.push(`/leisure_details?activity_id=${activityId}`);
+    } else {
+      alert("activity_id가 존재하지 않습니다.");
     }
   };
 
@@ -152,7 +165,12 @@ export default function Myleisure() {
                   </p>
 
                   {/* 제목 */}
-                  <p className="text-[24px] font-bold">{item.detailedInfo?.title ?? "제목 없음"}</p>
+                  <button
+                    className="text-[24px] font-bold"
+                    onClick={() => handleLeisureClick(item)}
+                  >
+                    {item.detailedInfo?.title ?? "제목 없음"}
+                  </button>
 
                   {/* 장소 */}
                   <p className="text-[20px] whitespace-pre-line">
@@ -221,3 +239,4 @@ export default function Myleisure() {
     </div>
   );
 }
+
