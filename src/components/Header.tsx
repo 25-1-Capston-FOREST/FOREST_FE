@@ -40,7 +40,7 @@ const Header = () => {
       >
         {/* 기본 로고 */}
         <h1
-          className={`flex flex-row text-[#447959] absolute top-0 left-0 z-10 leading-none transition-all duration-500 
+          className={`flex flex-row font-semibold text-[#447959] absolute top-0 left-0 z-10 leading-none transition-all duration-500 
           ${isScrolled ? "text-[100px]" : "text-[200px]"}`}
         >
           {isScrolled ? (
@@ -51,7 +51,7 @@ const Header = () => {
         </h1>
 
         {/* Hover 시 FOR; REST */}
-        <h1 className="absolute top-0 left-0 text-[200px] text-[#447959] flex z-20 leading-none">
+        <h1 className="font-semibold absolute top-0 left-0 text-[200px] text-[#447959] flex z-20 leading-none">
           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[0ms]">F</span>
           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[20ms]">O</span>
           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[40ms]">R</span>
