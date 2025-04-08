@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { postBooking } from "@/lib/api/book";
+import { getDetail } from "@/lib/api/detail";
 
 interface PerformanceDetail {
   performance_id: string;
@@ -54,15 +55,27 @@ export default function Detail() {
     }
   };
 
+
+
+
   useEffect(() => {
     if (!activity_id) return;
+    // const fetchActivity = async () => {
+    //   try {
+    //     const res = await fetch("/data/activities.json");
+    //     const json = await res.json();
+
+    //     setActivity(json);
+    //   } catch (error) {
+    //     console.error("여가 정보 불러오기 실패", error);
+    //     alert("여가 정보를 불러오는 데 실패했어요 😢");
+    //   }
+    // };
 
     const fetchActivity = async () => {
       try {
-        const res = await fetch("/data/activities.json");
-        const json = await res.json();
-
-        setActivity(json);
+        const data = await getDetail(Number(activity_id));
+        setActivity(data);
       } catch (error) {
         console.error("여가 정보 불러오기 실패", error);
         alert("여가 정보를 불러오는 데 실패했어요 😢");
