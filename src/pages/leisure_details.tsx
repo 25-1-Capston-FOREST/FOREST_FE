@@ -58,7 +58,8 @@ export default function Detail() {
 
 
 
-  useEffect(() => { if (!activity_id || typeof activity_id !== "string") return; if (!activity_id) return;
+  useEffect(() => {
+    if (!activity_id || typeof activity_id !== "string") return; if (!activity_id) return;
     console.log(activity_id)
     // const fetchActivity = async () => {
     //   try {
@@ -75,7 +76,8 @@ export default function Detail() {
     const fetchActivity = async () => {
       try {
         const data = await getDetail(activity_id);
-        setActivity(data);
+        console.log("받은 데이터:", data);
+        setActivity(data.data);
       } catch (error) {
         console.error("여가 정보 불러오기 실패", error);
         alert("여가 정보를 불러오는 데 실패했어요 😢");
@@ -85,11 +87,12 @@ export default function Detail() {
     fetchActivity();
   }, [activity_id]);
 
-  if (!activity) {
+  if (!activity || !activity.detail) {
     return <div>로딩 중...</div>;
   }
 
   const detail = activity.detail;
+
 
   return (
     <div className="p-10">
