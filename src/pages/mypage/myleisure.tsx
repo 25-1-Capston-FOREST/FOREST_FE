@@ -19,11 +19,23 @@ export default function Myleisure() {
   const handleToggleWish = async (item) => {
     try {
       if (item.isWished) {
+        console.log("삭제할 wish_id:", item.wish_id);
         await deleteWish(item.wish_id);
         alert("찜이 해제되었습니다!");
       } else {
+        console.log("추가할 activity_id:", item.activity_id);
         await postWish(item.activity_id);
         alert("찜에 추가되었습니다!");
+      }
+      // 목록 새로고침
+      if (selectedTab === "찜 목록") {
+        const res = await getWishlist();
+        setBookmarkedLeisure(
+          res.data.map((item) => ({
+            ...item,
+            isWished: true,
+          }))
+        );
       }
     } catch (error) {
       console.error("찜 처리 실패", error);
@@ -37,7 +49,12 @@ export default function Myleisure() {
         const res = await getWishlist();
         //const res = await fetch("/data/activities.json")
         console.log("찜 목록 응답", res);
-        setBookmarkedLeisure(res.data);
+        setBookmarkedLeisure(
+          res.data.map((item) => ({
+            ...item,
+            isWished: true,
+          }))
+        );
         //const data = await res.json();
         //setBookmarkedLeisure(data)
       } catch (error) {
@@ -176,7 +193,7 @@ export default function Myleisure() {
 
                       <button
                         onClick={() => handleBook(item.activity_id)}
-                        className="bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
+                        className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
                       >
                         일정 등록하기
                       </button>
