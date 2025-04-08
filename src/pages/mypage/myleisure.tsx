@@ -1,4 +1,4 @@
-import MypageSidebar from "@/components/MypageSidebar";
+import MypageSidebar from "@/components/Mypagebar";
 import { useEffect, useState } from "react";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 
@@ -53,18 +53,18 @@ export default function Myleisure() {
     }
   };
   return (
-    <div className="ml-[400px] mt-[30px]">
+    <div className="mt-[10px]">
       <MypageSidebar />
-      <div className="p-6">
+      <div className="">
         {/* 탭 메뉴 */}
-        <div className="flex space-x-4 border-b pb-2">
+        <div className="flex flex-col ml-[520px] py-[3px] gap-0.5">
           {["찜 목록", "예정된 여가", "완료된 여가"].map((tab) => (
             <button
               key={tab}
               onClick={() => setSelectedTab(tab)}
-              className={`px-4 py-2 text-lg font-semibold ${selectedTab === tab
-                ? "border-b-4 border-blue-500 text-blue-500"
-                : "text-gray-600"
+              className={`text-left w-[80px] text-[13px] ${selectedTab === tab
+                ? "text-[#000000]"
+                : "text-[#9A9A9A]"
                 }`}
             >
               {tab}

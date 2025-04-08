@@ -1,4 +1,4 @@
-import MypageSidebar from "@/components/MypageSidebar";
+import MypageSidebar from "@/components/Mypagebar";
 
 
 export default function Modify() {

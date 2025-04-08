@@ -81,7 +81,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="mt-[20px] w-full mx-[30px] justify-between border-t border-black" />
+      <div className="mt-[20px] w-[1480px] mx-auto justify-between border-t border-black" />
     </div>
   );
 }
