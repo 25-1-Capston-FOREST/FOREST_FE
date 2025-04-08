@@ -12,7 +12,7 @@ export default function Myleisure() {
         const res = await getWishlist();
         console.log("찜 목록 응답", res);
         setBookmarkedLeisure(res);
-        console.log("현재 탭 리스트", getCurrentList());
+
       } catch (error) {
         console.error("찜 목록 불러오기 실패", error);
       }
@@ -75,14 +75,30 @@ export default function Myleisure() {
         <ul className="mt-4">
           {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ? (
             getCurrentList().map((item) => (
-              <li key={item.wish_id ?? item.activity_id} className="p-2 border-b">
-                {renderLeisureTitle(item) ?? "제목 없음"}
+              <li key={item.wish_id ?? item.activity_id} className="p-4 border-b flex space-x-4 items-center">
+                {/* 이미지 */}
+                {item.detailedInfo?.image_url ? (
+                  <img
+                    src={item.detailedInfo.image_url}
+                    alt={item.detailedInfo.title || "이미지"}
+                    className="w-20 h-28 object-cover rounded"
+                  />
+                ) : (
+                  <div className="w-20 h-28 bg-gray-200 flex items-center justify-center text-sm text-gray-500 rounded">
+                    No Image
+                  </div>
+                )}
+
+                {/* 텍스트 정보 */}
+                <div>
+                  <p className="text-lg font-bold">{item.detailedInfo?.title ?? "제목 없음"}</p>
+                  <p className="text-sm text-gray-600">{item.activity_type}</p>
+                </div>
               </li>
             ))
           ) : (
             <p className="text-gray-500">리스트가 비어 있습니다.</p>
           )}
-
         </ul>
       </div>
     </div>
