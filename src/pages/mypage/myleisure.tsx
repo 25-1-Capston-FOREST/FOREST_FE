@@ -37,12 +37,12 @@ export default function Myleisure() {
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        //const res = await getWishlist();
-        const res = await fetch("/data/activities.json")
+        const res = await getWishlist();
+        //const res = await fetch("/data/activities.json")
         console.log("찜 목록 응답", res);
-        //setBookmarkedLeisure(res.data);
-        const data = await res.json();
-        setBookmarkedLeisure(data)
+        setBookmarkedLeisure(res.data);
+        //const data = await res.json();
+        //setBookmarkedLeisure(data)
       } catch (error) {
         console.error("찜 목록 불러오기 실패", error);
       }
