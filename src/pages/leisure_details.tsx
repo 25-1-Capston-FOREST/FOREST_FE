@@ -66,7 +66,7 @@ export default function Detail() {
         alert("찜이 해제되었습니다!");
       } else {
         console.log("추가할 activity_id:", item.activity_id);
-        await postWish(Number(item.activity_id)); // 숫자로!
+        await postWish(Number(item.activity_id));
         alert("찜에 추가되었습니다!");
       }
     } catch (error) {
