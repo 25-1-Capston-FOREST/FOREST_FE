@@ -136,8 +136,8 @@ export default function Main() {
 
       {/* 여가 목록  */}
 
-      <div className="w-full mt-[30px] px-[70px]">
-        <div className="flex flex-wrap justify-start gap-x-[50px] gap-y-[80px] justify-start">
+      <div className="w-full mt-[30px] flex justify-center">
+        <div className=" max-w-[1200px] flex flex-wrap justify-start gap-x-[50px] gap-y-[80px] justify-start">
           {filteredActivities.length > 0 ? (
             filteredActivities.map((activity) => {
               const detail = activity.detail || {};
