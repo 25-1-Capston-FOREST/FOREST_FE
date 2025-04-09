@@ -8,8 +8,10 @@ export const getWishlist = async () => {
 
 // 찜하기
 export const postWish = async (activityId: string | number) => {
-  const response = await instance.post("/api/wish", {
-    activity_id: Number(activityId), // ✅ 숫자로 변환
+  const response =await instance.post("/api/wish", null, {
+    params: {
+      id: activityId,
+    },
   });
   return response.data;
 };
