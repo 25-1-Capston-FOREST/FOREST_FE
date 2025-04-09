@@ -128,7 +128,7 @@ export default function Myleisure() {
     }
   };
   return (
-    <div className="pt-[10px] mt-[220px]">
+    <div className="pt-[10px] mt-[230px]">
       <MypageSidebar />
       <div className="">
         {/* 탭 메뉴 */}
@@ -182,7 +182,7 @@ export default function Myleisure() {
                   </button>
 
                   {/* 장소 */}
-                  <p className="text-[18px] whitespace-pre-line">
+                  <p className="text-[16px] whitespace-pre-line">
                     {item.activity_type === "MOVIE"
                       ? "\n"
                       : item.activity_type === "PERFORMANCE"
