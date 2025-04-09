@@ -12,7 +12,8 @@ const nextConfig = {
     domains: ['www.kopis.or.kr'],
     domains: ['i.namu.wiki'],
     domains: ['www.culture.go.kr'],
-    domains: ['www.themoviedb.org'],
+
+    domains: ['image.tmdb.org'], // 필요한 도메인들 다 나열
 
   },
 };
