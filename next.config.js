@@ -14,7 +14,7 @@ const nextConfig = {
     domains: ['www.culture.go.kr'],
 
     domains: ['image.tmdb.org'], // 필요한 도메인들 다 나열
-
+    domains: ['media.themoviedb.org'], 
   },
 };
 
