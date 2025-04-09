@@ -29,9 +29,9 @@ export default function Main() {
         const res = await getRecommendation();
         console.log("추천 리스트:", res);
 
-        // 응답 데이터가 예상한 구조인지 확인
-        if (res && Array.isArray(res.data?.recommendations)) {
-          const mappedActivities = res.data.recommendations.map((activity: any) => ({
+        // res가 바로 배열일 경우, 바로 그 배열을 사용
+        if (Array.isArray(res)) {
+          const mappedActivities = res.map((activity: any) => ({
             activity_id: activity.activity_id,
             activity_type: activity.activity_type,
             detail: {
@@ -49,12 +49,13 @@ export default function Main() {
           console.log("매핑된 액티비티:", mappedActivities);
           setActivities(mappedActivities);
         } else {
-          console.error("추천 리스트 데이터를 받을 수 없습니다:", res);
+          console.error("추천 리스트 데이터는 배열이어야 합니다:", res);
         }
       } catch (error) {
         console.error("추천 리스트를 불러오는 중 오류 발생:", error);
       }
     };
+
     fetchRecommendations();
   }, []);
 
