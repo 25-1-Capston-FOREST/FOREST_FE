@@ -24,6 +24,8 @@ interface PerformanceDetail {
   story: string;
   link: string;
   status: string;
+  isWished?: boolean;
+  wish_id?: string;
 }
 
 interface Activity {
@@ -69,10 +71,15 @@ export default function Detail() {
         await postWish(item.activity_id);
         alert("찜에 추가되었습니다!");
       }
+      // 💡 데이터 다시 불러와서 상태 반영
+      if (activity_id && typeof activity_id === "string") {
+        const updated = await getDetail(activity_id);
+        setActivity(updated.data);
+      }
 
     } catch (error) {
       console.error("찜 처리 실패", error);
-      alert("찜 처리에 실패했어요 😢");
+      alert("찜 처리에 실패했어요");
     }
   };
 
@@ -157,10 +164,10 @@ export default function Detail() {
               </button>
 
 
-              <button onClick={() => handleToggleWish(activity)}>
+              <button onClick={() => handleToggleWish(detail)}>
                 <Image
                   src={
-                    activity.isWished
+                    detail.isWished
                       ? "/images/icon_heart.svg"
                       : "/images/icon_emptyheart.svg"
                   }
