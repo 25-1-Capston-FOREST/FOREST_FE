@@ -71,13 +71,13 @@ export default function Detail() {
         await postWish(item.activity_id);
         alert("찜에 추가되었습니다!");
       }
-  
+
       // 데이터 다시 불러오기
       if (activity_id && typeof activity_id === "string") {
         const updated = await getDetail(activity_id);
         setActivity(updated.data);
       }
-  
+
     } catch (error) {
       console.error("찜 처리 실패", error);
       alert("찜 처리에 실패했어요");
@@ -125,7 +125,7 @@ export default function Detail() {
 
       <div>
         <div className="flex flex-row ml-[10px] items-center gap-6 mb-3">
-          <p className="flex-row items-center font-normal justify-center text-white w-[50px] h-[30px] rounded-[8px] text-[14px] bg-[#447959] text-center">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
+          <p className="text-lg text-gray-600">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
           <h1 className="text-3xl mt-2 font-bold">{detail.title}</h1>
         </div>
         <div className="flex flex-row gap-[30px] text-[#757575] text-[18px] mb-[10px]">
@@ -190,11 +190,11 @@ export default function Detail() {
             </div>
           </div>
           <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex flex-row items-center justify-center">
-          리뷰 내용 구현 예정
-        </div>
+            리뷰 내용 구현 예정
+          </div>
 
         </div>
-        
+
 
 
 
