@@ -29,6 +29,7 @@ export default function Myleisure() {
       // 목록 새로고침
       if (selectedTab === "찜 목록") {
         const res = await getWishlist();
+        console.log("찜 목록 응답:", res);
         setBookmarkedLeisure(
           res.data.map((item) => ({
             ...item,
