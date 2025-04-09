@@ -6,3 +6,8 @@ export const postBooking = async (activityId: number, activityDate: string) => {
   });
   return response.data;
 };
+
+export const getBookedActivities = async () => {
+  const response = await instance.get("/api/user/activities?status=0");
+  return response.data;
+};
