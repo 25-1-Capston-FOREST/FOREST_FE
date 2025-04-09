@@ -21,7 +21,7 @@ const Header = () => {
 
   const chatbotButtonClick = () => router.push("/chatbot");
   const logoButtonClick = () => router.push("/main");
-  const mypageButtonClick = () => router.push("/mypage/modify");
+  const mypageButtonClick = () => router.push("/mypage/myleisure");
   const logoutButtonClick = () => router.push("/");
 
   const getTextSize = () => {
