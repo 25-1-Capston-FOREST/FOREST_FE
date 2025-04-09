@@ -152,9 +152,9 @@ export default function Detail() {
             <p>일시: {detail.time}</p>
             <p>러닝타임: {detail.runtime}</p>
             <p>출연진: {detail.cast || "정보 없음"}</p>
-
-            <p className="bg-[#EBEBEB] w-[595px] h-[375px] flex flex-row items-center justify-center"> 카카오맵 API 구현 예정</p>
             <p>장르: {detail.genre}</p>
+            <p className="bg-[#EBEBEB] w-[595px] h-[375px] flex flex-row items-center justify-center"> 카카오맵 API 구현 예정</p>
+
 
             <div>
               <button
@@ -190,9 +190,7 @@ export default function Detail() {
             </div>
           </div>
 
-
         </div>
-
         <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex flex-row items-center justify-center">
           리뷰 내용 구현 예정
         </div>
