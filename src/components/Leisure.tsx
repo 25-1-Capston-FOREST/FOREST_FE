@@ -1,65 +1,72 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
 export interface LeisureProps {
+  activity_id: string; 
   activity_type: string;
   title: string;
   image_url: string;
+  start_date: string;
+  end_date: string;
 }
 
-const Leisure: React.FC<LeisureProps> = ({ activity_type, title, image_url }) => {
-  const [activities, setActivities] = useState<LeisureProps[]>([]);
-  useEffect(() => {
-    setActivities([{ activity_type, title, image_url }]); // 초기 값 설정
-  }, [activity_type, title, image_url]); // props가 변경될 때마다 업데이트
-  const router = useRouter()
+const Leisure: React.FC<LeisureProps> = ({
+  activity_id,
+  activity_type,
+  title,
+  image_url,
+  start_date,
+  end_date,
+}) => {
+  const router = useRouter();
 
   const detailClick = () => {
-    router.push("/leisure_details")
-  }
+    router.push(`/leisure_details?id=${activity_id}`);
+  };
+
+  const getActivityTypeName = (type: string) => {
+    switch (type) {
+      case "MOVIE":
+        return "영화";
+      case "PERFORMANCE":
+        return "공연";
+      case "EXHIBITION":
+        return "전시";
+      default:
+        return "??";
+    }
+  };
 
   return (
-    <div>
-      <button onClick={detailClick}>
-        <Image src={image_url} alt={title} width={200} height={266} />
+    <div className="w-[280px] h-[430px]">
+      <button
+        onClick={detailClick}
+        className="flex flex-col justify-center items-center w-[280px] h-[340px] bg-gray-200 overflow-hidden relative"
+      >
+        <Image
+          src={image_url}
+          alt="포스터"
+          width={247}
+          height={340}
+          style={{ objectFit: "cover", objectPosition: "center" }}
+        />
       </button>
 
-      <div className="flex flex-row justify-between mt-[8px]">
-        <div >
-          {activities.map((activity, index) => {
-            switch (activity.activity_type) {
-              case "MOVIE":
-                return <div key={index} className="font-normal flex justify-center pt-[3px] bg-[#FFA7A7] text-white text-[15px] w-[41px] h-[24px] rounded-[10px]">영화</div>;
-              case "PERFORMANCE":
-                return <div key={index} className="font-normal flex justify-center pt-[3px] bg-[#FFD34F] text-white text-[15px] w-[41px] h-[24px] rounded-[10px]">공연</div>;
-              case "EXHIBITION":
-                return <div key={index} className="font-normal flex justify-center pt-[3px] bg-[#A0B5FF] text-white text-[15px] w-[41px] h-[24px] rounded-[10px]">전시</div>;
-              default:
-                return <div key={index}>??</div>;
-            }
-          })}
+      <div className="flex flex-row mt-[20px] border-t">
+        <div className="flex font-normal justify-center text-white w-[40px] h-[20px] rounded-[8px] text-[12px] bg-[#447959] pt-[2px] mt-[5px]">
+          {getActivityTypeName(activity_type)}
         </div>
-
-        <div>
-          {/* 찜X일경우 */}
-          <Image src="/images/icon_circleheart.png" alt="빈하트" width={24} height={24} />
-          {/* 찜O일 경우 */}dd
-          {/* <Image src="/images/icon_circleheart_color.png" alt="색칠된된하트" width={24} height={24}></Image> */}
+        <div className="font-bold text-[14px] mt-[6px] ml-[6px] max-w-[235px] truncate overflow-hidden whitespace-nowrap">
+          {title}
         </div>
-
       </div>
 
-      <div className="mt-[6px]">{title}</div>
-
-      {/* 별점 */}
-      <Image src="/images/icon_star.svg" alt="별" width={15} height={15} />
-
+      {/* 날짜 출력 */}
+      <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
+        {start_date} ~ {end_date}
+      </div>
     </div>
   );
 };
 
-
 export default Leisure;
-
-

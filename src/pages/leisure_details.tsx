@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { postBooking } from "@/lib/api/book";
+import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 
 interface PerformanceDetail {
   performance_id: string;
@@ -27,6 +28,8 @@ interface Activity {
   activity_id: string;
   activity_type: string;
   detail: PerformanceDetail;
+  isWished?: boolean;
+  wish_id?: number;
 }
 
 export default function Detail() {
@@ -51,6 +54,24 @@ export default function Detail() {
     } catch (error) {
       console.error("예약 실패", error);
       alert("예약에 실패했어요 😢");
+    }
+  };
+
+  const handleToggleWish = async (item) => {
+    try {
+      if (item.isWished) {
+        console.log("삭제할 wish_id:", item.wish_id);
+        await deleteWish(item.wish_id);
+        alert("찜이 해제되었습니다!");
+      } else {
+        console.log("추가할 activity_id:", item.activity_id);
+        await postWish(item.activity_id);
+        alert("찜에 추가되었습니다!");
+      }
+
+    } catch (error) {
+      console.error("찜 처리 실패", error);
+      alert("찜 처리에 실패했어요 😢");
     }
   };
 
@@ -121,20 +142,20 @@ export default function Detail() {
               </button>
 
 
-              {/* <button onClick={() => handleToggleWish(item)}>
-              <Image
-                src={
-                  item.isWished
-                    ? "/images/icon_heart.svg"
-                    : "/images/icon_emptyheart.svg"
-                }
-                alt="하트"
-                width={27}
-                height={27}
-              />
-            </button> */}
+              <button onClick={() => handleToggleWish(activity)}>
+                <Image
+                  src={
+                    activity.isWished
+                      ? "/images/icon_heart.svg"
+                      : "/images/icon_emptyheart.svg"
+                  }
+                  alt="하트"
+                  width={27}
+                  height={27}
+                />
+              </button>
 
-              <button>
+              {/* <button>
                 <Image
                   src={
                     "/images/icon_heart.svg"}
@@ -142,7 +163,7 @@ export default function Detail() {
                   width={27}
                   height={27}
                 />
-              </button>
+              </button> */}
             </div>
           </div>
 

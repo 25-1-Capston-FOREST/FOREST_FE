@@ -55,7 +55,7 @@ export default function Myleisure() {
         //   }))
         // );
         const data = await res.json();
-        setBookmarkedLeisure(data)
+        setBookmarkedLeisure(data.data)
       } catch (error) {
         console.error("찜 목록 불러오기 실패", error);
       }
@@ -88,8 +88,6 @@ export default function Myleisure() {
       alert("예약에 실패했어요 😢");
     }
   };
-
-
 
   const handleLeisureClick = (item) => {
     const activityId = item.detailedInfo?.activity_id;
