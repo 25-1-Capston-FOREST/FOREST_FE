@@ -7,7 +7,7 @@ import { getRecommendation } from "@/lib/api/recommend";
 interface ActivityDetail {
   title: string;
   image_url: string;
-  start_date?: string; // 영화일 경우 undefined
+  start_date?: string;
   end_date?: string;
 }
 
@@ -26,13 +26,11 @@ export default function Main() {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
-        const res = await getRecommendation();
-        //const res = await fetch("/data/activities.json");
-
+        const res = await getRecommendation(); // 이미 recommendations 배열을 반환함
         console.log("추천 리스트:", res);
 
-        const mappedActivities: Activity[] = res.recommendations.map((item: any) => {
-          const isMovie = item.activity_type === "MOVIE"; // 영화이면 날짜 제외
+        const mappedActivities: Activity[] = res.map((item: any) => {
+          const isMovie = item.activity_type === "MOVIE";
 
           return {
             activity_id: item.activity_id,
@@ -40,6 +38,7 @@ export default function Main() {
             detail: {
               title: item.detail.title,
               image_url: item.detail.image_url || "/default-image.jpg",
+              // MOVIE는 start_date, end_date 없이
               start_date: isMovie ? undefined : item.detail.start_date,
               end_date: isMovie ? undefined : item.detail.end_date,
             },
