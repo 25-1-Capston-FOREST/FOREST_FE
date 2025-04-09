@@ -2,45 +2,61 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Leisure from "@/components/Leisure";
+import { getRecommendation } from "@/lib/api/recommend";
 
-interface Activity {
-  activity_id: number;
-  activity_type: string;
+interface ActivityDetail {
   title: string;
   image_url: string;
+  start_date: string;
+  end_date: string;
 }
 
+interface Activity {
+  activity_id: string;
+  activity_type: string;
+  detail: ActivityDetail;
+}
 
 export default function Main() {
-  const router = useRouter()
+  const router = useRouter();
   const [isSortPopupOpen, setIsSortPopupOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
 
   useEffect(() => {
-    fetch("/data/activities.json")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.text(); // JSON 파싱 전에 먼저 응답을 텍스트로 확인
-      })
-      .then((text) => {
-        console.log("서버 응답:", text); // JSON이 올바르게 오는지 확인
-        return JSON.parse(text); // 직접 JSON 변환
-      })
-      .then((data) => {
-        console.log("불러온 데이터:", data);
-        setActivities(data);
-      })
-      .catch((error) => console.error("Error fetching activities:", error));
+    const fetchRecommendations = async () => {
+      try {
+        //const res = await getWishlist();
+        const res = await fetch("/data/activities.json");
+        //const data = await getRecommendation();
+        const data = await res.json();
+        console.log("추천 리스트:", data);
+
+        const mappedActivities: Activity[] = data.recommendations.map((item: any) => ({
+          activity_id: item.activity_id,
+          activity_type: item.activity_type,
+          detail: {
+            title: item.detail.title,
+            image_url: item.detail.image_url || "/default-image.jpg",
+            start_date: item.detail.start_date,
+            end_date: item.detail.end_date,
+          },
+        }));
+
+        setActivities(mappedActivities);
+      } catch (error) {
+        console.error("추천 리스트를 불러오는 중 오류 발생:", error);
+      }
+    };
+    fetchRecommendations();
   }, []);
 
-
   const handleCategoryClick = (category: string) => {
-    setSelectedCategories((prev) => prev.includes(category)
-      ? prev.filter((c) => c !== category)
-      : [...prev, category]);
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
   };
 
   const filteredActivities =
@@ -50,12 +66,11 @@ export default function Main() {
 
   const toggleSortPopup = () => {
     setIsSortPopupOpen(!isSortPopupOpen);
-  }
+  };
 
   return (
     <div>
-
-      <div className="w-full flex flex-row mt-[10px] items-center">
+      <div className="w-full flex flex-row items-center">
         <div className="flex flex-row items-center ml-[30px] text-[25px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
@@ -77,15 +92,17 @@ export default function Main() {
           ))}
         </div>
 
-
         <div className="ml-[400px]">
           {/* 정렬버튼 */}
-          <button className="border-[#000000]  border rounded-[10px] w-[149px] h-[55px]"
-            onClick={toggleSortPopup}>
+          <button
+            className="border-[#000000]  border rounded-[10px] w-[149px] h-[55px]"
+            onClick={toggleSortPopup}
+          >
             정렬
           </button>
 
-          {isSortPopupOpen && (
+          {/* 정렬 팝업 (현재는 주석 처리됨) */}
+          {/* {isSortPopupOpen && (
             <div className="mt-2 w-[90px] bg-white border border-gray-300 rounded-lg shadow-custom absolute left-[1160px] top-[270px]">
               <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
                 추천순
@@ -97,36 +114,40 @@ export default function Main() {
                 거리순
               </button>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* 검색창 */}
         <div className="w-[480px] h-[59px] items-center border border-[#000000] text-[14px] ml-[80px] mr-[30px]">
-          <textarea className="resize-none w-[450px] h-[59px] bg-transparent text-[14px] outline-none px-[30px] py-[19px]"
-            placeholder="Search">
-          </textarea>
+          <textarea
+            className="resize-none w-[450px] h-[59px] bg-transparent text-[14px] outline-none px-[30px] py-[19px]"
+            placeholder="Search"
+          ></textarea>
         </div>
       </div>
 
-
       {/* 여가 목록  */}
-      <div>
-        <div className="mt-[70px] grid grid-cols-4 gap-10 px-10">
+      <div className="w-full mt-[210px] px-[70px]">
+        <div className="flex flex-wrap justify-between gap-x-[50px] gap-y-[80px] justify-start">
           {filteredActivities.length > 0 ? (
             filteredActivities.map((activity) => (
               <Leisure
                 key={activity.activity_id}
+                activity_id={activity.activity_id} // ✅ id 전달
                 activity_type={activity.activity_type}
-                title={activity.title}
-                image_url={activity.image_url}
+                title={activity.detail.title}
+                image_url={activity.detail.image_url}
+                start_date={activity.detail.start_date}
+                end_date={activity.detail.end_date}
               />
             ))
           ) : (
-            <p className="col-span-4 text-center text-gray-500">해당 카테고리에 활동이 없습니다.</p>
+            <p className="w-full text-center text-gray-500">
+              해당 카테고리에 활동이 없습니다.
+            </p>
           )}
         </div>
       </div>
-
-    </div >
+    </div>
   );
 }

@@ -48,6 +48,7 @@ export default function Myleisure() {
         const res = await getWishlist();
         //const res = await fetch("/data/activities.json")
         console.log("찜 목록 응답", res);
+
         setBookmarkedLeisure(
           res.data.map((item) => ({
             ...item,
@@ -56,6 +57,16 @@ export default function Myleisure() {
         );
         //const data = await res.json();
         //setBookmarkedLeisure(data)
+
+        // setBookmarkedLeisure(
+        //   res.data.map((item) => ({
+        //     ...item,
+        //     isWished: true,
+        //   }))
+        // );
+        const data = await res.json();
+        setBookmarkedLeisure(data.data)
+
       } catch (error) {
         console.error("찜 목록 불러오기 실패", error);
       }
@@ -88,8 +99,6 @@ export default function Myleisure() {
       alert("예약에 실패했어요 😢");
     }
   };
-
-
 
   const handleLeisureClick = (item) => {
     const activityId = item.detailedInfo?.activity_id;
