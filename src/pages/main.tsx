@@ -136,29 +136,31 @@ export default function Main() {
 
       {/* 여가 목록  */}
 
-      <div className="px-auto w-full mt-[30px] flex justify-center">
-        <div className=" max-w-[1500px] flex flex-wrap justify-start gap-x-[50px] gap-y-[80px] justify-start">
-          {filteredActivities.length > 0 ? (
-            filteredActivities.map((activity) => {
-              const detail = activity.detail || {};
+      <div className="w-full mt-[30px] flex justify-center">
+        <div className="w-full max-w-[1500px]">
+          <div className="flex flex-wrap gap-x-[50px] gap-y-[80px]">
+            {filteredActivities.length > 0 ? (
+              filteredActivities.map((activity) => {
+                const detail = activity.detail || {};
 
-              return (
-                <Leisure
-                  key={activity.activity_id}
-                  activity_id={activity.activity_id}
-                  activity_type={activity.activity_type}
-                  title={activity.detail.title || "제목 없음"}
-                  image_url={activity.detail.image_url || "/default-image.jpg"}
-                  start_date={activity.detail.start_date}
-                  end_date={activity.detail.end_date}
-                />
-              );
-            })
-          ) : (
-            <p className="w-full text-center text-gray-500">
-              해당 카테고리에 추천 활동이 없습니다.
-            </p>
-          )}
+                return (
+                  <Leisure
+                    key={activity.activity_id}
+                    activity_id={activity.activity_id}
+                    activity_type={activity.activity_type}
+                    title={activity.detail.title || "제목 없음"}
+                    image_url={activity.detail.image_url || "/default-image.jpg"}
+                    start_date={activity.detail.start_date}
+                    end_date={activity.detail.end_date}
+                  />
+                );
+              })
+            ) : (
+              <p className="w-full text-center text-gray-500">
+                해당 카테고리에 추천 활동이 없습니다.
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
