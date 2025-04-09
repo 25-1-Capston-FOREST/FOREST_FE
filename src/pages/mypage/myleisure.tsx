@@ -128,7 +128,7 @@ export default function Myleisure() {
     }
   };
   return (
-    <div className="pt-[10px] mt-[210px]">
+    <div className="pt-[10px] mt-[220px]">
       <MypageSidebar />
       <div className="">
         {/* 탭 메뉴 */}
@@ -175,7 +175,7 @@ export default function Myleisure() {
 
                   {/* 제목 */}
                   <button
-                    className="text-[23px] font-bold"
+                    className="text-[21px] font-bold"
                     onClick={() => handleLeisureClick(item)}
                   >
                     {item.detailedInfo?.title ?? "제목 없음"}
