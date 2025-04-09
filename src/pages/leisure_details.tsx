@@ -60,6 +60,7 @@ export default function Detail() {
   };
 
   const handleToggleWish = async (item) => {
+    console.log(item.isWished);
     try {
       if (item.isWished) {
         await deleteWish(item.wish_id); 
@@ -160,6 +161,7 @@ export default function Detail() {
                 <Image
                   src={
                     activity.isWished
+                    
                       ? "/images/icon_heart.svg"
                       : "/images/icon_emptyheart.svg"
                   }
