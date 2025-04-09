@@ -61,17 +61,14 @@ export default function Detail() {
 
   const handleToggleWish = async (item) => {
     try {
-      console.log("현재 item 전체 구조:", item);
       if (item.isWished) {
-        console.log("삭제할 wish_id:", item.wish_id);
         await deleteWish(item.wish_id);
         alert("찜이 해제되었습니다!");
       } else {
         console.log("추가할 activity_id:", item.activity_id);
-        await postWish(item.activity_id);
+        await postWish(Number(item.activity_id)); // 숫자로!
         alert("찜에 추가되었습니다!");
       }
-
     } catch (error) {
       console.error("찜 처리 실패", error);
       alert("찜 처리에 실패했어요 😢");
