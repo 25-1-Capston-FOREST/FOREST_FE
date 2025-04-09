@@ -10,10 +10,8 @@ const nextConfig = {
   },
   images: {
     domains: ['www.kopis.or.kr'],
-    domains: ['i.namu.wiki'],
     domains: ['www.culture.go.kr'],
-
-    domains: ['image.tmdb.org'], // 필요한 도메인들 다 나열
+    domains: ['image.tmdb.org'], 
     domains: ['media.themoviedb.org'], 
   },
 };
