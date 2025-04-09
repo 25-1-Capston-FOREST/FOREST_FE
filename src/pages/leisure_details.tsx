@@ -31,7 +31,7 @@ interface Activity {
   activity_type: string;
   detail: PerformanceDetail;
   isWished?: boolean;
-  wish_id?: number;
+  wish_id?: string; 
 }
 
 export default function Detail() {
@@ -62,11 +62,11 @@ export default function Detail() {
   const handleToggleWish = async (item) => {
     try {
       if (item.isWished) {
-        await deleteWish(item.wish_id);
+        await deleteWish(item.wish_id); 
         alert("찜이 해제되었습니다!");
       } else {
         console.log("추가할 activity_id:", item.activity_id);
-        await postWish(Number(item.activity_id));
+        await postWish(item.activity_id);
         alert("찜에 추가되었습니다!");
       }
     } catch (error) {
