@@ -114,7 +114,7 @@ export default function Detail() {
 
 
   return (
-    <div className="p-10">
+    <div className="p-10 pt-[10px] mt-[230px]">
 
       <div>
         <div className="flex flex-row ml-[10px] items-center gap-6 mb-3">
