@@ -82,7 +82,9 @@ export default function Myleisure() {
     switch (selectedTab) {
       case "찜 목록":
         return bookmarkedLeisure;
-      // 나머지 예정된 여가, 완료된 여가
+      case "예정된 여가":
+        return ;
+        // 나머지 예정된 여가, 완료된 여가
       default:
         return [];
     }

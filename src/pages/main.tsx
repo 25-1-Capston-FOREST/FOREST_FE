@@ -29,33 +29,28 @@ export default function Main() {
         const res = await getRecommendation();
         console.log("추천 리스트:", res);
 
-        // 응답 데이터가 배열인지 확인
-        if (!Array.isArray(res)) {
-          console.error("응답 데이터가 배열이 아닙니다:", res);
-          return;
-        }
-
-        const mappedActivities: Activity[] = res.map((item: any) => {
-          if (!item.detail) {
-            console.error("detail이 없는 항목 발견:", item);
-          }
-
-          const isMovie = item.activity_type === "MOVIE";
-
-          return {
-            activity_id: item.activity_id,
-            activity_type: item.activity_type,
+        // 응답 데이터가 예상한 구조인지 확인
+        if (res && Array.isArray(res.data?.recommendations)) {
+          const mappedActivities = res.data.recommendations.map((activity: any) => ({
+            activity_id: activity.activity_id,
+            activity_type: activity.activity_type,
             detail: {
-              title: item.detail?.title || "제목 없음", // 기본값 추가
-              image_url: item.detail?.image_url || "/default-image.jpg",
-              start_date: isMovie ? undefined : item.detail?.start_date,
-              end_date: isMovie ? undefined : item.detail?.end_date,
+              title: activity.detail.title,
+              image_url: activity.detail.image_url,
+              open_dt: activity.detail.open_dt,
+              rank: activity.detail.rank,
+              genre_nm: activity.detail.genre_nm,
+              director: activity.detail.director,
+              actors: activity.detail.actors,
+              keywords: activity.detail.keywords,
             },
-          };
-        });
+          }));
 
-        console.log("매핑된 액티비티:", mappedActivities);
-        setActivities(mappedActivities);
+          console.log("매핑된 액티비티:", mappedActivities);
+          setActivities(mappedActivities);
+        } else {
+          console.error("추천 리스트 데이터를 받을 수 없습니다:", res);
+        }
       } catch (error) {
         console.error("추천 리스트를 불러오는 중 오류 발생:", error);
       }
