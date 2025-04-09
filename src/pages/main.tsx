@@ -26,9 +26,9 @@ export default function Main() {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
-        const res = await getRecommendation();
-        //const res = await fetch("/data/activities.json");
-        //const data = await getRecommendation();
+        //const res = await getRecommendation();
+        const res = await fetch("/data/activities.json");
+
         const data = await res.json();
         console.log("추천 리스트:", data);
 
