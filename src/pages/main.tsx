@@ -7,8 +7,8 @@ import { getRecommendation } from "@/lib/api/recommend";
 interface ActivityDetail {
   title: string;
   image_url: string;
-  start_date: string;
-  end_date: string;
+  start_date?: string; // 영화일 경우 undefined
+  end_date?: string;
 }
 
 interface Activity {
@@ -32,16 +32,20 @@ export default function Main() {
         const data = await res.json();
         console.log("추천 리스트:", data);
 
-        const mappedActivities: Activity[] = data.recommendations.map((item: any) => ({
-          activity_id: item.activity_id,
-          activity_type: item.activity_type,
-          detail: {
-            title: item.detail.title,
-            image_url: item.detail.image_url || "/default-image.jpg",
-            start_date: item.detail.start_date,
-            end_date: item.detail.end_date,
-          },
-        }));
+        const mappedActivities: Activity[] = data.recommendations.map((item: any) => {
+          const isMovie = item.activity_type === "MOVIE"; // 영화이면 날짜 제외
+
+          return {
+            activity_id: item.activity_id,
+            activity_type: item.activity_type,
+            detail: {
+              title: item.detail.title,
+              image_url: item.detail.image_url || "/default-image.jpg",
+              start_date: isMovie ? undefined : item.detail.start_date,
+              end_date: isMovie ? undefined : item.detail.end_date,
+            },
+          };
+        });
 
         setActivities(mappedActivities);
       } catch (error) {
@@ -133,7 +137,7 @@ export default function Main() {
             filteredActivities.map((activity) => (
               <Leisure
                 key={activity.activity_id}
-                activity_id={activity.activity_id} 
+                activity_id={activity.activity_id}
                 activity_type={activity.activity_type}
                 title={activity.detail.title}
                 image_url={activity.detail.image_url}
