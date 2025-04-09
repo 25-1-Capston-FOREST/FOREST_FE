@@ -12,13 +12,8 @@ const nextConfig = {
     domains: ['www.kopis.or.kr'],
     domains: ['i.namu.wiki'],
     domains: ['www.culture.go.kr'],
-    domains: ['https://i.namu.wiki'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'i.namu.wiki',
-      },
-    ],
+    domains: ['www.themoviedb.org'],
+
   },
 };
 
