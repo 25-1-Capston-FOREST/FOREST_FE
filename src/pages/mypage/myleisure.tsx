@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 import Image from "next/image";
-import { postBooking } from "@/lib/api/book";
+import { postBooking, getBookedActivities } from "@/lib/api/book";
 
 export default function Myleisure() {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("찜 목록");
   const [bookmarkedLeisure, setBookmarkedLeisure] = useState([]);
+  const [reservedLeisure, setReservedLeisure] = useState([]);
+
   const TYPE_MAP: { [key: string]: string } = {
     MOVIE: "영화",
     PERFORMANCE: "공연",
@@ -42,6 +44,22 @@ export default function Myleisure() {
       alert("찜 처리에 실패했어요 😢");
     }
   };
+
+  useEffect(() => {
+    const fetchReservedLeisure = async () => {
+      try {
+        const res = await getBookedActivities();
+        console.log("예약된 여가 응답:", res);
+        setReservedLeisure(res.data);
+      } catch (error) {
+        console.error("예약된 여가 불러오기 실패", error);
+      }
+    };
+
+    if (selectedTab === "예정된 여가") {
+      fetchReservedLeisure();
+    }
+  }, [selectedTab]);
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -83,8 +101,8 @@ export default function Myleisure() {
       case "찜 목록":
         return bookmarkedLeisure;
       case "예정된 여가":
-        return ;
-        // 나머지 예정된 여가, 완료된 여가
+        return reservedLeisure;
+      // 나머지 예정된 여가, 완료된 여가
       default:
         return [];
     }
