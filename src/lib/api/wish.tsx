@@ -7,7 +7,7 @@ export const getWishlist = async () => {
 };
 
 // 찜하기
-export const postWish = async (activityId: number) => {
+export const postWish = async (activityId: string) => {
   const response = await instance.post("/api/wish", { activity_id: activityId });
   return response.data;
 };

@@ -122,7 +122,9 @@ export default function Detail() {
           <h1 className="text-3xl mt-2 font-bold">{detail.title}</h1>
         </div>
         <div className="flex flex-row gap-[30px] text-[#757575] text-[18px] mb-[10px]">
-          <p className="font-bold">{detail.region}  {detail.location}</p>
+          <p className="font-bold">
+            {!detail.location ? detail.region : ""}
+          </p>
           <p className="">{detail.start_date} ~ {detail.end_date}</p>
         </div>
       </div>
