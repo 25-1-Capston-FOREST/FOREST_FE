@@ -124,8 +124,8 @@ export default function Detail() {
     <div className="p-10 pt-[10px] mt-[230px]">
 
       <div>
-        <div className="flex flex-row ml-[10px] items-center gap-6 mb-3">
-          <p className="text-lg text-gray-600">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
+        <div className="flex flex-row ml-[10px] items-center justify-center gap-6 mb-3">
+          <p className="flex font-normal justify-center text-white w-[40px] h-[20px] rounded-[8px] text-[12px] bg-[#447959] text-center">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
           <h1 className="text-3xl mt-2 font-bold">{detail.title}</h1>
         </div>
         <div className="flex flex-row gap-[30px] text-[#757575] text-[18px] mb-[10px]">
@@ -189,12 +189,12 @@ export default function Detail() {
               </button> */}
             </div>
           </div>
-
-
-        </div>
-        <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex flex-row items-center justify-center">
+          <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex flex-row items-center justify-center">
           리뷰 내용 구현 예정
         </div>
+
+        </div>
+        
 
 
 

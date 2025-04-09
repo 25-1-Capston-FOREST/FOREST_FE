@@ -152,7 +152,7 @@ export default function Main() {
             })
           ) : (
             <p className="w-full text-center text-gray-500">
-              해당 카테고리에 활동이 없습니다.
+              해당 카테고리에 추천 활동이 없습니다.
             </p>
           )}
         </div>
