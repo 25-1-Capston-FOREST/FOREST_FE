@@ -71,13 +71,13 @@ export default function Main() {
   return (
     <div>
       <div className="pt-[250px] w-full flex flex-row items-center">
-        <div className="flex flex-row items-center ml-[30px] text-[25px]">
+        <div className="flex flex-row items-center ml-[30px] text-[18px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
             <button
               key={category}
               onClick={() => handleCategoryClick(category)}
-              className={`w-[108px] rounded-[20px] py-2 text-white text-center text-left 
+              className={`w-[100px] rounded-[20px] py-2 text-white text-center text-left 
               ${selectedCategories.includes(category)
                   ? "bg-[#447959]"
                   : "bg-[#D0D0D0]"
@@ -127,7 +127,7 @@ export default function Main() {
       </div>
 
       {/* 여가 목록  */}
-      <div className="w-full mt-[210px] px-[70px]">
+      <div className="w-full mt-[100px] px-[70px]">
         <div className="flex flex-wrap justify-between gap-x-[50px] gap-y-[80px] justify-start">
           {filteredActivities.length > 0 ? (
             filteredActivities.map((activity) => (
