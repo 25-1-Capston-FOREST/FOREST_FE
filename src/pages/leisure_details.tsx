@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { postBooking } from "@/lib/api/book";
 import { getDetail } from "@/lib/api/detail";
-import { deleteWish, postWish } from "@/lib/api/wish";
+import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 
 
 interface PerformanceDetail {
