@@ -29,10 +29,9 @@ export default function Main() {
         const res = await getRecommendation();
         //const res = await fetch("/data/activities.json");
 
-        const data = await res.json();
-        console.log("추천 리스트:", data);
+        console.log("추천 리스트:", res);
 
-        const mappedActivities: Activity[] = data.recommendations.map((item: any) => {
+        const mappedActivities: Activity[] = res.recommendations.map((item: any) => {
           const isMovie = item.activity_type === "MOVIE"; // 영화이면 날짜 제외
 
           return {
