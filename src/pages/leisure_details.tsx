@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { postBooking } from "@/lib/api/book";
 import { getDetail } from "@/lib/api/detail";
-import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
+import { deleteWish, postWish } from "@/lib/api/wish";
 
 
 interface PerformanceDetail {
@@ -61,6 +61,7 @@ export default function Detail() {
 
   const handleToggleWish = async (item) => {
     try {
+      console.log("현재 item 전체 구조:", item);
       if (item.isWished) {
         console.log("삭제할 wish_id:", item.wish_id);
         await deleteWish(item.wish_id);
