@@ -71,7 +71,7 @@ export default function Main() {
   return (
     <div>
       <div className="pt-[250px] w-full flex flex-row items-center">
-        <div className="flex flex-row items-center ml-[30px] text-[18px]">
+        <div className="flex flex-row items-center ml-[35px] text-[18px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
             <button
@@ -127,7 +127,7 @@ export default function Main() {
       </div>
 
       {/* 여가 목록  */}
-      <div className="w-full mt-[100px] px-[70px]">
+      <div className="w-full mt-[30px] px-[70px]">
         <div className="flex flex-wrap justify-between gap-x-[50px] gap-y-[80px] justify-start">
           {filteredActivities.length > 0 ? (
             filteredActivities.map((activity) => (

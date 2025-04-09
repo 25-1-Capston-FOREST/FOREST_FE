@@ -128,7 +128,7 @@ export default function Myleisure() {
     }
   };
   return (
-    <div className="pt-[300px] mt-[10px]">
+    <div className="pt-[10px] mt-[210px]">
       <MypageSidebar />
       <div className="">
         {/* 탭 메뉴 */}
@@ -175,14 +175,14 @@ export default function Myleisure() {
 
                   {/* 제목 */}
                   <button
-                    className="text-[24px] font-bold"
+                    className="text-[23px] font-bold"
                     onClick={() => handleLeisureClick(item)}
                   >
                     {item.detailedInfo?.title ?? "제목 없음"}
                   </button>
 
                   {/* 장소 */}
-                  <p className="text-[20px] whitespace-pre-line">
+                  <p className="text-[18px] whitespace-pre-line">
                     {item.activity_type === "MOVIE"
                       ? "\n"
                       : item.activity_type === "PERFORMANCE"
@@ -193,7 +193,7 @@ export default function Myleisure() {
                   </p>
 
                   {/* 기간 */}
-                  <p className="text-[16px] mb-[14px]">
+                  <p className="text-[14px] mb-[14px]">
                     {item.activity_type === "MOVIE"
                       ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
                       : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
@@ -204,11 +204,11 @@ export default function Myleisure() {
                   <div className="w-full flex items-center justify-between">
                     {/* 별점 */}
                     <div className="flex flex-row items-center gap-1 text-[17px]">
-                      <Image src="/images/icon_star.svg" alt="별" width={24} height={24} />
-                      <Image src="/images/icon_star.svg" alt="별" width={24} height={24} />
-                      <Image src="/images/icon_star.svg" alt="별" width={24} height={24} />
-                      <Image src="/images/icon_star.svg" alt="별" width={24} height={24} />
-                      <Image src="/images/icon_star.svg" alt="별" width={24} height={24} />
+                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
                       <p className="pt-[3px] ml-[6px]">평균 평점 5</p>
                     </div>
 
