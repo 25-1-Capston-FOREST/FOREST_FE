@@ -60,23 +60,24 @@ export default function Detail() {
       alert("예약에 실패했어요 😢");
     }
   };
-  const handleToggleWish = async (item) => {
+  const handleToggleWish = async (item: Activity) => {
     try {
       if (item.isWished) {
         console.log("삭제할 wish_id:", item.wish_id);
-        await deleteWish(item.wish_id);
+        await deleteWish(item.wish_id!);
         alert("찜이 해제되었습니다!");
       } else {
         console.log("추가할 activity_id:", item.activity_id);
         await postWish(item.activity_id);
         alert("찜에 추가되었습니다!");
       }
-      // 💡 데이터 다시 불러와서 상태 반영
+  
+      // 데이터 다시 불러오기
       if (activity_id && typeof activity_id === "string") {
         const updated = await getDetail(activity_id);
         setActivity(updated.data);
       }
-
+  
     } catch (error) {
       console.error("찜 처리 실패", error);
       alert("찜 처리에 실패했어요");
@@ -164,7 +165,7 @@ export default function Detail() {
               </button>
 
 
-              <button onClick={() => handleToggleWish(detail)}>
+              <button onClick={() => handleToggleWish(activity)}>
                 <Image
                   src={
                     detail.isWished

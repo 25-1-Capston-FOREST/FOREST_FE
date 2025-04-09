@@ -14,10 +14,10 @@ export const postWish = async (activityId: string) => {
   return response.data;
 };
 //찜삭제
-export const deleteWish = async (wishId: number) => {
+export const deleteWish = async (wishId: string) => {
   const response = await instance.delete("/api/wish", {
     params: {
-      id: wishId.toString(), 
+      id: wishId, 
     },
   });
   return response.data;
