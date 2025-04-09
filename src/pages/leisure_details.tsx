@@ -189,13 +189,13 @@ export default function Detail() {
               </button> */}
             </div>
           </div>
-          <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex flex-row items-center justify-center">
-            리뷰 내용 구현 예정
-          </div>
+
 
         </div>
 
-
+        <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex flex-row items-center justify-center">
+          리뷰 내용 구현 예정
+        </div>
 
 
         {/* //<p className="mt-4 whitespace-pre-line">{detail.story || "설명 없음"}</p> */}

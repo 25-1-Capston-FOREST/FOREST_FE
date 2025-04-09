@@ -9,16 +9,13 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['www.kopis.or.kr'],
-  },
-  images: {
-    domains: ['www.culture.go.kr'],
-  },
-  images: {
-    domains: ['image.tmdb.org'], 
-  },
-  images: {
-    domains: ['media.themoviedb.org'], 
+    domains: [
+      'www.kopis.or.kr',
+      'www.culture.go.kr',
+      'image.tmdb.org',
+      'media.themoviedb.org',
+      'i.namu.wiki',
+    ],
   },
 };
 
