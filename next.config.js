@@ -9,11 +9,16 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['www.kopis.or.kr'], 
+    domains: ['www.kopis.or.kr'],
     domains: ['i.namu.wiki'],
     domains: ['www.culture.go.kr'],
-    domains: ['www.culture.go.kr'],
-    domains: ['www.culture.go.kr'],
+    domains: ['https://i.namu.wiki'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'i.namu.wiki',
+      },
+    ],
   },
 };
 
