@@ -26,8 +26,8 @@ export default function Main() {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
-        //const res = await getWishlist();
-        const res = await fetch("/data/activities.json");
+        const res = await getRecommendation();
+        //const res = await fetch("/data/activities.json");
         //const data = await getRecommendation();
         const data = await res.json();
         console.log("추천 리스트:", data);
@@ -133,7 +133,7 @@ export default function Main() {
             filteredActivities.map((activity) => (
               <Leisure
                 key={activity.activity_id}
-                activity_id={activity.activity_id} // ✅ id 전달
+                activity_id={activity.activity_id} 
                 activity_type={activity.activity_type}
                 title={activity.detail.title}
                 image_url={activity.detail.image_url}
