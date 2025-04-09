@@ -31,7 +31,7 @@ interface Activity {
   activity_type: string;
   detail: PerformanceDetail;
   isWished?: boolean;
-  wish_id?: string; 
+  wish_id?: string;
 }
 
 export default function Detail() {
@@ -58,18 +58,18 @@ export default function Detail() {
       alert("예약에 실패했어요 😢");
     }
   };
-
   const handleToggleWish = async (item) => {
-    console.log(item.isWished);
     try {
       if (item.isWished) {
-        await deleteWish(item.wish_id); 
+        console.log("삭제할 wish_id:", item.wish_id);
+        await deleteWish(item.wish_id);
         alert("찜이 해제되었습니다!");
       } else {
         console.log("추가할 activity_id:", item.activity_id);
         await postWish(item.activity_id);
         alert("찜에 추가되었습니다!");
       }
+
     } catch (error) {
       console.error("찜 처리 실패", error);
       alert("찜 처리에 실패했어요 😢");
@@ -161,7 +161,6 @@ export default function Detail() {
                 <Image
                   src={
                     activity.isWished
-                    
                       ? "/images/icon_heart.svg"
                       : "/images/icon_emptyheart.svg"
                   }
