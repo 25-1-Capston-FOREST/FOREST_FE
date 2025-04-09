@@ -7,7 +7,7 @@ import { getRecommendation } from "@/lib/api/recommend";
 interface ActivityDetail {
   title: string;
   image_url: string;
-  start_date?: string;
+  start_date?: string; // 영화일 경우 undefined
   end_date?: string;
 }
 
@@ -26,11 +26,13 @@ export default function Main() {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
-        const res = await getRecommendation(); // 이미 recommendations 배열을 반환함
+        const res = await getRecommendation();
+        //const res = await fetch("/data/activities.json");
+
         console.log("추천 리스트:", res);
 
-        const mappedActivities: Activity[] = res.map((item: any) => {
-          const isMovie = item.activity_type === "MOVIE";
+        const mappedActivities: Activity[] = res.recommendations.map((item: any) => {
+          const isMovie = item.activity_type === "MOVIE"; // 영화이면 날짜 제외
 
           return {
             activity_id: item.activity_id,
@@ -38,7 +40,6 @@ export default function Main() {
             detail: {
               title: item.detail.title,
               image_url: item.detail.image_url || "/default-image.jpg",
-              // MOVIE는 start_date, end_date 없이
               start_date: isMovie ? undefined : item.detail.start_date,
               end_date: isMovie ? undefined : item.detail.end_date,
             },
@@ -129,20 +130,25 @@ export default function Main() {
       </div>
 
       {/* 여가 목록  */}
+
       <div className="w-full mt-[30px] px-[70px]">
         <div className="flex flex-wrap justify-between gap-x-[50px] gap-y-[80px] justify-start">
           {filteredActivities.length > 0 ? (
-            filteredActivities.map((activity) => (
-              <Leisure
-                key={activity.activity_id}
-                activity_id={activity.activity_id}
-                activity_type={activity.activity_type}
-                title={activity.detail.title}
-                image_url={activity.detail.image_url}
-                start_date={activity.detail.start_date}
-                end_date={activity.detail.end_date}
-              />
-            ))
+            filteredActivities.map((activity) => {
+              const detail = activity.detail || {};
+
+              return (
+                <Leisure
+                  key={activity.activity_id}
+                  activity_id={activity.activity_id}
+                  activity_type={activity.activity_type}
+                  title={activity.detail.title || "제목 없음"}
+                  image_url={activity.detail.image_url || "/default-image.jpg"}
+                  start_date={activity.detail.start_date}
+                  end_date={activity.detail.end_date}
+                />
+              );
+            })
           ) : (
             <p className="w-full text-center text-gray-500">
               해당 카테고리에 활동이 없습니다.
@@ -151,5 +157,6 @@ export default function Main() {
         </div>
       </div>
     </div>
+
   );
 }
