@@ -46,7 +46,7 @@ export default function Main() {
           };
         });
 
-
+        console.log("매핑된 액티비티:", mappedActivities);
         setActivities(mappedActivities);
       } catch (error) {
         console.error("추천 리스트를 불러오는 중 오류 발생:", error);
