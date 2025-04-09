@@ -31,8 +31,8 @@ export default function Main() {
 
         console.log("추천 리스트:", res);
 
-        const mappedActivities: Activity[] = res.recommendations.map((item: any) => {
-          const isMovie = item.activity_type === "MOVIE"; // 영화이면 날짜 제외
+        const mappedActivities: Activity[] = res.map((item: any) => {
+          const isMovie = item.activity_type === "MOVIE";
 
           return {
             activity_id: item.activity_id,
@@ -45,6 +45,7 @@ export default function Main() {
             },
           };
         });
+
 
         setActivities(mappedActivities);
       } catch (error) {
