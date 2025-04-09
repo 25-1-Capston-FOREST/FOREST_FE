@@ -21,7 +21,7 @@ const Leisure: React.FC<LeisureProps> = ({
   const router = useRouter();
 
   const detailClick = () => {
-    router.push(`/leisure_details?id=${activity_id}`);
+    router.push(`/leisure_details?activity_id=${activity_id}`);
   };
 
   const getActivityTypeName = (type: string) => {
