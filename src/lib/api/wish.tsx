@@ -8,14 +8,11 @@ export const getWishlist = async () => {
 
 // 찜하기
 export const postWish = async (activityId: string | number) => {
-  const response =await instance.post("/api/wish", null, {
-    params: {
-      id: activityId,
-    },
+  const response = await instance.post("/api/wish", {
+    activity_id: Number(activityId),
   });
   return response.data;
 };
-
 //찜삭제
 export const deleteWish = async (wishId: number) => {
   const response = await instance.delete("/api/wish", {
