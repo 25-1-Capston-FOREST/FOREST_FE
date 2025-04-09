@@ -7,8 +7,8 @@ import { getRecommendation } from "@/lib/api/recommend";
 interface ActivityDetail {
   title: string;
   image_url: string;
-  start_date: string;
-  end_date: string;
+  start_date?: string; // 영화일 경우 undefined
+  end_date?: string;
 }
 
 interface Activity {
@@ -26,28 +26,36 @@ export default function Main() {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
-        //const res = await getWishlist();
-        const res = await fetch("/data/activities.json");
-        //const data = await getRecommendation();
-        const data = await res.json();
-        console.log("추천 리스트:", data);
+        const res = await getRecommendation();
+        console.log("추천 리스트:", res);
 
-        const mappedActivities: Activity[] = data.recommendations.map((item: any) => ({
-          activity_id: item.activity_id,
-          activity_type: item.activity_type,
-          detail: {
-            title: item.detail.title,
-            image_url: item.detail.image_url || "/default-image.jpg",
-            start_date: item.detail.start_date,
-            end_date: item.detail.end_date,
-          },
-        }));
+        // res가 바로 배열일 경우, 바로 그 배열을 사용
+        if (Array.isArray(res)) {
+          const mappedActivities = res.map((activity: any) => ({
+            activity_id: activity.activity_id,
+            activity_type: activity.activity_type,
+            detail: {
+              title: activity.detail.title,
+              image_url: activity.detail.image_url,
+              open_dt: activity.detail.open_dt,
+              rank: activity.detail.rank,
+              genre_nm: activity.detail.genre_nm,
+              director: activity.detail.director,
+              actors: activity.detail.actors,
+              keywords: activity.detail.keywords,
+            },
+          }));
 
-        setActivities(mappedActivities);
+          console.log("매핑된 액티비티:", mappedActivities);
+          setActivities(mappedActivities);
+        } else {
+          console.error("추천 리스트 데이터는 배열이어야 합니다:", res);
+        }
       } catch (error) {
         console.error("추천 리스트를 불러오는 중 오류 발생:", error);
       }
     };
+
     fetchRecommendations();
   }, []);
 
@@ -70,14 +78,14 @@ export default function Main() {
 
   return (
     <div>
-      <div className="w-full flex flex-row items-center">
-        <div className="flex flex-row items-center ml-[30px] text-[25px]">
+      <div className="pt-[250px] w-full flex flex-row items-center">
+        <div className="flex flex-row items-center ml-[35px] text-[18px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
             <button
               key={category}
               onClick={() => handleCategoryClick(category)}
-              className={`w-[108px] rounded-[20px] py-2 text-white text-center text-left 
+              className={`w-[100px] rounded-[20px] py-2 text-white text-center text-left 
               ${selectedCategories.includes(category)
                   ? "bg-[#447959]"
                   : "bg-[#D0D0D0]"
@@ -127,27 +135,33 @@ export default function Main() {
       </div>
 
       {/* 여가 목록  */}
-      <div className="w-full mt-[210px] px-[70px]">
+
+      <div className="w-full mt-[30px] px-[70px]">
         <div className="flex flex-wrap justify-between gap-x-[50px] gap-y-[80px] justify-start">
           {filteredActivities.length > 0 ? (
-            filteredActivities.map((activity) => (
-              <Leisure
-                key={activity.activity_id}
-                activity_id={activity.activity_id} // ✅ id 전달
-                activity_type={activity.activity_type}
-                title={activity.detail.title}
-                image_url={activity.detail.image_url}
-                start_date={activity.detail.start_date}
-                end_date={activity.detail.end_date}
-              />
-            ))
+            filteredActivities.map((activity) => {
+              const detail = activity.detail || {};
+
+              return (
+                <Leisure
+                  key={activity.activity_id}
+                  activity_id={activity.activity_id}
+                  activity_type={activity.activity_type}
+                  title={activity.detail.title || "제목 없음"}
+                  image_url={activity.detail.image_url || "/default-image.jpg"}
+                  start_date={activity.detail.start_date}
+                  end_date={activity.detail.end_date}
+                />
+              );
+            })
           ) : (
             <p className="w-full text-center text-gray-500">
-              해당 카테고리에 활동이 없습니다.
+              해당 카테고리에 추천 활동이 없습니다.
             </p>
           )}
         </div>
       </div>
     </div>
+
   );
 }

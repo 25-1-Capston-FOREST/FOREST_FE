@@ -9,7 +9,13 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['www.kopis.or.kr'], // ✅ 외부 이미지 도메인 추가!
+    domains: [
+      'www.kopis.or.kr',
+      'www.culture.go.kr',
+      'image.tmdb.org',
+      'media.themoviedb.org',
+      'i.namu.wiki',
+    ],
   },
 };
 

@@ -6,8 +6,8 @@ export interface LeisureProps {
   activity_type: string;
   title: string;
   image_url: string;
-  start_date: string;
-  end_date: string;
+  start_date?: string; // optional로 변경
+  end_date?: string;   // optional로 변경
 }
 
 const Leisure: React.FC<LeisureProps> = ({
@@ -21,7 +21,7 @@ const Leisure: React.FC<LeisureProps> = ({
   const router = useRouter();
 
   const detailClick = () => {
-    router.push(`/leisure_details?id=${activity_id}`);
+    router.push(`/leisure_details?activity_id=${activity_id}`);
   };
 
   const getActivityTypeName = (type: string) => {
@@ -62,9 +62,11 @@ const Leisure: React.FC<LeisureProps> = ({
       </div>
 
       {/* 날짜 출력 */}
-      <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
-        {start_date} ~ {end_date}
-      </div>
+      {start_date && end_date && (
+        <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
+          {start_date} ~ {end_date}
+        </div>
+      )}
     </div>
   );
 };

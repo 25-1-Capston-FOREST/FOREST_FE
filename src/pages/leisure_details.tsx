@@ -24,6 +24,8 @@ interface PerformanceDetail {
   story: string;
   link: string;
   status: string;
+  isWished?: boolean;
+  wish_id?: string;
 }
 
 interface Activity {
@@ -31,7 +33,7 @@ interface Activity {
   activity_type: string;
   detail: PerformanceDetail;
   isWished?: boolean;
-  wish_id?: number;
+  wish_id?: string;
 }
 
 export default function Detail() {
@@ -58,12 +60,11 @@ export default function Detail() {
       alert("예약에 실패했어요 😢");
     }
   };
-
-  const handleToggleWish = async (item) => {
+  const handleToggleWish = async (item: Activity) => {
     try {
       if (item.isWished) {
         console.log("삭제할 wish_id:", item.wish_id);
-        await deleteWish(item.wish_id);
+        await deleteWish(item.wish_id!);
         alert("찜이 해제되었습니다!");
       } else {
         console.log("추가할 activity_id:", item.activity_id);
@@ -71,9 +72,15 @@ export default function Detail() {
         alert("찜에 추가되었습니다!");
       }
 
+      // 데이터 다시 불러오기
+      if (activity_id && typeof activity_id === "string") {
+        const updated = await getDetail(activity_id);
+        setActivity(updated.data);
+      }
+
     } catch (error) {
       console.error("찜 처리 실패", error);
-      alert("찜 처리에 실패했어요 😢");
+      alert("찜 처리에 실패했어요");
     }
   };
 
@@ -114,7 +121,7 @@ export default function Detail() {
 
 
   return (
-    <div className="p-10">
+    <div className="p-10 pt-[10px] mt-[230px]">
 
       <div>
         <div className="flex flex-row ml-[10px] items-center gap-6 mb-3">
@@ -122,7 +129,9 @@ export default function Detail() {
           <h1 className="text-3xl mt-2 font-bold">{detail.title}</h1>
         </div>
         <div className="flex flex-row gap-[30px] text-[#757575] text-[18px] mb-[10px]">
-          <p className="font-bold">{detail.region}  {detail.location}</p>
+          <p className="font-bold">
+            {!detail.location ? detail.region : ""}
+          </p>
           <p className="">{detail.start_date} ~ {detail.end_date}</p>
         </div>
       </div>
@@ -159,7 +168,7 @@ export default function Detail() {
               <button onClick={() => handleToggleWish(activity)}>
                 <Image
                   src={
-                    activity.isWished
+                    detail.isWished
                       ? "/images/icon_heart.svg"
                       : "/images/icon_emptyheart.svg"
                   }
@@ -183,10 +192,10 @@ export default function Detail() {
 
 
         </div>
+
         <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex flex-row items-center justify-center">
           리뷰 내용 구현 예정
         </div>
-
 
 
         {/* //<p className="mt-4 whitespace-pre-line">{detail.story || "설명 없음"}</p> */}

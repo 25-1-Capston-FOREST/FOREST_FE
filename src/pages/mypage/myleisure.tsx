@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 import Image from "next/image";
-import { postBooking } from "@/lib/api/book";
+import { postBooking, getBookedActivities } from "@/lib/api/book";
 
 export default function Myleisure() {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState("찜 목록");
   const [bookmarkedLeisure, setBookmarkedLeisure] = useState([]);
+  const [reservedLeisure, setReservedLeisure] = useState([]);
+
   const TYPE_MAP: { [key: string]: string } = {
     MOVIE: "영화",
     PERFORMANCE: "공연",
@@ -29,6 +31,7 @@ export default function Myleisure() {
       // 목록 새로고침
       if (selectedTab === "찜 목록") {
         const res = await getWishlist();
+        console.log("찜 목록 응답:", res);
         setBookmarkedLeisure(
           res.data.map((item) => ({
             ...item,
@@ -43,11 +46,36 @@ export default function Myleisure() {
   };
 
   useEffect(() => {
+    const fetchReservedLeisure = async () => {
+      try {
+        const res = await getBookedActivities();
+        console.log("예약된 여가 응답:", res);
+        setReservedLeisure(res.data);
+      } catch (error) {
+        console.error("예약된 여가 불러오기 실패", error);
+      }
+    };
+
+    if (selectedTab === "예정된 여가") {
+      fetchReservedLeisure();
+    }
+  }, [selectedTab]);
+
+  useEffect(() => {
     const fetchWishlist = async () => {
       try {
         const res = await getWishlist();
         //const res = await fetch("/data/activities.json")
         console.log("찜 목록 응답", res);
+
+        // setBookmarkedLeisure(
+        //   res.data.map((item) => ({
+        //     ...item,
+        //     isWished: true,
+        //   }))
+        // );
+        //const data = await res.json();
+        //setBookmarkedLeisure(data)
 
         setBookmarkedLeisure(
           res.data.map((item) => ({
@@ -56,16 +84,7 @@ export default function Myleisure() {
           }))
         );
         //const data = await res.json();
-        //setBookmarkedLeisure(data)
-
-        // setBookmarkedLeisure(
-        //   res.data.map((item) => ({
-        //     ...item,
-        //     isWished: true,
-        //   }))
-        // );
-        const data = await res.json();
-        setBookmarkedLeisure(data.data)
+        //setBookmarkedLeisure(data.data)
 
       } catch (error) {
         console.error("찜 목록 불러오기 실패", error);
@@ -81,6 +100,8 @@ export default function Myleisure() {
     switch (selectedTab) {
       case "찜 목록":
         return bookmarkedLeisure;
+      case "예정된 여가":
+        return reservedLeisure;
       // 나머지 예정된 여가, 완료된 여가
       default:
         return [];
@@ -128,7 +149,7 @@ export default function Myleisure() {
     }
   };
   return (
-    <div className="mt-[10px]">
+    <div className="pt-[10px] mt-[230px]">
       <MypageSidebar />
       <div className="">
         {/* 탭 메뉴 */}
@@ -175,14 +196,14 @@ export default function Myleisure() {
 
                   {/* 제목 */}
                   <button
-                    className="text-[24px] font-bold"
+                    className="text-[21px] font-bold"
                     onClick={() => handleLeisureClick(item)}
                   >
                     {item.detailedInfo?.title ?? "제목 없음"}
                   </button>
 
                   {/* 장소 */}
-                  <p className="text-[20px] whitespace-pre-line">
+                  <p className="text-[16px] whitespace-pre-line">
                     {item.activity_type === "MOVIE"
                       ? "\n"
                       : item.activity_type === "PERFORMANCE"
@@ -193,7 +214,7 @@ export default function Myleisure() {
                   </p>
 
                   {/* 기간 */}
-                  <p className="text-[16px] mb-[14px]">
+                  <p className="text-[14px] mb-[14px]">
                     {item.activity_type === "MOVIE"
                       ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
                       : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
@@ -204,11 +225,11 @@ export default function Myleisure() {
                   <div className="w-full flex items-center justify-between">
                     {/* 별점 */}
                     <div className="flex flex-row items-center gap-1 text-[17px]">
-                      <Image src="/images/icon_star.svg" alt="별" width={24} height={24} />
-                      <Image src="/images/icon_star.svg" alt="별" width={24} height={24} />
-                      <Image src="/images/icon_star.svg" alt="별" width={24} height={24} />
-                      <Image src="/images/icon_star.svg" alt="별" width={24} height={24} />
-                      <Image src="/images/icon_star.svg" alt="별" width={24} height={24} />
+                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
                       <p className="pt-[3px] ml-[6px]">평균 평점 5</p>
                     </div>
 
