@@ -42,6 +42,10 @@ export default function Detail() {
 
   const [activity, setActivity] = useState<Activity | null>(null);
 
+  const extractURL = (link: string) => {
+    const match = link.match(/https?:\/\/[^\s]+/);
+    return match ? match[0] : null;
+  };
   const TYPE_MAP: { [key: string]: string } = {
     MOVIE: "영화",
     PERFORMANCE: "공연",
@@ -87,28 +91,31 @@ export default function Detail() {
   useEffect(() => {
     if (!activity_id || typeof activity_id !== "string") return; if (!activity_id) return;
     console.log(activity_id)
+    const fetchActivity = async () => {
+      try {
+        const res = await fetch("/data/activities.json");
+        const json = await res.json();
+
+        setActivity(json.data);
+        console.log(activity)
+      } catch (error) {
+        console.error("여가 정보 불러오기 실패", error);
+        alert("여가 정보를 불러오는 데 실패했어요 😢");
+      }
+
+
+    };
+
     // const fetchActivity = async () => {
     //   try {
-    //     const res = await fetch("/data/activities.json");
-    //     const json = await res.json();
-
-    //     setActivity(json);
+    //     const data = await getDetail(activity_id);
+    //     console.log("받은 데이터:", data);
+    //     setActivity(data.data);
     //   } catch (error) {
     //     console.error("여가 정보 불러오기 실패", error);
     //     alert("여가 정보를 불러오는 데 실패했어요 😢");
     //   }
     // };
-
-    const fetchActivity = async () => {
-      try {
-        const data = await getDetail(activity_id);
-        console.log("받은 데이터:", data);
-        setActivity(data.data);
-      } catch (error) {
-        console.error("여가 정보 불러오기 실패", error);
-        alert("여가 정보를 불러오는 데 실패했어요 😢");
-      }
-    };
 
     fetchActivity();
   }, [activity_id]);
@@ -125,18 +132,18 @@ export default function Detail() {
 
       <div>
         <div className="flex flex-row ml-[10px] items-center gap-6 mb-3">
-          <p className="text-lg text-gray-600">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
-          <h1 className="text-3xl mt-2 font-bold">{detail.title}</h1>
+          <p className="flex flex-row items-center justify-center text-white w-[58px] h-[30px] rounded-[10px] text-[14px] bg-[#447959] pt-[2px] mt-[7px]">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
+          <h1 className="text-[30px] mt-2 font-bold">{detail.title}</h1>
         </div>
-        <div className="flex flex-row gap-[30px] text-[#757575] text-[18px] mb-[10px]">
-          <p className="font-bold">
-            {!detail.location ? detail.region : ""}
+        <div className="items-center justify-left flex flex-row gap-[14px] text-[#757575] text-[18px] mb-[10px]">
+          <p className="ml-[6px] font-bold">
+            {detail.location ? detail.location : detail.region}
           </p>
           <p className="">{detail.start_date} ~ {detail.end_date}</p>
         </div>
       </div>
 
-      <div className="flex flex-col mx-auto bg-[#F5F5F5] rounded-[10px] w-[1440px] h-[1350px] p-4">
+      <div className="flex flex-col mx-auto bg-[#F5F5F5] rounded-[10px] w-[1440px] h-[1150px] p-4">
         <div className="flex flex-row">
           <div className="ml-[50px]">
             <Image
@@ -148,18 +155,23 @@ export default function Detail() {
             />
           </div>
 
-          <div className="flex flex-col mb-6 ml-[70px] gap-[20px] pt-[20px] ">
+          <div className="text-gray-700 flex flex-col mb-6 ml-[90px] gap-[6px] pt-[10px] ">
             <p>일시: {detail.time}</p>
             <p>러닝타임: {detail.runtime}</p>
             <p>출연진: {detail.cast || "정보 없음"}</p>
-
-            <p className="bg-[#EBEBEB] w-[595px] h-[375px] flex flex-row items-center justify-center"> 카카오맵 API 구현 예정</p>
             <p>장르: {detail.genre}</p>
+            <p>가격: {detail.cost}</p>
+            {detail.story?.trim() && (
+              <p>내용: {detail.story}</p>
+            )}
 
-            <div>
+            <Image src="/images/image_jido.svg" alt="카카오맵" width={655} height={375} />
+
+
+            <div className="flex flex-row mt-[20px]">
               <button
                 onClick={() => handleBook(Number(activity.activity_id))}
-                className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
+                className="font-bold mr-[30px] bg-[#447959] hover:bg-[#356246] text-white w-[150px] h-[45px] rounded-[20px]"
               >
                 일정 등록하기
               </button>
@@ -173,8 +185,8 @@ export default function Detail() {
                       : "/images/icon_emptyheart.svg"
                   }
                   alt="하트"
-                  width={27}
-                  height={27}
+                  width={33}
+                  height={33}
                 />
               </button>
 
@@ -187,6 +199,21 @@ export default function Detail() {
                   height={27}
                 />
               </button> */}
+            </div>
+
+
+            <div
+              onClick={() => {
+                const url = extractURL(detail.link);
+                if (url) {
+                  window.open(url, "_blank");
+                } else {
+                  alert("유효한 링크가 없습니다");
+                }
+              }}
+              className="mt-[30px] cursor-pointer text-blue-600 underline"
+            >
+              여가 예약 페이지로 이동하기
             </div>
           </div>
 
