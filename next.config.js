@@ -10,8 +10,14 @@ const nextConfig = {
   },
   images: {
     domains: ['www.kopis.or.kr'],
+  },
+  images: {
     domains: ['www.culture.go.kr'],
+  },
+  images: {
     domains: ['image.tmdb.org'], 
+  },
+  images: {
     domains: ['media.themoviedb.org'], 
   },
 };
