@@ -70,7 +70,7 @@ export default function Main() {
 
   return (
     <div>
-      <div className="w-full flex flex-row items-center">
+      <div className="pt-[250px] w-full flex flex-row items-center">
         <div className="flex flex-row items-center ml-[30px] text-[25px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
