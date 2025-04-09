@@ -27,21 +27,29 @@ export default function Main() {
     const fetchRecommendations = async () => {
       try {
         const res = await getRecommendation();
-        //const res = await fetch("/data/activities.json");
-
         console.log("추천 리스트:", res);
 
+        // 응답 데이터가 배열인지 확인
+        if (!Array.isArray(res)) {
+          console.error("응답 데이터가 배열이 아닙니다:", res);
+          return;
+        }
+
         const mappedActivities: Activity[] = res.map((item: any) => {
+          if (!item.detail) {
+            console.error("detail이 없는 항목 발견:", item);
+          }
+
           const isMovie = item.activity_type === "MOVIE";
 
           return {
             activity_id: item.activity_id,
             activity_type: item.activity_type,
             detail: {
-              title: item.detail.title,
-              image_url: item.detail.image_url || "/default-image.jpg",
-              start_date: isMovie ? undefined : item.detail.start_date,
-              end_date: isMovie ? undefined : item.detail.end_date,
+              title: item.detail?.title || "제목 없음", // 기본값 추가
+              image_url: item.detail?.image_url || "/default-image.jpg",
+              start_date: isMovie ? undefined : item.detail?.start_date,
+              end_date: isMovie ? undefined : item.detail?.end_date,
             },
           };
         });
