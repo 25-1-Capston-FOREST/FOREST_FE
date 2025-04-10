@@ -39,42 +39,43 @@ const Header = () => {
   return (
     <div className="relative w-full z-10">
       <div className="fixed top-[-10px] left-0 w-full bg-white z-10 pointer-events-none">
-        {/* 로고 전체 그룹 */}
-        <div className="group cursor-pointer pointer-events-auto" onClick={logoButtonClick}>
-          {/* F */}
-          <div className="fixed top-[-10px] left-[50px] z-20">
-            <h1 className={`font-semibold text-[#447959] leading-none transition-all duration-400 ${getTextSize()}`}>
-              F
-            </h1>
-            <h1
-              className={`font-semibold absolute top-0 left-0 text-[#447959] flex leading-none pointer-events-none ${getTextSize()}`}
-            >
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[20ms]">F</span>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[40ms]">O</span>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[60ms]">R</span>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[80ms]">;</span>
-            </h1>
-          </div>
+        <div
+          className="group cursor-pointer pointer-events-auto"
+          onClick={logoButtonClick}
+        >
+          {/* 로고 전체 hover 범위 확보 */}
+          <div className="fixed top-[-10px] left-0 w-full h-[200px] z-20">
+            {/* F - 왼쪽 고정 */}
+            <div className="absolute left-[50px] top-0 group cursor-pointer pointer-events-auto" onClick={logoButtonClick}>
+              <div className="relative">
+                <h1 className={`font-semibold text-[#447959] leading-none transition-all duration-400 ${getTextSize()}`}>F</h1>
+                <h1 className={`font-semibold absolute top-0 left-0 text-[#447959] flex leading-none pointer-events-none ${getTextSize()}`}>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[20ms]">F</span>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[40ms]">O</span>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[60ms]">R</span>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[80ms]">;</span>
+                </h1>
+              </div>
+            </div>
 
-          {/* R */}
-          <div className="fixed top-[-10px] left-1/2 ml-[210px] transform -translate-x-1/2 z-20">
-            <h1 className={`font-semibold text-[#447959] leading-none transition-all duration-400 ${getTextSize()}`}>
-              R
-            </h1>
-            <h1
-              className={`absolute font-semibold top-0 left-0 text-[#447959] flex leading-none pointer-events-none ${getTextSize()}`}
-            >
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[100ms]">R</span>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[120ms]">E</span>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[140ms]">S</span>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[160ms]">T</span>
-            </h1>
+            {/* R - 가운데 정렬 */}
+            <div className="absolute mx-[170px] left-1/2 top-0 transform -translate-x-1/2 group cursor-pointer pointer-events-auto">
+              <div className="relative">
+                <h1 className={`font-semibold text-[#447959] leading-none transition-all duration-400 ${getTextSize()}`}>R</h1>
+                <h1 className={`absolute font-semibold top-0 left-0 text-[#447959] flex leading-none pointer-events-none ${getTextSize()}`}>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[100ms]">R</span>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[120ms]">E</span>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[140ms]">S</span>
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[160ms]">T</span>
+                </h1>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* 버튼 영역 */}
         <div
-          className={`mt-[200px] w-full flex flex-row justify-between px-[30px] ${getButtonMarginTop()} text-[23px] transition-all duration-200`}
+          className={`w-full flex flex-row justify-between px-[30px] text-[23px] transition-all duration-200 ${getButtonMarginTop()}`}
         >
           <div>
             <button onClick={chatbotButtonClick} className="pointer-events-auto text-[#447959]">
