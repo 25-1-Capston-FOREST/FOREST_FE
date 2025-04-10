@@ -142,7 +142,7 @@ export default function Main() {
             {filteredActivities.length > 0 ? (
               filteredActivities.map((activity) => {
                 const detail = activity.detail || {};
-
+                console.log("activity.detail 안에 뭐가 있는지:", detail);
                 return (
                   <Leisure
                     key={activity.activity_id}
