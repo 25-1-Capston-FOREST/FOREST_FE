@@ -240,7 +240,7 @@ export default function Myleisure() {
                         onClick={() => handleBook(item.activity_id)}
                         className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
                       >
-                        일정 등록하기
+                        예약 취소소하기
                       </button>
 
                       <button onClick={() => handleToggleWish(item)}>

@@ -31,21 +31,31 @@ export default function Main() {
 
         // res가 바로 배열일 경우, 바로 그 배열을 사용
         if (Array.isArray(res)) {
-          const mappedActivities = res.map((activity: any) => ({
-            activity_id: activity.activity_id,
-            activity_type: activity.activity_type,
-            detail: {
-              title: activity.detail.title,
-              image_url: activity.detail.image_url,
-              start_date: activity.detail.open_dt,
-              end_date: activity.detail.opsnm_dt || "",
-              rank: activity.detail.rank,
-              genre_nm: activity.detail.genre_nm,
-              director: activity.detail.director,
-              actors: activity.detail.actors,
-              keywords: activity.detail.keywords,
-            },
-          }));
+          const mappedActivities = res.map((activity: any) => {
+            let detail = activity.detail;
+
+            let mappedDetail: ActivityDetail = {
+              title: detail.title,
+              image_url: detail.image_url,
+            };
+
+            if (activity.activity_type === "MOVIE") {
+              mappedDetail.start_date = detail.open_dt;
+              mappedDetail.end_date = detail.opsnm_dt || "";
+            } else if (activity.activity_type === "PERFORMANCE") {
+              mappedDetail.start_date = detail.startDate;
+              mappedDetail.end_date = detail.endDate || "";
+            } else if (activity.activity_type === "EXHIBITION") {
+              mappedDetail.start_date = detail.startDate;
+              mappedDetail.end_date = detail.endDate || "";
+            }
+
+            return {
+              activity_id: activity.activity_id,
+              activity_type: activity.activity_type,
+              detail: mappedDetail,
+            };
+          });
 
           console.log("매핑된 액티비티:", mappedActivities);
           setActivities(mappedActivities);
