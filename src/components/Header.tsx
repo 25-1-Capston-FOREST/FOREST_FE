@@ -25,14 +25,14 @@ const Header = () => {
   const logoutButtonClick = () => router.push("/");
 
   const getTextSize = () => {
-    if (scrollLevel === 2) return "text-[70px]";
+    if (scrollLevel === 2) return "text-[70px] mt-[5px]";
     if (scrollLevel === 1) return "text-[130px]";
     return "text-[200px]";
   };
 
   const getButtonMarginTop = () => {
     if (scrollLevel === 2) return "mt-[60px]";
-    if (scrollLevel === 1) return "mt-[120px]";
+    if (scrollLevel === 1) return "mt-[90px] pt-[30px]";
     return "mt-[200px]";
   };
 
@@ -91,7 +91,7 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="mt-[10px] w-[1480px] mx-auto border-t border-black" />
+        <div className="mt-[10px] mx-6 border-t border-black" />
       </div>
     </div>
   );
