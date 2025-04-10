@@ -26,7 +26,7 @@ const Leisure: React.FC<LeisureProps> = ({
   const renderDate = () => {
     if (activity_type.toUpperCase() === "MOVIE" && start_date)
       return `개봉일: ${start_date}`;
-    if (start_date && end_date)
+    if (start_date || end_date)
       return `${start_date} ~ ${end_date}`;
     return null;
   };
