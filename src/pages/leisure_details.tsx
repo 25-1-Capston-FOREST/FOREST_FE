@@ -153,7 +153,7 @@ export default function Detail() {
             />
           </div>
 
-          <div className="flex flex-col mb-6 gap-[6px] pt-[10px] justify-center w-full max-w-[700px] mx-auto text-gray-700">
+          <div className="font-bold flex flex-col mb-6 gap-[6px] pt-[10px] justify-center w-full max-w-[700px] mx-auto text-gray-700">
             <p>일시: {detail.time}</p>
             <p>러닝타임: {detail.runtime}</p>
             <p>출연진: {detail.cast || "정보 없음"}</p>
