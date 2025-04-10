@@ -31,8 +31,8 @@ const Header = () => {
   };
 
   const getButtonMarginTop = () => {
-    if (scrollLevel === 2) return "mt-[100px]";
-    if (scrollLevel === 1) return "mt-[150px]";
+    if (scrollLevel === 2) return "mt-[60px]";
+    if (scrollLevel === 1) return "mt-[120px]";
     return "mt-[200px]";
   };
 
