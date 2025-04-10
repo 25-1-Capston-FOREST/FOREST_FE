@@ -45,7 +45,7 @@ const Leisure: React.FC<LeisureProps> = ({
   };
 
   return (
-    <div className="w-[280px] h-[430px]">
+    <div className="w-[280px] h-[380px]">
       <button
         onClick={detailClick}
         className="flex flex-col justify-center items-center w-[280px] h-[340px] bg-gray-200 overflow-hidden relative"
@@ -69,7 +69,7 @@ const Leisure: React.FC<LeisureProps> = ({
       </div>
 
       {/* 날짜 출력 */}
-      <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
+      <div className="text-[13px] text-gray-600 mt-[6px] ml-[4px]">
         {renderDate()}
       </div>
 
