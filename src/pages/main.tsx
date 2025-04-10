@@ -37,7 +37,8 @@ export default function Main() {
             detail: {
               title: activity.detail.title,
               image_url: activity.detail.image_url,
-              open_dt: activity.detail.open_dt,
+              start_date: activity.detail.open_dt,
+              end_date: activity.detail.opsnm_dt || "",
               rank: activity.detail.rank,
               genre_nm: activity.detail.genre_nm,
               director: activity.detail.director,
@@ -150,8 +151,8 @@ export default function Main() {
                     activity_type={activity.activity_type}
                     title={activity.detail.title || "제목 없음"}
                     image_url={activity.detail.image_url || "/default-image.jpg"}
-                    start_date={activity.detail.start_date}
-                    end_date={activity.detail.end_date}
+                    start_date={activity.detail.start_date || "미정"}
+                    end_date={activity.detail.end_date || "미정"}
                   />
                 );
               })
