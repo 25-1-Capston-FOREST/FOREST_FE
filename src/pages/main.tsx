@@ -135,7 +135,7 @@ export default function Main() {
         </div>
 
         {/* 검색창 */}
-        <div className="w-[480px] h-[59px] items-center border border-[#000000] text-[14px] ml-[40px] mr-[35px]">
+        <div className="w-[480px] h-[59px] items-center border border-[#000000] text-[14px] ml-[80px] mr-[35px]">
           <textarea
             className="resize-none w-[450px] h-[59px] bg-transparent text-[14px] outline-none px-[30px] py-[19px]"
             placeholder="Search"
