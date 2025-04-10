@@ -113,10 +113,9 @@ export default function Main() {
         <div className="ml-[400px]">
           {/* 정렬버튼 */}
           <button
-            className="border-[#000000]  border rounded-[10px] w-[149px] h-[55px]"
-            onClick={toggleSortPopup}
+            className=" rounded-[10px] w-[149px] h-[55px]"
           >
-            정렬
+          
           </button>
 
           {/* 정렬 팝업 (현재는 주석 처리됨) */}
@@ -136,7 +135,7 @@ export default function Main() {
         </div>
 
         {/* 검색창 */}
-        <div className="w-[480px] h-[59px] items-center border border-[#000000] text-[14px] ml-[80px] mr-[30px]">
+        <div className="w-[480px] h-[59px] items-center border border-[#000000] text-[14px] ml-[40px] mr-[35px]">
           <textarea
             className="resize-none w-[450px] h-[59px] bg-transparent text-[14px] outline-none px-[30px] py-[19px]"
             placeholder="Search"
