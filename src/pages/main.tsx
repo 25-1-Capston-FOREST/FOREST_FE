@@ -110,7 +110,7 @@ export default function Main() {
           ))}
         </div>
 
-        <div className="ml-[400px]">
+        <div className="flex flex-row justify-left">
           {/* 정렬버튼 */}
           <button
             className="border-[#000000]  border rounded-[10px] w-[149px] h-[55px]"
