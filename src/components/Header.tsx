@@ -75,7 +75,7 @@ const Header = () => {
 
         {/* 버튼 영역 */}
         <div
-          className={`w-full flex flex-row justify-between px-[30px] text-[23px] `}
+          className={`w-full flex flex-row justify-between px-[30px] text-[23px] transition-all duration-200 ${getButtonMarginTop()}`}
         >
           <div>
             <button onClick={chatbotButtonClick} className="pointer-events-auto text-[#447959]">
