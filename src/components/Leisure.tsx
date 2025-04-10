@@ -23,6 +23,13 @@ const Leisure: React.FC<LeisureProps> = ({
   const detailClick = () => {
     router.push(`/leisure_details?activity_id=${activity_id}`);
   };
+  const renderDate = () => {
+    if (activity_type.toUpperCase() === "MOVIE" && start_date)
+      return `개봉일: ${start_date}`;
+    if (start_date && end_date)
+      return `${start_date} ~ ${end_date}`;
+    return null;
+  };
 
   const getActivityTypeName = (type: string) => {
     switch (type) {
@@ -62,18 +69,10 @@ const Leisure: React.FC<LeisureProps> = ({
       </div>
 
       {/* 날짜 출력 */}
+      <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
+        {renderDate()}
+      </div>
 
-      {activity_type === "MOVIE" && start_date && (
-        <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
-          개봉일: {start_date}
-        </div>
-      )}
-
-      {activity_type !== "MOVIE" && start_date && end_date && (
-        <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
-          {start_date} ~ {end_date}
-        </div>
-      )}
 
     </div>
   );
