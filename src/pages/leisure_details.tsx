@@ -91,31 +91,29 @@ export default function Detail() {
   useEffect(() => {
     if (!activity_id || typeof activity_id !== "string") return; if (!activity_id) return;
     console.log(activity_id)
-    const fetchActivity = async () => {
-      try {
-        const res = await fetch("/data/activities.json");
-        const json = await res.json();
-
-        setActivity(json.data);
-        console.log(activity)
-      } catch (error) {
-        console.error("여가 정보 불러오기 실패", error);
-        alert("여가 정보를 불러오는 데 실패했어요 😢");
-      }
-
-
-    };
-
     // const fetchActivity = async () => {
     //   try {
-    //     const data = await getDetail(activity_id);
-    //     console.log("받은 데이터:", data);
-    //     setActivity(data.data);
+    //     const res = await fetch("/data/activities.json");
+    //     const json = await res.json();
+
+    //     setActivity(json.data);
+    //     console.log(activity)
     //   } catch (error) {
     //     console.error("여가 정보 불러오기 실패", error);
     //     alert("여가 정보를 불러오는 데 실패했어요 😢");
     //   }
     // };
+
+    const fetchActivity = async () => {
+      try {
+        const data = await getDetail(activity_id);
+        console.log("받은 데이터:", data);
+        setActivity(data.data);
+      } catch (error) {
+        console.error("여가 정보 불러오기 실패", error);
+        alert("여가 정보를 불러오는 데 실패했어요 😢");
+      }
+    };
 
     fetchActivity();
   }, [activity_id]);
@@ -217,9 +215,7 @@ export default function Detail() {
             </div>
           </div>
 
-
         </div>
-
         <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex flex-row items-center justify-center">
           리뷰 내용 구현 예정
         </div>
