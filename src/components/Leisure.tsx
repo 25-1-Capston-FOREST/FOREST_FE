@@ -63,9 +63,17 @@ const Leisure: React.FC<LeisureProps> = ({
 
       {/* 날짜 출력 */}
 
-      <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
-        시작일: {start_date || "없음"}, 종료일: {end_date || "없음"}
-      </div>
+      {activity_type === "MOVIE" && start_date && (
+        <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
+          개봉일: {start_date}
+        </div>
+      )}
+
+      {activity_type !== "MOVIE" && start_date && end_date && (
+        <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
+          {start_date} ~ {end_date}
+        </div>
+      )}
 
     </div>
   );
