@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 export interface LeisureProps {
-  activity_id: string; 
+  activity_id: string;
   activity_type: string;
   title: string;
   image_url: string;
@@ -62,11 +62,11 @@ const Leisure: React.FC<LeisureProps> = ({
       </div>
 
       {/* 날짜 출력 */}
-      {start_date && end_date && (
-        <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
-          {start_date} ~ {end_date}
-        </div>
-      )}
+
+      <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
+        시작일: {start_date || "없음"}, 종료일: {end_date || "없음"}
+      </div>
+
     </div>
   );
 };
