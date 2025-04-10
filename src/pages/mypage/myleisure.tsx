@@ -207,7 +207,7 @@ export default function Myleisure() {
                     {item.activity_type === "MOVIE"
                       ? "\n"
                       : item.activity_type === "PERFORMANCE"
-                        ? item.detailedInfo?.region ?? "지역 정보 없음"
+                        ? item.detailedInfo?.location ?? "지역 정보 없음"
                         : item.activity_type === "EXHIBITION"
                           ? item.detailedInfo?.location ?? "장소 정보 없음"
                           : ""}
