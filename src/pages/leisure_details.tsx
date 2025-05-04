@@ -91,29 +91,29 @@ export default function Detail() {
   useEffect(() => {
     if (!activity_id || typeof activity_id !== "string") return; if (!activity_id) return;
     console.log(activity_id)
-    const fetchActivity = async () => {
-      try {
-        const res = await fetch("/data/activities.json");
-        const json = await res.json();
-
-        setActivity(json.data);
-        console.log(activity)
-      } catch (error) {
-        console.error("여가 정보 불러오기 실패", error);
-        alert("여가 정보를 불러오는 데 실패했어요 😢");
-      }
-    };
-
     // const fetchActivity = async () => {
     //   try {
-    //     const data = await getDetail(activity_id);
-    //     console.log("받은 데이터:", data);
-    //     setActivity(data.data);
+    //     const res = await fetch("/data/activities.json");
+    //     const json = await res.json();
+
+    //     setActivity(json.data);
+    //     console.log(activity)
     //   } catch (error) {
     //     console.error("여가 정보 불러오기 실패", error);
     //     alert("여가 정보를 불러오는 데 실패했어요 😢");
     //   }
     // };
+
+    const fetchActivity = async () => {
+      try {
+        const data = await getDetail(activity_id);
+        console.log("받은 데이터:", data);
+        setActivity(data.data);
+      } catch (error) {
+        console.error("여가 정보 불러오기 실패", error);
+        alert("여가 정보를 불러오는 데 실패했어요 😢");
+      }
+    };
 
     fetchActivity();
   }, [activity_id]);
@@ -153,7 +153,7 @@ export default function Detail() {
             />
           </div>
 
-          <div className="flex flex-col mb-6 gap-[6px] pt-[10px] justify-center w-full max-w-[700px] mx-auto text-gray-700">
+          <div className="font-bold flex flex-col mb-6 gap-[6px] pt-[10px] justify-center w-full max-w-[700px] mx-auto text-gray-700">
             <p>일시: {detail.time}</p>
             <p>러닝타임: {detail.runtime}</p>
             <p>출연진: {detail.cast || "정보 없음"}</p>

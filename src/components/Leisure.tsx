@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 export interface LeisureProps {
-  activity_id: string; 
+  activity_id: string;
   activity_type: string;
   title: string;
   image_url: string;
@@ -23,6 +23,13 @@ const Leisure: React.FC<LeisureProps> = ({
   const detailClick = () => {
     router.push(`/leisure_details?activity_id=${activity_id}`);
   };
+  const renderDate = () => {
+    if (activity_type.toUpperCase() === "MOVIE" && start_date)
+      return `개봉일: ${start_date}`;
+    if (start_date || end_date)
+      return `${start_date} ~ ${end_date}`;
+    return null;
+  };
 
   const getActivityTypeName = (type: string) => {
     switch (type) {
@@ -38,7 +45,7 @@ const Leisure: React.FC<LeisureProps> = ({
   };
 
   return (
-    <div className="w-[280px] h-[430px]">
+    <div className="w-[280px] h-[380px]">
       <button
         onClick={detailClick}
         className="flex flex-col justify-center items-center w-[280px] h-[340px] bg-gray-200 overflow-hidden relative"
@@ -62,11 +69,11 @@ const Leisure: React.FC<LeisureProps> = ({
       </div>
 
       {/* 날짜 출력 */}
-      {start_date && end_date && (
-        <div className="text-[13px] text-gray-600 mt-[4px] ml-[4px]">
-          {start_date} ~ {end_date}
-        </div>
-      )}
+      <div className="text-[13px] text-gray-600 mt-[6px] ml-[4px]">
+        {renderDate()}
+      </div>
+
+
     </div>
   );
 };

@@ -31,20 +31,30 @@ export default function Main() {
 
         // res가 바로 배열일 경우, 바로 그 배열을 사용
         if (Array.isArray(res)) {
-          const mappedActivities = res.map((activity: any) => ({
-            activity_id: activity.activity_id,
-            activity_type: activity.activity_type,
-            detail: {
-              title: activity.detail.title,
-              image_url: activity.detail.image_url,
-              open_dt: activity.detail.open_dt,
-              rank: activity.detail.rank,
-              genre_nm: activity.detail.genre_nm,
-              director: activity.detail.director,
-              actors: activity.detail.actors,
-              keywords: activity.detail.keywords,
-            },
-          }));
+          const mappedActivities = res.map((activity: any) => {
+            let detail = activity.detail;
+
+            let mappedDetail: ActivityDetail = {
+              title: detail.title,
+              image_url: detail.image_url,
+            };
+
+            if (activity.activity_type === "MOVIE") {
+              mappedDetail.start_date = detail.open_dt;
+              mappedDetail.end_date = detail.opsnm_dt || "";
+            } else if (activity.activity_type === "PERFORMANCE") {
+              mappedDetail.start_date = detail.start_date; // ✅ 고쳤음!
+              mappedDetail.end_date = detail.end_date || "";
+            } else if (activity.activity_type === "EXHIBITION") {
+              mappedDetail.start_date = detail.start_date; // ✅ 고쳤음!
+              mappedDetail.end_date = detail.end_date || "";
+            }
+            return {
+              activity_id: activity.activity_id,
+              activity_type: activity.activity_type,
+              detail: mappedDetail,
+            };
+          });
 
           console.log("매핑된 액티비티:", mappedActivities);
           setActivities(mappedActivities);
@@ -103,10 +113,9 @@ export default function Main() {
         <div className="ml-[400px]">
           {/* 정렬버튼 */}
           <button
-            className="border-[#000000]  border rounded-[10px] w-[149px] h-[55px]"
-            onClick={toggleSortPopup}
+            className=" rounded-[10px] w-[149px] h-[55px]"
           >
-            정렬
+          
           </button>
 
           {/* 정렬 팝업 (현재는 주석 처리됨) */}
@@ -126,7 +135,7 @@ export default function Main() {
         </div>
 
         {/* 검색창 */}
-        <div className="w-[480px] h-[59px] items-center border border-[#000000] text-[14px] ml-[80px] mr-[30px]">
+        <div className="w-[480px] h-[59px] items-center border border-[#000000] text-[14px] ml-[100px] mr-[35px]">
           <textarea
             className="resize-none w-[450px] h-[59px] bg-transparent text-[14px] outline-none px-[30px] py-[19px]"
             placeholder="Search"
@@ -142,7 +151,7 @@ export default function Main() {
             {filteredActivities.length > 0 ? (
               filteredActivities.map((activity) => {
                 const detail = activity.detail || {};
-
+                console.log("activity.detail 안에 뭐가 있는지:", detail);
                 return (
                   <Leisure
                     key={activity.activity_id}
@@ -150,8 +159,8 @@ export default function Main() {
                     activity_type={activity.activity_type}
                     title={activity.detail.title || "제목 없음"}
                     image_url={activity.detail.image_url || "/default-image.jpg"}
-                    start_date={activity.detail.start_date}
-                    end_date={activity.detail.end_date}
+                    start_date={activity.detail.start_date || "미정"}
+                    end_date={activity.detail.end_date || "미정"}
                   />
                 );
               })
