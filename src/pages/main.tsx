@@ -88,7 +88,7 @@ export default function Main() {
 
   return (
     <div>
-      <div className="pt-[250px] w-full flex flex-row items-center">
+      <div className="mt-[10px] w-full flex flex-row items-center">
         <div className="flex flex-row items-center ml-[35px] text-[18px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
@@ -115,7 +115,7 @@ export default function Main() {
           <button
             className=" rounded-[10px] w-[149px] h-[55px]"
           >
-          
+
           </button>
 
           {/* 정렬 팝업 (현재는 주석 처리됨) */}
@@ -167,12 +167,24 @@ export default function Main() {
             ) : (
               <p className="w-full text-center text-gray-500">
                 해당 카테고리에 추천 활동이 없습니다.
+                <p className="h-[500px]">
+                </p>
+                <p>
+                  d
+                </p>
+                <p className="h-[500px]">
+                </p>
+                <p>
+                  d
+                </p>
+
               </p>
+
             )}
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
 
   );
 }

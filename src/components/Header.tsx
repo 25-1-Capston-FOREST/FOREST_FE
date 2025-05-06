@@ -4,17 +4,21 @@ import { useEffect, useState } from "react";
 const Header = () => {
   const router = useRouter();
   const [scrollLevel, setScrollLevel] = useState(0);
+  const [fontSize, setFontSize] = useState(200);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setScrollLevel(2);
-      } else if (window.scrollY > 50) {
-        setScrollLevel(1);
-      } else {
-        setScrollLevel(0);
-      }
+      const scrollY = window.scrollY;
+      const maxScroll = 150;
+      const minSize = 70;
+      const maxSize = 200;
+
+      const clampedScroll = Math.min(scrollY, maxScroll);
+      const newSize = maxSize - ((maxSize - minSize) * (clampedScroll / maxScroll));
+
+      setFontSize(newSize); // 즉시 적용
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -24,76 +28,79 @@ const Header = () => {
   const mypageButtonClick = () => router.push("/mypage/myleisure");
   const logoutButtonClick = () => router.push("/");
 
-  const getTextSize = () => {
-    if (scrollLevel === 2) return "text-[70px] mt-[5px]";
-    if (scrollLevel === 1) return "text-[130px]";
-    return "text-[200px]";
-  };
-
-  const getButtonMarginTop = () => {
-    if (scrollLevel === 2) return "mt-[60px]";
-    if (scrollLevel === 1) return "mt-[120px]";
-    return "mt-[200px]";
-  };
+  const getTextStyle = () => ({
+    fontSize: `${fontSize}px`,
+    marginTop: '5px',
+  });
 
   return (
-    <div className="relative w-full z-10">
-      <div className="fixed top-[-10px] left-0 w-full bg-white z-10 pointer-events-none">
-        <div
-          className="group cursor-pointer pointer-events-auto"
-          onClick={logoButtonClick}
-        >
-          {/* 로고 전체 hover 범위 확보 */}
-          <div className="fixed top-[-10px] left-0 w-full h-[200px] z-20">
-            {/* F - 왼쪽 고정 */}
-            <div className="absolute left-[50px] top-0 group cursor-pointer pointer-events-auto" onClick={logoButtonClick}>
-              <div className="relative">
-                <h1 className={`font-semibold text-[#447959] leading-none transition-all duration-400 ${getTextSize()}`}>F</h1>
-                <h1 className={`font-semibold absolute top-0 left-0 text-[#447959] flex leading-none pointer-events-none ${getTextSize()}`}>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[20ms]">F</span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[40ms]">O</span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[60ms]">R</span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-[80ms]">;</span>
-                </h1>
-              </div>
-            </div>
+    <div className="w-full z-10">
+      <div
+        className="absolute top-[-20px] px-[20px] w-full group cursor-pointer pointer-events-auto"
+        onClick={logoButtonClick}
+      >
+        {/* 로고 전체 hover 범위 확보 */}
+        <div className="fixed left-0 w-full">
+          {/* F ↔ FOR; */}
+          <div className="relative group cursor-pointer pointer-events-auto" onClick={logoButtonClick}>
+            <h1
+              className="relative font-semibold text-[#447959] leading-none transition-all duration-100 ease-linear"
+              style={getTextStyle()}
+            >
+              <span className="block opacity-100 group-hover:opacity-0 transition-opacity duration-100 ease-linear">
+                F
+              </span>
+              {/* FOR; 호버 애니메이션 */}
+              <span className="absolute inset-0 flex items-center justify-start pointer-events-none pl-[20px]">
+                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[20ms]" style={getTextStyle()}>F</span>
+                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[40ms]" style={getTextStyle()}>O</span>
+                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[60ms]" style={getTextStyle()}>R</span>
+                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[80ms]" style={getTextStyle()}>;</span>
+              </span>
+            </h1>
+          </div>
 
-            {/* R - 가운데 정렬 */}
-            <div className="absolute mx-[170px] left-1/2 top-0 transform -translate-x-1/2 group cursor-pointer pointer-events-auto">
-              <div className="relative">
-                <h1 className={`font-semibold text-[#447959] leading-none transition-all duration-400 ${getTextSize()}`}>R</h1>
-                <h1 className={`absolute font-semibold top-0 left-0 text-[#447959] flex leading-none pointer-events-none ${getTextSize()}`}>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[100ms]">R</span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[120ms]">E</span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[140ms]">S</span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-[160ms]">T</span>
-                </h1>
-              </div>
-            </div>
+          {/* R ↔ REST */}
+          <div className="absolute left-1/2 top-0 transform -translate-x-1/2 group cursor-pointer pointer-events-auto">
+            <h1
+              className="relative font-semibold text-[#447959] leading-none transition-all duration-100 ease-linear"
+              style={getTextStyle()}
+            >
+              <span className="block opacity-100 group-hover:opacity-0 transition-opacity duration-100 ease-linear">
+                R
+              </span>
+              {/* REST 호버 애니메이션 */}
+              <span className="absolute inset-0 flex items-center pointer-events-none ml-[20px]">
+                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[100ms]" style={getTextStyle()}>R</span>
+                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[120ms]" style={getTextStyle()}>E</span>
+                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[140ms]" style={getTextStyle()}>S</span>
+                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[160ms]" style={getTextStyle()}>T</span>
+              </span>
+            </h1>
           </div>
         </div>
-
-        {/* 버튼 영역 */}
-        <div
-          className={`w-full flex flex-row justify-between px-[30px] text-[23px] transition-all duration-200 ${getButtonMarginTop()}`}
-        >
-          <div>
-            <button onClick={chatbotButtonClick} className="pointer-events-auto text-[#447959]">
-              chatty!
-            </button>
-            <button onClick={mypageButtonClick} className="pointer-events-auto ml-[30px]">
-              MyPage
-            </button>
-          </div>
-          <div>
-            <button className="pointer-events-auto text-[#9A9A9A]" onClick={logoutButtonClick}>
-              Logout
-            </button>
-          </div>
-        </div>
-
-        <div className="mt-[10px] mx-6 border-t border-black" />
       </div>
+
+      {/* 버튼 영역 */}
+      <div
+        className={`w-full flex flex-row justify-between px-[40px] text-[20px] transition-all duration-200 mt-[180px] `}
+      >
+        <div>
+          <button onClick={chatbotButtonClick} className="pointer-events-auto text-[#447959]">
+            chatty!
+          </button>
+          <button onClick={mypageButtonClick} className="pointer-events-auto ml-[30px]">
+            MyPage
+          </button>
+        </div>
+        <div>
+          <button className="pointer-events-auto text-[#9A9A9A]" onClick={logoutButtonClick}>
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-[10px] mx-6 border-t border-black" />
     </div>
   );
 };

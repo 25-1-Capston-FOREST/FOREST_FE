@@ -149,7 +149,7 @@ export default function Myleisure() {
     }
   };
   return (
-    <div className="pt-[10px] mt-[230px]">
+    <div className="">
       <MypageSidebar />
       <div className="">
         {/* 탭 메뉴 */}

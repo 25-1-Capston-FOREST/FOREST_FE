@@ -12,7 +12,7 @@ const MypageSidebar = () => {
   ];
 
   return (
-      <div className="w-full flex flex-row justify-between items-center px-[30px] text-[16px]">
+      <div className="mt-[10px] w-full flex flex-row justify-between items-center px-[30px] text-[16px]">
         {menuItems.map((item, index) => (
           <div key={item.path}>
             <Link href={item.path}>
