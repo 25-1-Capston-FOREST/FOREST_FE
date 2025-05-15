@@ -88,7 +88,7 @@ export default function Main() {
 
   return (
     <div>
-      <div className="mt-[10px] w-full flex flex-row items-center">
+      <div className=" w-full flex flex-row items-center">
         <div className="flex flex-row items-center ml-[35px] text-[18px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
@@ -113,13 +113,13 @@ export default function Main() {
         <div className="ml-[400px]">
           {/* 정렬버튼 */}
           <button
-            className=" rounded-[10px] w-[149px] h-[55px]"
+            className="border border-black rounded-[10px] w-[143px] h-[40px]"
           >
-
+            추천순
           </button>
 
           {/* 정렬 팝업 (현재는 주석 처리됨) */}
-          {/* {isSortPopupOpen && (
+          {isSortPopupOpen && (
             <div className="mt-2 w-[90px] bg-white border border-gray-300 rounded-lg shadow-custom absolute left-[1160px] top-[270px]">
               <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
                 추천순
@@ -131,7 +131,7 @@ export default function Main() {
                 거리순
               </button>
             </div>
-          )} */}
+          )}
         </div>
 
         {/* 검색창 */}

@@ -1,107 +1,146 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const Header = () => {
+interface HeaderProps {
+  headerHeight: number;
+  setHeaderHeight: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
   const router = useRouter();
-  const [scrollLevel, setScrollLevel] = useState(0);
-  const [fontSize, setFontSize] = useState(200);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
+      const minHeight = 60;
+      const maxHeight = 150;
       const maxScroll = 150;
-      const minSize = 70;
-      const maxSize = 200;
 
-      const clampedScroll = Math.min(scrollY, maxScroll);
-      const newSize = maxSize - ((maxSize - minSize) * (clampedScroll / maxScroll));
+      const newHeight =
+        scrollY > maxScroll
+          ? minHeight
+          : maxHeight - ((maxHeight - minHeight) * (scrollY / maxScroll));
 
-      setFontSize(newSize); // 즉시 적용
+      setHeaderHeight((prev) =>
+        Math.abs(prev - newHeight) < 1 ? prev : newHeight
+      );
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [setHeaderHeight]);
+
+  const fontSize = (headerHeight / 150) * 200;
+
+  const getTextStyle = () => ({
+    fontSize: `${fontSize}px`,
+    marginTop: "5px",
+    transition: "font-size 150ms ease-out",
+    lineHeight: 1,
+  });
+
+  const getHoverSpan = (chars: string[], startDelay: number) =>
+    chars.map((char, i) => (
+      <span
+        key={char + i}
+        className="inline-block transition-opacity ease-linear"
+        style={{
+          opacity: hovered ? 1 : 0,
+          transitionDuration: "150ms",
+          transitionProperty: "opacity",
+          transitionDelay: `${startDelay + i * 5}ms`,
+        }}
+      >
+        {char}
+      </span>
+    ));
 
   const chatbotButtonClick = () => router.push("/chatbot");
   const logoButtonClick = () => router.push("/main");
   const mypageButtonClick = () => router.push("/mypage/myleisure");
   const logoutButtonClick = () => router.push("/");
 
-  const getTextStyle = () => ({
-    fontSize: `${fontSize}px`,
-    marginTop: '5px',
-  });
-
   return (
-    <div className="w-full z-10">
+    <header
+      className="px-10 flex-col items-start fixed top-0 w-full z-10 bg-white"
+      style={{
+        height: `${headerHeight}px`,
+        transition: "height 150ms ease-out",
+      }}
+    >
       <div
-        className="absolute top-[-20px] px-[20px] w-full group cursor-pointer pointer-events-auto"
+        className="relative h-full flex items-center cursor-pointer"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         onClick={logoButtonClick}
       >
-        {/* 로고 전체 hover 범위 확보 */}
-        <div className="fixed left-0 w-full">
-          {/* F ↔ FOR; */}
-          <div className="relative group cursor-pointer pointer-events-auto" onClick={logoButtonClick}>
-            <h1
-              className="relative font-semibold text-[#447959] leading-none transition-all duration-100 ease-linear"
-              style={getTextStyle()}
-            >
-              <span className="block opacity-100 group-hover:opacity-0 transition-opacity duration-100 ease-linear">
-                F
-              </span>
-              {/* FOR; 호버 애니메이션 */}
-              <span className="absolute inset-0 flex items-center justify-start pointer-events-none pl-[20px]">
-                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[20ms]" style={getTextStyle()}>F</span>
-                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[40ms]" style={getTextStyle()}>O</span>
-                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[60ms]" style={getTextStyle()}>R</span>
-                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[80ms]" style={getTextStyle()}>;</span>
-              </span>
-            </h1>
-          </div>
+        {/* FOR; 왼쪽 */}
+        <div
+          className="left-[-15px] relative pointer-events-auto"
+          style={{ position: "absolute" }}
+        >
+          <h1
+            className="height-auto relative font-semibold text-[#447959] leading-none flex items-center"
+            style={getTextStyle()}
+          >
+            <span className="block">F</span>
+            <span className="absolute inset-0 flex items-center justify-start pointer-events-none">
+              {getHoverSpan(["F", "O", "R", ":"], 0)}
+            </span>
+          </h1>
+        </div>
 
-          {/* R ↔ REST */}
-          <div className="absolute left-1/2 top-0 transform -translate-x-1/2 group cursor-pointer pointer-events-auto">
-            <h1
-              className="relative font-semibold text-[#447959] leading-none transition-all duration-100 ease-linear"
-              style={getTextStyle()}
-            >
-              <span className="block opacity-100 group-hover:opacity-0 transition-opacity duration-100 ease-linear">
-                R
-              </span>
-              {/* REST 호버 애니메이션 */}
-              <span className="absolute inset-0 flex items-center pointer-events-none ml-[20px]">
-                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[100ms]" style={getTextStyle()}>R</span>
-                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[120ms]" style={getTextStyle()}>E</span>
-                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[140ms]" style={getTextStyle()}>S</span>
-                <span className="inline-block opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-linear delay-[160ms]" style={getTextStyle()}>T</span>
-              </span>
-            </h1>
-          </div>
+        {/* REST 중앙 */}
+        <div
+          className="relative pointer-events-auto"
+          style={{
+            position: "absolute",
+            left: "65%",
+            transform: "translateX(-50%)",
+          }}
+        >
+          <h1
+            className="relative font-semibold text-[#447959] leading-none flex items-center"
+            style={getTextStyle()}
+          >
+            <span className="block">R</span>
+            <span className="absolute inset-0 flex items-center pointer-events-none pl-[0px]">
+              {getHoverSpan(["R", "E", "S", "T"], 150)}
+            </span>
+          </h1>
         </div>
       </div>
 
       {/* 버튼 영역 */}
-      <div
-        className={`w-full flex flex-row justify-between px-[40px] text-[20px] transition-all duration-200 mt-[180px] `}
-      >
+      <div className="mt-[10px] border-t border-[#9A9A9A]" />
+      <div className="w-full flex flex-row justify-between px-[40px] text-[20px] transition-all duration-200 mt-[10px]">
         <div>
-          <button onClick={chatbotButtonClick} className="pointer-events-auto text-[#447959]">
+          <button
+            onClick={chatbotButtonClick}
+            className="pointer-events-auto text-[#447959]"
+          >
             chatty!
           </button>
-          <button onClick={mypageButtonClick} className="pointer-events-auto ml-[30px]">
+          <button
+            onClick={mypageButtonClick}
+            className="pointer-events-auto ml-[30px]"
+          >
             MyPage
           </button>
         </div>
         <div>
-          <button className="pointer-events-auto text-[#9A9A9A]" onClick={logoutButtonClick}>
+          <button
+            className="pointer-events-auto text-[#9A9A9A]"
+            onClick={logoutButtonClick}
+          >
             Logout
           </button>
         </div>
       </div>
 
-      <div className="mt-[10px] mx-6 border-t border-black" />
-    </div>
+      <div className="mt-[10px] border-t border-[#9A9A9A]" />
+    </header>
   );
 };
 
