@@ -66,29 +66,31 @@ export default function Detail() {
   };
 
   const handleToggleWish = async (item: Activity) => {
-    try {
-      if (item.isWished) {
-        console.log("삭제할 wish_id:", item.wish_id);
-        await deleteWish(item.wish_id!);
-        alert("찜이 해제되었습니다!");
-      } else {
-        console.log("추가할 activity_id:", item.activity_id);
-        await postWish(item.activity_id);
-        alert("찜에 추가되었습니다!");
-      }
-
-      // 데이터 새로고침
-      if (activity_id && typeof activity_id === "string") {
-        const updated = await getDetail(activity_id);
-        console.log("업데이트된 데이터:", updated.data);
-        setActivity({ ...updated.data });
-      }
-
-    } catch (error) {
-      console.error("찜 처리 실패 ❌", error);
-      alert("찜 처리에 실패했어요 😢");
+  try {
+    if (item.isWished) {
+      await deleteWish(item.wish_id!);
+      alert("찜이 해제되었습니다!");
+    } else {
+      await postWish(item.activity_id);
+      alert("찜에 추가되었습니다!");
     }
-  };
+
+    
+    setActivity(prev =>
+      prev ? { ...prev, isWished: !prev.isWished } : prev
+    );
+
+    // 서버에서 최종 데이터 다시 받아오기
+    if (activity_id && typeof activity_id === "string") {
+      const updated = await getDetail(activity_id);
+      setActivity({ ...updated.data }); // ← 중요: 참조가 바뀌도록!
+    }
+
+  } catch (error) {
+    console.error("찜 처리 실패 ❌", error);
+    alert("찜 처리에 실패했어요 😢");
+  }
+};
 
   useEffect(() => {
     if (!activity_id || typeof activity_id !== "string") return;
