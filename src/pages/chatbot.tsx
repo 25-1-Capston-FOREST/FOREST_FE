@@ -43,7 +43,7 @@ export default function Chatbot() {
     const fetchInitialMessage = async () => {
       try {
         console.log("초기 메시지 요청 시작")
-        const data = await postChatMessage(QUESTION_ID, "")
+        const data = await postChatMessage(QUESTION_ID, " ")
         console.log("초기 메시지 응답:", data)
         setMessages([{ role: "bot", text: data.reply }])
       } catch (error) {
