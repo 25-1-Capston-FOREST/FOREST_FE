@@ -46,7 +46,7 @@ export default function Chatbot() {
       try {
         console.log("초기 메시지 요청 시작")
         // 빈 문자열로 보내야 서버에서 초기 메시지로 인식함
-        const data = await postChatMessage(QUESTION_ID, "")
+        const data = await postChatMessage(QUESTION_ID, " ")
         console.log("초기 메시지 응답:", data)
         setMessages([{ role: "bot", text: data.reply }])
       } catch (error: any) {
