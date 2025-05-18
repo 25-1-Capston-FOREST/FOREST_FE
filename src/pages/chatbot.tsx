@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
-import { postChatMessage } from "@/lib/api/chatbot"
+import { postChatMessage, saveChatMessage } from "@/lib/api/chatbot"
 
 type Role = "user" | "bot"
 type Message = { role: Role; text: string }
@@ -13,6 +13,27 @@ export default function Chatbot() {
 
   const QUESTION_ID = "1"
 
+  const handleEndChat = async () => {
+    // 마지막 메시지 찾기 (bot의 메시지만)
+    const lastBotMessage = [...messages].reverse().find(msg => msg.role === "bot")
+
+    if (!lastBotMessage) {
+      alert("저장할 메시지가 없습니다.")
+      return
+    }
+
+    try {
+      const data = await saveChatMessage(QUESTION_ID, lastBotMessage.text)
+      if (data.status === "success") {
+        alert("대화가 성공적으로 저장되었습니다.")
+      } else {
+        alert("저장 실패: " + data.message)
+      }
+    } catch (error: any) {
+      console.error("대화 저장 에러:", error)
+      alert("대화 저장 중 에러가 발생했습니다.")
+    }
+  }
   // ✅ 메시지 전송
   const handleSend = async () => {
     if (!input.trim()) return
@@ -104,10 +125,8 @@ export default function Chatbot() {
 
         {/* 대화 종료 버튼 */}
         <button
-          onClick={() => {
-            alert("대화 종료 버튼 클릭됨")
-          }}
-          className="bg-red-600 text-white rounded-[10px] px-4 h-[38px] text-sm font-semibold hover:bg-red-700 transition-colors"
+          onClick={handleEndChat}
+          className="bg-[#FFA6A6] text-white rounded-[10px] px-4 h-[38px] text-sm font-semibold hover:bg-red-700 transition-colors"
         >
           대화 종료
         </button>
