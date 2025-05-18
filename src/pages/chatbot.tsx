@@ -92,10 +92,10 @@ export default function Chatbot() {
         ))}
       </div>
 
-      {/* 입력창 */}
+      {/* 입력창 + 전송버튼 + 대화종료 버튼 컨테이너 */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[527px] h-[38px] rounded-[10px] border flex items-center bg-white z-10 shadow-md px-2 space-x-2">
         <input
-          className="flex-1 px-2 outline-none text-[14px] rounded-[10px] border border-gray-300"
+          className="flex-1 px-2 outline-none text-[14px]"
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => {
@@ -106,12 +106,21 @@ export default function Chatbot() {
           }}
           placeholder="메시지를 입력하세요"
         />
+        <button onClick={handleSend} className="px-2">
+          <Image
+            src="/images/icon_arrow.svg"
+            alt="화살표"
+            width={30}
+            height={30}
+            className="transform -rotate-90"
+          />
+        </button>
         <button
           onClick={() => {
-            // 대화 종료 동작 구현 필요
+            // 대화 종료 로직 여기에
             alert("대화 종료 버튼 클릭됨")
           }}
-          className="bg-[#FFA6A6] text-white rounded-[10px] px-4 h-full text-sm font-semibold hover:bg-red-700 transition-colors"
+          className="bg-red-600 text-white rounded-[10px] px-4 h-[30px] text-sm font-semibold hover:bg-red-700 transition-colors"
         >
           대화 종료
         </button>
