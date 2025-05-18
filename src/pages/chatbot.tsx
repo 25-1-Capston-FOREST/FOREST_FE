@@ -65,9 +65,8 @@ export default function Chatbot() {
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${
-              msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
-            }`}
+            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
+              }`}
           >
             {msg.text}
           </div>
@@ -75,10 +74,7 @@ export default function Chatbot() {
       </div>
 
       {/* 입력창 + 전송버튼 + 대화종료 버튼 컨테이너 */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[527px] h-[38px] rounded-[10px] border flex items-center bg-white z-10 shadow-md px-2 space-x-2">
-        <div className="w-[527px] h-[38px] rounded-[10px] border">
-
-        
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[440px] h-[38px] rounded-[10px] border flex items-center bg-white z-10 shadow-md px-2">
         <input
           className="flex-1 px-2 outline-none text-[14px]"
           value={input}
@@ -100,13 +96,15 @@ export default function Chatbot() {
             className="transform -rotate-90"
           />
         </button>
-        </div>
+      </div>
+
+      {/* ✅ 대화 종료 버튼 (박스 바깥) */}
+      <div className="fixed bottom-8 left-[calc(50%+230px+8px)] z-10">
         <button
           onClick={() => {
-            // 대화 종료 로직 여기에
             alert("대화 종료 버튼 클릭됨")
           }}
-          className="bg-red-600 text-white rounded-[10px] px-4 h-[30px] text-sm font-semibold hover:bg-red-700 transition-colors"
+          className="bg-red-600 text-white rounded-[10px] px-4 h-[38px] text-sm font-semibold hover:bg-red-700 transition-colors"
         >
           대화 종료
         </button>
