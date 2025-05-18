@@ -41,13 +41,13 @@ export default function Chatbot() {
   // ✅ 초기 진입 시 자동 메시지
   useEffect(() => {
     const fetchInitialMessage = async () => {
-      const loadingMessage: Message = { role: "bot", text: "..." }
-      setMessages([loadingMessage])
-
       try {
+        console.log("초기 메시지 요청 시작")
         const data = await postChatMessage(QUESTION_ID, "")
+        console.log("초기 메시지 응답:", data)
         setMessages([{ role: "bot", text: data.reply }])
       } catch (error) {
+        console.error("초기 메시지 요청 실패:", error)
         setMessages([{ role: "bot", text: "초기 메시지를 불러오는 데 실패했습니다." }])
       }
     }
@@ -79,9 +79,8 @@ export default function Chatbot() {
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${
-              msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
-            }`}
+            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
+              }`}
           >
             {msg.text}
           </div>
