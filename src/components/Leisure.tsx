@@ -54,7 +54,7 @@ const Leisure: React.FC<LeisureProps> = ({
           src={image_url}
           alt="포스터"
           width={247}
-          height={340}
+          height={350}
           style={{ objectFit: "cover", objectPosition: "center" }}
           className="mt-[15px]"
         />
