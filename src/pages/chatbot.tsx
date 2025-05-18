@@ -11,6 +11,9 @@ export default function Chatbot() {
   const [input, setInput] = useState("")
   const containerRef = useRef<HTMLDivElement>(null)
 
+  const QUESTION_ID = "1"
+
+  // ✅ 메시지 전송
   const handleSend = async () => {
     if (!input.trim()) return
 
@@ -21,7 +24,7 @@ export default function Chatbot() {
     setInput("")
 
     try {
-      const data = await postChatMessage("1", "1", input)
+      const data = await postChatMessage(QUESTION_ID, input)
 
       setMessages(prev => {
         const withoutLoading = prev.slice(0, -1)
@@ -35,14 +38,14 @@ export default function Chatbot() {
     }
   }
 
-  // ✅ 페이지 첫 진입 시 초기 메시지 자동 로드
+  // ✅ 초기 진입 시 자동 메시지
   useEffect(() => {
     const fetchInitialMessage = async () => {
       const loadingMessage: Message = { role: "bot", text: "..." }
       setMessages([loadingMessage])
 
       try {
-        const data = await postChatMessage("1", "1", "")
+        const data = await postChatMessage(QUESTION_ID, "")
         setMessages([{ role: "bot", text: data.reply }])
       } catch (error) {
         setMessages([{ role: "bot", text: "초기 메시지를 불러오는 데 실패했습니다." }])
@@ -52,6 +55,7 @@ export default function Chatbot() {
     fetchInitialMessage()
   }, [])
 
+  // ✅ 자동 스크롤
   useEffect(() => {
     const container = containerRef.current
     if (container) {
@@ -61,6 +65,7 @@ export default function Chatbot() {
 
   return (
     <div className="flex flex-col items-center bg-white px-4 pt-10">
+      {/* 메시지 영역 */}
       <div
         ref={containerRef}
         className="w-full max-w-[527px] flex flex-col space-y-2 overflow-y-auto px-4 pt-4"
@@ -83,6 +88,7 @@ export default function Chatbot() {
         ))}
       </div>
 
+      {/* 입력창 */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[527px] h-[38px] rounded-[10px] border flex items-center bg-white z-10 shadow-md px-2">
         <input
           className="flex-1 px-2 outline-none text-[14px]"
