@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
+import { postChatMessage } from "@/lib/api/chatbot"
 
 type Role = "user" | "bot"
 type Message = { role: Role; text: string }
@@ -10,7 +11,28 @@ export default function Chatbot() {
   const [input, setInput] = useState("")
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const handleSend = () => {
+
+  // 로컬용
+  // const handleSend = () => {
+  //   if (!input.trim()) return
+
+  //   const userMessage: Message = { role: "user", text: input }
+  //   const loadingMessage: Message = { role: "bot", text: "..." }
+
+  //   setMessages(prev => [...prev, userMessage, loadingMessage])
+  //   setInput("")
+
+  //   setTimeout(() => {
+  //     setMessages(prev => {
+  //       const withoutLoading = prev.slice(0, -1)
+  //       return [...withoutLoading, { role: "bot", text: `"${input}"에 대한 응답입니다.` }]
+  //     })
+  //   }, 1000)
+  // }
+
+
+  // 배포용
+  const handleSend = async () => {
     if (!input.trim()) return
 
     const userMessage: Message = { role: "user", text: input }
@@ -19,13 +41,21 @@ export default function Chatbot() {
     setMessages(prev => [...prev, userMessage, loadingMessage])
     setInput("")
 
-    setTimeout(() => {
+    try {
+      const data = await postChatMessage("1", "1", input)
+
       setMessages(prev => {
         const withoutLoading = prev.slice(0, -1)
-        return [...withoutLoading, { role: "bot", text: `"${input}"에 대한 응답입니다.` }]
+        return [...withoutLoading, { role: "bot", text: data.reply }]
       })
-    }, 1000)
+    } catch (error) {
+      setMessages(prev => {
+        const withoutLoading = prev.slice(0, -1)
+        return [...withoutLoading, { role: "bot", text: "에러가 발생했습니다. 다시 시도해주세요." }]
+      })
+    }
   }
+
 
   useEffect(() => {
     const container = containerRef.current
@@ -51,9 +81,8 @@ export default function Chatbot() {
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${
-              msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
-            }`}
+            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
+              }`}
           >
             {msg.text}
           </div>

@@ -1,41 +1,31 @@
 {
-  "success": true,
-  "message": "여가 상세 정보가 성공적으로 조회되었습니다.",
-  "data": {
-    "activity_id": "41",
-    "activity_type": "PERFORMANCE",
-    "created_at": {},
-    "updated_at": {},
-    "detail": {
-      "performance_id": "31",
-      "activity_id": "41",
-      "performance_cd": "PF262474",
-      "title": "78LIVE, 고고학",
-      "image_url": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF262474_250407_100435.gif",
-      "start_date": "2025.04.24",
-      "end_date": "2025.04.24",
-      "time": "목요일(19:30)",
-      "region": "서울특별시",
-      "location": "엠피엠지 (LOUNGE M.)",
-      "runtime": "1시간 18분",
-      "cost": "전석 44,000원",
-      "cast": " ",
-      "genre": "대중음악",
-      "story": " ",
-      "link": "인터파크: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=25004913",
-      "status": "공연예정",
-      "keywords": [
-        "대중음악",
-        "고고학",
-        "독창적 콘텐츠",
-        "감성적 접근",
-        "78LIVE",
-        "소극장 라이브"
-      ],
+  "status": "success",
+  "message": "추천 리스트를 성공적으로 가져왔습니다.",
+  "recommendations": [
+    {
+      "activity_id": "1",
+      "activity_type": "MOVIE",
       "created_at": {},
       "updated_at": {},
-      "isWished": false,
-      "wish_id": null
+      "detail": {
+        "activity_id": "1",
+        "movie_id": "1",
+        "movie_cd": "20203863",
+        "title": "승부",
+        "image_url": null,
+        "open_dt": "20250326",
+        "rank": "1",
+        "audi_acc": "1351651",
+        "show_tm": "114",
+        "genre_nm": "드라마",
+        "director": "김형주",
+        "actors": "이병헌, 유아인, 고창석, 현봉식, 문정희",
+        "keywords": null,
+        "created_at": {},
+        "updated_at": {},
+        "is_wished": true,
+        "wish_id": "1"
+      }
     }
-  }
+  ]
 }
