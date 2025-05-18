@@ -66,31 +66,29 @@ export default function Detail() {
   };
 
   const handleToggleWish = async (item: Activity) => {
-  try {
-    if (item.isWished) {
-      await deleteWish(item.wish_id!);
-      alert("찜이 해제되었습니다!");
-    } else {
-      await postWish(item.activity_id);
-      alert("찜에 추가되었습니다!");
+    try {
+      if (item.isWished) {
+        await deleteWish(item.wish_id!);
+        alert("찜이 해제되었습니다!");
+      } else {
+        await postWish(item.activity_id);
+        alert("찜에 추가되었습니다!");
+      }
+
+      if (activity_id && typeof activity_id === "string") {
+        const updated = await getDetail(activity_id);
+        // 여기서도 똑같이 복사
+        setActivity({
+          ...updated.data,
+          isWished: updated.data.detail.isWished,
+          wish_id: updated.data.detail.wish_id,
+        });
+      }
+    } catch (error) {
+      console.error("찜 처리 실패 ❌", error);
+      alert("찜 처리에 실패했어요 😢");
     }
-
-    
-    setActivity(prev =>
-      prev ? { ...prev, isWished: !prev.isWished } : prev
-    );
-
-    // 서버에서 최종 데이터 다시 받아오기
-    if (activity_id && typeof activity_id === "string") {
-      const updated = await getDetail(activity_id);
-      setActivity({ ...updated.data }); // ← 중요: 참조가 바뀌도록!
-    }
-
-  } catch (error) {
-    console.error("찜 처리 실패 ❌", error);
-    alert("찜 처리에 실패했어요 😢");
-  }
-};
+  };
 
   useEffect(() => {
     if (!activity_id || typeof activity_id !== "string") return;
@@ -99,7 +97,11 @@ export default function Detail() {
       try {
         const data = await getDetail(activity_id);
         console.log("받은 데이터:", data);
-        setActivity(data.data);
+        setActivity({
+          ...data.data,
+          isWished: data.data.detail.isWished,
+          wish_id: data.data.detail.wish_id,
+        });
       } catch (error) {
         console.error("여가 정보 불러오기 실패", error);
         alert("여가 정보를 불러오는 데 실패했어요 😢");
