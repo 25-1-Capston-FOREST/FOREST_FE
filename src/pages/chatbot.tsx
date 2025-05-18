@@ -16,20 +16,11 @@ export default function Chatbot() {
   const QUESTION_ID = "1"
 
   const handleEndChat = async () => {
-    // 마지막 메시지 찾기 (bot의 메시지만)
-    const lastBotMessage = [...messages].reverse().find(msg => msg.role === "bot")
-
-    if (!lastBotMessage) {
-      alert("저장할 메시지가 없습니다.")
-      return
-    }
-
     try {
-      const data = await saveChatMessage(QUESTION_ID, lastBotMessage.text)
+      const data = await saveChatMessage()
       if (data.status === "success") {
         alert("대화가 성공적으로 저장되었습니다.")
         router.push("/main")
-
       } else {
         alert("저장 실패: " + data.message)
       }
