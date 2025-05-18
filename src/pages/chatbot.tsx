@@ -27,12 +27,14 @@ export default function Chatbot() {
       const data = await postChatMessage(QUESTION_ID, input)
 
       setMessages(prev => {
-        const withoutLoading = prev.slice(0, -1)
+        const withoutLoading = prev.filter(m => m.text !== "...")
         return [...withoutLoading, { role: "bot", text: data.reply }]
       })
-    } catch (error) {
+    } catch (error: any) {
+      console.error("메시지 전송 에러:", error)
+      console.error("서버 응답:", error.response?.data)
       setMessages(prev => {
-        const withoutLoading = prev.slice(0, -1)
+        const withoutLoading = prev.filter(m => m.text !== "...")
         return [...withoutLoading, { role: "bot", text: "에러가 발생했습니다. 다시 시도해주세요." }]
       })
     }
@@ -43,11 +45,14 @@ export default function Chatbot() {
     const fetchInitialMessage = async () => {
       try {
         console.log("초기 메시지 요청 시작")
-        const data = await postChatMessage(QUESTION_ID, " ")
+        // 빈 문자열로 보내야 서버에서 초기 메시지로 인식함
+        const data = await postChatMessage(QUESTION_ID, "")
         console.log("초기 메시지 응답:", data)
         setMessages([{ role: "bot", text: data.reply }])
-      } catch (error) {
+      } catch (error: any) {
         console.error("초기 메시지 요청 실패:", error)
+        console.error("서버 응답:", error.response?.data)
+        console.error("요청 데이터:", error.config?.data)
         setMessages([{ role: "bot", text: "초기 메시지를 불러오는 데 실패했습니다." }])
       }
     }
@@ -79,8 +84,9 @@ export default function Chatbot() {
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
-              }`}
+            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${
+              msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
+            }`}
           >
             {msg.text}
           </div>
