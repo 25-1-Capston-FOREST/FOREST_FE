@@ -56,7 +56,7 @@ const Leisure: React.FC<LeisureProps> = ({
           width={247}
           height={340}
           style={{ objectFit: "cover", objectPosition: "center" }}
-          className="mt-[10px]"
+          className="mt-[15px]"
         />
       </button>
 
@@ -64,7 +64,7 @@ const Leisure: React.FC<LeisureProps> = ({
         <div className="flex font-normal justify-center text-white w-[40px] h-[20px] rounded-[8px] text-[12px] bg-[#447959] pt-[2px] mt-[5px]">
           {getActivityTypeName(activity_type)}
         </div>
-        <div className="font-bold text-[14px] mt-[6px] ml-[6px] max-w-[235px] truncate overflow-hidden whitespace-nowrap">
+        <div className="font-bold text-[14px] mt-[6px] ml-[6px] max-w-[215px] truncate overflow-hidden whitespace-nowrap">
           {title}
         </div>
       </div>
