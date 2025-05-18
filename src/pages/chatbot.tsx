@@ -74,32 +74,35 @@ export default function Chatbot() {
       </div>
 
       {/* 입력창 + 전송버튼 + 대화종료 버튼 컨테이너 */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[440px] h-[38px] rounded-[10px] border flex items-center bg-white z-10 shadow-md px-2">
-        <input
-          className="flex-1 px-2 outline-none text-[14px]"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => {
-            if (e.key === "Enter") {
-              e.preventDefault()
-              handleSend()
-            }
-          }}
-          placeholder="메시지를 입력하세요"
-        />
-        <button onClick={handleSend} className="px-2">
-          <Image
-            src="/images/icon_arrow.svg"
-            alt="화살표"
-            width={30}
-            height={30}
-            className="transform -rotate-90"
-          />
-        </button>
-      </div>
+      {/* 입력 영역 전체 감싸는 컨테이너 */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-10 flex items-center space-x-2 w-[527px]">
 
-      {/* ✅ 대화 종료 버튼 (박스 바깥) */}
-      <div className="fixed bottom-8 left-[calc(50%+230px+8px)] z-10">
+        {/* 입력창 + 전송 버튼 (border 박스) */}
+        <div className="flex flex-1 h-[38px] rounded-[10px] border items-center bg-white shadow-md px-2">
+          <input
+            className="flex-1 px-2 outline-none text-[14px]"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                handleSend()
+              }
+            }}
+            placeholder="메시지를 입력하세요"
+          />
+          <button onClick={handleSend} className="px-2">
+            <Image
+              src="/images/icon_arrow.svg"
+              alt="화살표"
+              width={30}
+              height={30}
+              className="transform -rotate-90"
+            />
+          </button>
+        </div>
+
+        {/* 대화 종료 버튼 */}
         <button
           onClick={() => {
             alert("대화 종료 버튼 클릭됨")
@@ -109,6 +112,7 @@ export default function Chatbot() {
           대화 종료
         </button>
       </div>
+
     </div>
   )
 }
