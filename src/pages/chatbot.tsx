@@ -40,20 +40,20 @@ export default function Chatbot() {
 
   // ✅ 초기 진입 시 자동 메시지
   useEffect(() => {
-  const fetchInitialMessage = async () => {
-    const loadingMessage: Message = { role: "bot", text: "..." }
-    setMessages([loadingMessage])
+    const fetchInitialMessage = async () => {
+      const loadingMessage: Message = { role: "bot", text: "..." }
+      setMessages([loadingMessage])
 
-    try {
-      const data = await postChatMessage(QUESTION_ID, "안녕") // 초기 메시지로 "안녕" 전달
-      setMessages([{ role: "bot", text: data.reply }])
-    } catch (error) {
-      setMessages([{ role: "bot", text: "초기 메시지를 불러오는 데 실패했습니다." }])
+      try {
+        const data = await postChatMessage(QUESTION_ID, "")
+        setMessages([{ role: "bot", text: data.reply }])
+      } catch (error) {
+        setMessages([{ role: "bot", text: "초기 메시지를 불러오는 데 실패했습니다." }])
+      }
     }
-  }
 
-  fetchInitialMessage()
-}, [])
+    fetchInitialMessage()
+  }, [])
 
   // ✅ 자동 스크롤
   useEffect(() => {
