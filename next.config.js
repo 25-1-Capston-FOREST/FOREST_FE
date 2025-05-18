@@ -13,7 +13,7 @@ const nextConfig = {
       'www.kopis.or.kr',
       'www.culture.go.kr',
       'image.tmdb.org',
-      'media.themoviedb.org',
+      'www.themoviedb.org',
       'i.namu.wiki',
     ],
   },
