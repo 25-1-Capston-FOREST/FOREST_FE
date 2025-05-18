@@ -54,13 +54,13 @@ const Leisure: React.FC<LeisureProps> = ({
           src={image_url}
           alt="포스터"
           width={247}
-          height={330}
+          height={340}
           style={{ objectFit: "cover", objectPosition: "center" }}
           className="mt-[15px]"
         />
       </button>
 
-      <div className="flex flex-row mt-[10px] px-[20px]">
+      <div className="flex flex-row mt-[8px] px-[20px]">
         <div className="flex font-normal justify-center text-white w-[40px] h-[20px] rounded-[8px] text-[12px] bg-[#447959] pt-[2px] mt-[5px]">
           {getActivityTypeName(activity_type)}
         </div>
@@ -70,7 +70,7 @@ const Leisure: React.FC<LeisureProps> = ({
       </div>
 
       {/* 날짜 출력 */}
-      <div className="text-[13px] px-[20px] text-gray-600 mt-[6px] ml-[4px]">
+      <div className="text-[13px] px-[20px] text-gray-600 mt-[3px] ml-[4px]">
         {renderDate()}
       </div>
 
