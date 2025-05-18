@@ -45,10 +45,10 @@ const Leisure: React.FC<LeisureProps> = ({
   };
 
   return (
-    <div className="w-[280px] h-[380px]  bg-gray-200">
+    <div className="w-[280px] h-[430px]  bg-[#F6F6F6]">
       <button
         onClick={detailClick}
-        className="flex flex-col justify-center items-center w-[280px] h-[340px] bg-gray-200 overflow-hidden relative"
+        className="flex flex-col justify-center items-center w-[280px] h-[340px] bg-[#F6F6F6] overflow-hidden relative"
       >
         <Image
           src={image_url}
@@ -56,10 +56,11 @@ const Leisure: React.FC<LeisureProps> = ({
           width={247}
           height={340}
           style={{ objectFit: "cover", objectPosition: "center" }}
+          className="mt-[10px]"
         />
       </button>
 
-      <div className="flex flex-row mt-[20px] border-t">
+      <div className="flex flex-row mt-[10px] px-[10px]">
         <div className="flex font-normal justify-center text-white w-[40px] h-[20px] rounded-[8px] text-[12px] bg-[#447959] pt-[2px] mt-[5px]">
           {getActivityTypeName(activity_type)}
         </div>
@@ -69,7 +70,7 @@ const Leisure: React.FC<LeisureProps> = ({
       </div>
 
       {/* 날짜 출력 */}
-      <div className="text-[13px] text-gray-600 mt-[6px] ml-[4px]">
+      <div className="text-[13px] px-[10px] text-gray-600 mt-[6px] ml-[4px]">
         {renderDate()}
       </div>
 
