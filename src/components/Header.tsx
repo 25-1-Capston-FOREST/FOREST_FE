@@ -118,6 +118,7 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              pointerEvents: "none",
             }}
           >
             <span className="block">R</span>
