@@ -1,10 +1,10 @@
+// pages/leisure_details.tsx
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { postBooking } from "@/lib/api/book";
 import { getDetail } from "@/lib/api/detail";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
-
 
 interface PerformanceDetail {
   performance_id: string;
@@ -46,16 +46,16 @@ export default function Detail() {
     const match = link.match(/https?:\/\/[^\s]+/);
     return match ? match[0] : null;
   };
+
   const TYPE_MAP: { [key: string]: string } = {
     MOVIE: "영화",
     PERFORMANCE: "공연",
     EXHIBITION: "전시",
   };
+
   const handleBook = async (activityId: number) => {
     try {
-      // 임시 예약 날짜, 이후 사용자 입력으로 변경 가능
       const reserveDate = "2025-03-05 00:00:00";
-
       const res = await postBooking(activityId, reserveDate);
       console.log("예약 성공!", res);
       alert("예약이 완료되었습니다!");
@@ -64,6 +64,7 @@ export default function Detail() {
       alert("예약에 실패했어요 😢");
     }
   };
+
   const handleToggleWish = async (item: Activity) => {
     try {
       if (item.isWished) {
@@ -76,33 +77,21 @@ export default function Detail() {
         alert("찜에 추가되었습니다!");
       }
 
-      // 데이터 다시 불러오기
+      // 데이터 새로고침
       if (activity_id && typeof activity_id === "string") {
         const updated = await getDetail(activity_id);
+        console.log("업데이트된 데이터:", updated.data);
         setActivity(updated.data);
       }
 
     } catch (error) {
-      console.error("찜 처리 실패", error);
-      alert("찜 처리에 실패했어요");
+      console.error("찜 처리 실패 ❌", error);
+      alert("찜 처리에 실패했어요 😢");
     }
   };
 
   useEffect(() => {
-    if (!activity_id || typeof activity_id !== "string") return; if (!activity_id) return;
-    console.log(activity_id)
-    // const fetchActivity = async () => {
-    //   try {
-    //     const res = await fetch("/data/activities.json");
-    //     const json = await res.json();
-
-    //     setActivity(json.data);
-    //     console.log(activity)
-    //   } catch (error) {
-    //     console.error("여가 정보 불러오기 실패", error);
-    //     alert("여가 정보를 불러오는 데 실패했어요 😢");
-    //   }
-    // };
+    if (!activity_id || typeof activity_id !== "string") return;
 
     const fetchActivity = async () => {
       try {
@@ -124,24 +113,22 @@ export default function Detail() {
 
   const detail = activity.detail;
 
-
   return (
     <div className="p-10 pt-[10px] mt-[230px]">
-
       <div>
         <div className="flex flex-row ml-[10px] items-center gap-6 mb-3">
-          <p className="flex flex-row items-center justify-center text-white w-[58px] h-[30px] rounded-[10px] text-[14px] bg-[#447959] pt-[2px] mt-[7px]">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
+          <p className="flex items-center justify-center text-white w-[58px] h-[30px] rounded-[10px] text-[14px] bg-[#447959] pt-[2px] mt-[7px]">
+            {TYPE_MAP[activity.activity_type] ?? "기타"}
+          </p>
           <h1 className="text-[30px] mt-2 font-bold">{detail.title}</h1>
         </div>
-        <div className="items-center justify-left flex flex-row gap-[14px] text-[#757575] text-[18px] mb-[10px]">
-          <p className="ml-[6px] font-bold">
-            {detail.location ? detail.location : detail.region}
-          </p>
-          <p className="">{detail.start_date} ~ {detail.end_date}</p>
+        <div className="flex flex-row gap-[14px] text-[#757575] text-[18px] mb-[10px]">
+          <p className="font-bold">{detail.location || detail.region}</p>
+          <p>{detail.start_date} ~ {detail.end_date}</p>
         </div>
       </div>
 
-      <div className="flex flex-col mx-auto bg-[#F5F5F5] rounded-[10px] mx-350 h-[1150px] p-4">
+      <div className="flex flex-col mx-auto bg-[#F5F5F5] rounded-[10px] h-[1150px] p-4">
         <div className="flex flex-row">
           <div className="ml-[50px]">
             <Image
@@ -153,18 +140,15 @@ export default function Detail() {
             />
           </div>
 
-          <div className="font-bold flex flex-col mb-6 gap-[6px] pt-[10px] justify-center w-full max-w-[700px] mx-auto text-gray-700">
+          <div className="font-bold flex flex-col gap-[6px] pt-[10px] w-full max-w-[700px] mx-auto text-gray-700">
             <p>일시: {detail.time}</p>
             <p>러닝타임: {detail.runtime}</p>
             <p>출연진: {detail.cast || "정보 없음"}</p>
             <p>장르: {detail.genre}</p>
             <p>가격: {detail.cost}</p>
-            {detail.story?.trim() && (
-              <p>내용: {detail.story}</p>
-            )}
+            {detail.story?.trim() && <p>내용: {detail.story}</p>}
 
-            <Image src="/images/image_jido.svg" alt="카카오맵" width={705} height={375} />
-
+            <Image src="/images/image_jido.svg" alt="지도" width={705} height={375} />
 
             <div className="flex flex-row mt-[20px]">
               <button
@@ -174,11 +158,10 @@ export default function Detail() {
                 일정 등록하기
               </button>
 
-
               <button onClick={() => handleToggleWish(activity)}>
                 <Image
                   src={
-                    detail.isWished
+                    activity.isWished
                       ? "/images/icon_heart.svg"
                       : "/images/icon_emptyheart.svg"
                   }
@@ -187,18 +170,7 @@ export default function Detail() {
                   height={33}
                 />
               </button>
-
-              {/* <button>
-                <Image
-                  src={
-                    "/images/icon_heart.svg"}
-                  alt="하트"
-                  width={27}
-                  height={27}
-                />
-              </button> */}
             </div>
-
 
             <div
               onClick={() => {
@@ -214,17 +186,12 @@ export default function Detail() {
               여가 예약 페이지로 이동하기
             </div>
           </div>
-
         </div>
-        <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex flex-row items-center justify-center">
+
+        <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex items-center justify-center">
           리뷰 내용 구현 예정
         </div>
-
-
-        {/* //<p className="mt-4 whitespace-pre-line">{detail.story || "설명 없음"}</p> */}
       </div>
-
-
-    </div >
+    </div>
   );
 }
