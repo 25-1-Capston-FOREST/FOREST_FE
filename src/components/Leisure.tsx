@@ -45,7 +45,7 @@ const Leisure: React.FC<LeisureProps> = ({
   };
 
   return (
-    <div className="w-[280px] h-[380px]">
+    <div className="w-[280px] h-[380px]  bg-gray-200">
       <button
         onClick={detailClick}
         className="flex flex-col justify-center items-center w-[280px] h-[340px] bg-gray-200 overflow-hidden relative"
