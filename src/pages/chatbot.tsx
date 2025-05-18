@@ -2,6 +2,7 @@
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { postChatMessage, saveChatMessage } from "@/lib/api/chatbot"
+import { useRouter } from "next/router"
 
 type Role = "user" | "bot"
 type Message = { role: Role; text: string }
@@ -10,6 +11,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const containerRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   const QUESTION_ID = "1"
 
@@ -26,6 +28,8 @@ export default function Chatbot() {
       const data = await saveChatMessage(QUESTION_ID, lastBotMessage.text)
       if (data.status === "success") {
         alert("대화가 성공적으로 저장되었습니다.")
+        router.push("/main")
+
       } else {
         alert("저장 실패: " + data.message)
       }
