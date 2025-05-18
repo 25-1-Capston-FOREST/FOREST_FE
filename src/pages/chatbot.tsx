@@ -40,7 +40,6 @@ export default function Chatbot() {
     }
   }
 
-  // 초기 메시지 불러오는 useEffect 삭제
 
   // ✅ 자동 스크롤
   useEffect(() => {
@@ -77,6 +76,9 @@ export default function Chatbot() {
 
       {/* 입력창 + 전송버튼 + 대화종료 버튼 컨테이너 */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[527px] h-[38px] rounded-[10px] border flex items-center bg-white z-10 shadow-md px-2 space-x-2">
+        <div className="w-[527px] h-[38px] rounded-[10px] border">
+
+        
         <input
           className="flex-1 px-2 outline-none text-[14px]"
           value={input}
@@ -98,6 +100,7 @@ export default function Chatbot() {
             className="transform -rotate-90"
           />
         </button>
+        </div>
         <button
           onClick={() => {
             // 대화 종료 로직 여기에
