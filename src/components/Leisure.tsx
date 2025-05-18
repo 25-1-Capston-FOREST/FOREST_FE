@@ -70,7 +70,7 @@ const Leisure: React.FC<LeisureProps> = ({
       </div>
 
       {/* 날짜 출력 */}
-      <div className="text-[13px] px-[10px] text-gray-600 mt-[6px] ml-[4px]">
+      <div className="text-[13px] px-[20px] text-gray-600 mt-[6px] ml-[4px]">
         {renderDate()}
       </div>
 
