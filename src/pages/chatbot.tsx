@@ -1,17 +1,14 @@
 "use client"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
-// 타입 정의
 type Role = "user" | "bot"
 type Message = { role: Role; text: string }
 
 export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
-
-  // 테스트용 더미 메시지 로딩
-
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const handleSend = () => {
     if (!input.trim()) return
@@ -19,64 +16,73 @@ export default function Chatbot() {
     const userMessage: Message = { role: "user", text: input }
     const loadingMessage: Message = { role: "bot", text: "..." }
 
-    // 사용자 메시지 추가 + 챗봇 로딩 메시지 추가
-    setMessages(prev => [loadingMessage, userMessage, ...prev])
+    setMessages(prev => [...prev, userMessage, loadingMessage])
     setInput("")
 
-    // 1초 후 챗봇 응답으로 교체
     setTimeout(() => {
-      const botResponse: Message = {
-        role: "bot",
-        text: `"${input}"에 대한 응답입니다.`,
-      }
-
       setMessages(prev => {
-        // prev[0] = loadingMessage, prev[1] = userMessage
-        const remaining = prev.slice(2)
-        return [botResponse, userMessage, ...remaining]
+        const withoutLoading = prev.slice(0, -1)
+        return [...withoutLoading, { role: "bot", text: `"${input}"에 대한 응답입니다.` }]
       })
     }, 1000)
   }
 
+  useEffect(() => {
+    const container = containerRef.current
+    if (container) {
+      // 메시지 추가될 때마다 스크롤을 맨 아래로 내림
+      container.scrollTop = container.scrollHeight
+    }
+  }, [messages])
+
   return (
-    <div className="w-full justify-center flex flex-row">
-      <div className="flex flex-col">
-        <div className="w-[527px] h-[408px] mt-[30px] overflow-y-auto flex flex-col-reverse p-2 space-y-2 space-y-reverse">
-          {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={`w-fit max-w-[80%] px-3 py-1 rounded-xl ${msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
-                }`}
-            >
-              {msg.text}
-            </div>
-          ))}
-        </div>
+    <div className="flex flex-col items-center bg-white px-4 pt-10">
+      {/* 메시지 영역 */}
+      <div
+        ref={containerRef}
+        className="w-full max-w-[527px] flex flex-col space-y-2 overflow-y-auto px-4 pt-4"
+        style={{
+          minHeight: 150,
+          maxHeight: "calc(100vh - 160px)",
+          width: "100%",
+          margin: "0 auto",
+        }}
+      >
+        {messages.map((msg, idx) => (
+          <div
+            key={idx}
+            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${
+              msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
+            }`}
+          >
+            {msg.text}
+          </div>
+        ))}
+      </div>
 
-        <div className="w-[527px] h-[38px] rounded-[10px] border flex items-center">
-          <input
-            className="flex-1 px-2 outline-none"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => {
-              if (e.key === "Enter") {
-                e.preventDefault()
-                handleSend()
-              }
-            }}
-            placeholder="메시지를 입력하세요"
+      {/* 입력창 */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[527px] h-[38px] rounded-[10px] border flex items-center bg-white z-10 shadow-md px-2">
+        <input
+          className="flex-1 px-2 outline-none text-[14px]"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === "Enter") {
+              e.preventDefault()
+              handleSend()
+            }
+          }}
+          placeholder="메시지를 입력하세요"
+        />
+        <button onClick={handleSend} className="px-2">
+          <Image
+            src="/images/icon_arrow.svg"
+            alt="화살표"
+            width={30}
+            height={30}
+            className="transform -rotate-90"
           />
-          <button onClick={handleSend} className="px-2">
-            <Image
-              src="images/icon_arrow.svg"
-              alt="화살표"
-              width={30}
-              height={30}
-              className="transform -rotate-90"
-            />
-          </button>
-        </div>
-
+        </button>
       </div>
     </div>
   )

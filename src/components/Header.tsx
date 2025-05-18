@@ -33,13 +33,17 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
 
   const fontSize = (headerHeight / 150) * 200;
 
-  const getTextStyle = () => ({
+  const getTextStyle = (): React.CSSProperties => ({
     fontSize: `${fontSize}px`,
     marginTop: "5px",
     transition: "font-size 150ms ease-out",
     lineHeight: 1,
+    width: "80px",
+    textAlign: "left" as React.CSSProperties['textAlign'],
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
   });
-
   const getHoverSpan = (chars: string[], startDelay: number) =>
     chars.map((char, i) => (
       <span
@@ -66,6 +70,7 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
       className="px-10 flex-col items-start fixed top-0 w-full z-10 bg-white"
       style={{
         height: `${headerHeight}px`,
+        minHeight: `${headerHeight}px`,
         transition: "height 150ms ease-out",
       }}
     >
@@ -102,7 +107,14 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
         >
           <h1
             className="relative font-semibold text-[#447959] leading-none flex items-center"
-            style={getTextStyle()}
+            style={{
+              fontSize: `${fontSize}px`,
+              transition: "font-size 150ms ease-out",
+              lineHeight: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             <span className="block">R</span>
             <span className="absolute inset-0 flex items-center pointer-events-none pl-[0px]">
@@ -112,9 +124,12 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
         </div>
       </div>
 
+      {/* 버튼 영역 위 간격 */}
+      <div className="flex height-[20px] bg-white" />
+
       {/* 버튼 영역 */}
-      <div className="mt-[10px] border-t border-[#9A9A9A]" />
-      <div className="w-full flex flex-row justify-between px-[40px] text-[20px] transition-all duration-200 mt-[10px]">
+      <div className="border-t border-[#9A9A9A]" />
+      <div className="py-[10px] justify-center flex bg-white w-full flex flex-row justify-between px-[30px] text-[20px] transition-all duration-200">
         <div>
           <button
             onClick={chatbotButtonClick}
@@ -138,8 +153,7 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
           </button>
         </div>
       </div>
-
-      <div className="mt-[10px] border-t border-[#9A9A9A]" />
+      <div className="border-t border-[#9A9A9A]" />
     </header>
   );
 };

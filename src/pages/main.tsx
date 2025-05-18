@@ -85,21 +85,28 @@ export default function Main() {
   const toggleSortPopup = () => {
     setIsSortPopupOpen(!isSortPopupOpen);
   };
+  const headerHeight = 150;
 
   return (
-    <div>
+    <div
+      className="relative"
+      style={{
+        paddingTop: `10px`,
+        backgroundColor: "white",
+        minHeight: "100vh",
+      }}        >
       <div className=" w-full flex flex-row items-center">
-        <div className="flex flex-row items-center ml-[35px] text-[18px]">
+        <div className="flex flex-row items-center ml-[45px] text-[18px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
             <button
               key={category}
               onClick={() => handleCategoryClick(category)}
-              className={`w-[100px] rounded-[20px] py-2 text-white text-center text-left 
+              className={`w-[110px] rounded-[20px] py-2 text-white text-center text-left 
               ${selectedCategories.includes(category)
                   ? "bg-[#447959]"
                   : "bg-[#D0D0D0]"
-                } ${index > 0 ? "ml-[10px]" : ""}`}
+                } ${index > 0 ? "ml-[20px]" : ""}`}
             >
               {category === "MOVIE"
                 ? "영화"
@@ -108,22 +115,23 @@ export default function Main() {
                   : "전시"}
             </button>
           ))}
-        </div>
 
-        <div className="ml-[400px]">
-          {/* 정렬버튼 */}
           <button
-            className="border border-black rounded-[10px] w-[143px] h-[40px]"
+            className="justify-left items-center px-[15px] py-[2px] flex flex-row text-[17px] ml-[30px] border border-black rounded-[10px] w-[143px] h-[40px]"
           >
             추천순
           </button>
+        </div>
 
+        <div className="ml-[320px]">
+          {/* 정렬버튼 */}
           {/* 정렬 팝업 (현재는 주석 처리됨) */}
           {isSortPopupOpen && (
             <div className="mt-2 w-[90px] bg-white border border-gray-300 rounded-lg shadow-custom absolute left-[1160px] top-[270px]">
               <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
                 추천순
               </button>
+              
               <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
                 시간순
               </button>
@@ -134,10 +142,13 @@ export default function Main() {
           )}
         </div>
 
+
+
+
         {/* 검색창 */}
-        <div className="w-[480px] h-[59px] items-center border border-[#000000] text-[14px] ml-[100px] mr-[35px]">
+        <div className="w-[480px] h-[40px] rounded-[10px] items-center border border-[#000000] text-[14px] ml-[100px] mr-[45px]">
           <textarea
-            className="resize-none w-[450px] h-[59px] bg-transparent text-[14px] outline-none px-[30px] py-[19px]"
+            className="resize-none w-[450px] h-[59px] bg-transparent text-[14px] outline-none px-[0px] py-[10px] px-[10px]"
             placeholder="Search"
           ></textarea>
         </div>
