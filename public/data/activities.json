@@ -1,31 +1,34 @@
 {
-  "status": "success",
-  "message": "추천 리스트를 성공적으로 가져왔습니다.",
-  "recommendations": [
-    {
-      "activity_id": "1",
-      "activity_type": "MOVIE",
+  "success": true,
+  "message": "여가 상세 정보가 성공적으로 조회되었습니다.",
+  "data": {
+    "activity_id": "704",
+    "activity_type": "PERFORMANCE",
+    "created_at": {},
+    "updated_at": {},
+    "detail": {
+      "performance_id": "368",
+      "activity_id": "704",
+      "performance_cd": "PF264976",
+      "title": "먼데이프로젝트 시즌8, 몽니 단독 콘서트: 몽니's 바캉스",
+      "image_url": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF264976_250515_105529.jfif",
+      "start_date": "2025.06.04",
+      "end_date": "2025.07.03",
+      "time": "수요일 ~ 목요일(20:00)",
+      "region": "서울특별시",
+      "location": "클럽온에어 (클럽온에어)",
+      "runtime": "1시간 30분",
+      "cost": "전석 88,000원",
+      "cast": "공태우, 김신의, 이인경, 정훈태",
+      "genre": "대중음악",
+      "story": " ",
+      "link": "멜론티켓: https://ticket.melon.com/performance/index.htm?prodId=211381",
+      "status": "공연예정",
+      "keywords": null,
       "created_at": {},
       "updated_at": {},
-      "detail": {
-        "activity_id": "1",
-        "movie_id": "1",
-        "movie_cd": "20203863",
-        "title": "승부",
-        "image_url": null,
-        "open_dt": "20250326",
-        "rank": "1",
-        "audi_acc": "1351651",
-        "show_tm": "114",
-        "genre_nm": "드라마",
-        "director": "김형주",
-        "actors": "이병헌, 유아인, 고창석, 현봉식, 문정희",
-        "keywords": null,
-        "created_at": {},
-        "updated_at": {},
-        "is_wished": true,
-        "wish_id": "1"
-      }
+      "isWished": false,
+      "wish_id": null
     }
-  ]
+  }
 }

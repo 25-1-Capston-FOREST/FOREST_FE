@@ -91,29 +91,30 @@ export default function Detail() {
   useEffect(() => {
     if (!activity_id || typeof activity_id !== "string") return; if (!activity_id) return;
     console.log(activity_id)
-    // const fetchActivity = async () => {
-    //   try {
-    //     const res = await fetch("/data/activities.json");
-    //     const json = await res.json();
-
-    //     setActivity(json.data);
-    //     console.log(activity)
-    //   } catch (error) {
-    //     console.error("여가 정보 불러오기 실패", error);
-    //     alert("여가 정보를 불러오는 데 실패했어요 😢");
-    //   }
-    // };
-
+    //로컬용
     const fetchActivity = async () => {
       try {
-        const data = await getDetail(activity_id);
-        console.log("받은 데이터:", data);
-        setActivity(data.data);
+        const res = await fetch("/data/activities.json");
+        const json = await res.json();
+
+        setActivity(json.data);
+        console.log(activity)
       } catch (error) {
         console.error("여가 정보 불러오기 실패", error);
         alert("여가 정보를 불러오는 데 실패했어요 😢");
       }
     };
+    //배포용
+    // const fetchActivity = async () => {
+    //   try {
+    //     const data = await getDetail(activity_id);
+    //     console.log("받은 데이터:", data);
+    //     setActivity(data.data);
+    //   } catch (error) {
+    //     console.error("여가 정보 불러오기 실패", error);
+    //     alert("여가 정보를 불러오는 데 실패했어요 😢");
+    //   }
+    // };
 
     fetchActivity();
   }, [activity_id]);
@@ -126,105 +127,91 @@ export default function Detail() {
 
 
   return (
-    <div className="p-10 pt-[10px] mt-[230px]">
+    <div className="mx-10 pt-[10px] w-max-auto">
 
       <div>
-        <div className="flex flex-row ml-[10px] items-center gap-6 mb-3">
-          <p className="flex flex-row items-center justify-center text-white w-[58px] h-[30px] rounded-[10px] text-[14px] bg-[#447959] pt-[2px] mt-[7px]">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
-          <h1 className="text-[30px] mt-2 font-bold">{detail.title}</h1>
-        </div>
-        <div className="items-center justify-left flex flex-row gap-[14px] text-[#757575] text-[18px] mb-[10px]">
-          <p className="ml-[6px] font-bold">
+        <div className="flex flex-row ml-[10px] items-center gap-3">
+          <p className="flex flex-row items-center justify-center text-white w-[46px] h-[24px] rounded-[14px] text-[14px] bg-[#447959] pt-[2px]">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
+          <h1 className="text-[23px] font-bold">{detail.title}</h1>
+          <p className="ml-[6px] font-bold text-[#757575] text-[16px]">
             {detail.location ? detail.location : detail.region}
           </p>
-          <p className="">{detail.start_date} ~ {detail.end_date}</p>
+          <p className="text-[#757575] text-[16px]">{detail.start_date} ~ {detail.end_date}</p>
         </div>
       </div>
 
-      <div className="flex flex-col mx-auto bg-[#F5F5F5] rounded-[10px] mx-350 h-[1150px] p-4">
-        <div className="flex flex-row">
-          <div className="ml-[50px]">
-            <Image
-              src={detail.image_url}
-              alt="공연 이미지"
-              width={563}
-              height={761}
-              className="rounded-md"
-            />
-          </div>
+      <div className="ml-[10px] mt-[15px] flex flex-row">
+        <div>
+          <Image
+            src={detail.image_url}
+            alt="공연 이미지"
+            width={361}
+            height={445}
+          />
+        </div>
 
-          <div className="font-bold flex flex-col mb-6 gap-[6px] pt-[10px] justify-center w-full max-w-[700px] mx-auto text-gray-700">
-            <p>일시: {detail.time}</p>
-            <p>러닝타임: {detail.runtime}</p>
-            <p>출연진: {detail.cast || "정보 없음"}</p>
-            <p>장르: {detail.genre}</p>
-            <p>가격: {detail.cost}</p>
-            {detail.story?.trim() && (
-              <p>내용: {detail.story}</p>
-            )}
+        <div className="flex flex-col mx-auto px-1">
+          <div className="flex flex-row justify-between">
+            <div className="flex flex-col">
+              <div className="flex mt-[10px] flex-col gap-[6px] text-[13px] justify-center w-[611px] h-[228px] text-gray-700">
+                <p>일시: {detail.time}</p>
+                <p>러닝타임: {detail.runtime}</p>
+                <p>출연진: {detail.cast || "정보 없음"}</p>
+                <p>장르: {detail.genre}</p>
+                <p>가격: {detail.cost}</p>
+                {detail.story?.trim() && (
+                  <p>내용: {detail.story}</p>
+                )}
 
-            <Image src="/images/image_jido.svg" alt="카카오맵" width={705} height={375} />
+                <button
+                  onClick={() => {
+                    const url = extractURL(detail.link);
+                    if (url) {
+                      window.open(url, "_blank");
+                    } else {
+                      alert("유효한 링크가 없습니다");
+                    }
+                  }}
+                  className="w-[155px] mt-[30px] cursor-pointer underline"
+                >
+                  여가 예약 페이지로 이동하기
+                </button>
 
 
-            <div className="flex flex-row mt-[20px]">
-              <button
-                onClick={() => handleBook(Number(activity.activity_id))}
-                className="font-bold mr-[30px] bg-[#447959] hover:bg-[#356246] text-white w-[150px] h-[45px] rounded-[20px]"
-              >
-                일정 등록하기
-              </button>
+                <div className="flex flex-row mt-[40px]">
+                  <button
+                    onClick={() => handleBook(Number(activity.activity_id))}
+                    className="border font-bold  border-[#447959] hover:bg-[#356246] text-[#447959] w-[182px] h-[23px] rounded-[20px]"
+                  >
+                    일정 등록하기
+                  </button>
 
+                  <button onClick={() => handleToggleWish(activity)}
+                    className="ml-[15px] border border-black w-[80px] h-[23px] rounded-[20px] ">
+                    <span className={`text-[14px] font-bold${detail.isWished ? "bg-[#000000] text-white" : "border-black text-black"
+                      }`}>
+                      {detail.isWished ? "찜 해제" : "찜하기"}
+                    </span>
+                  </button>
+                </div>
 
-              <button onClick={() => handleToggleWish(activity)}>
-                <Image
-                  src={
-                    detail.isWished
-                      ? "/images/icon_heart.svg"
-                      : "/images/icon_emptyheart.svg"
-                  }
-                  alt="하트"
-                  width={33}
-                  height={33}
-                />
-              </button>
+              </div>
 
-              {/* <button>
-                <Image
-                  src={
-                    "/images/icon_heart.svg"}
-                  alt="하트"
-                  width={27}
-                  height={27}
-                />
-              </button> */}
             </div>
 
 
-            <div
-              onClick={() => {
-                const url = extractURL(detail.link);
-                if (url) {
-                  window.open(url, "_blank");
-                } else {
-                  alert("유효한 링크가 없습니다");
-                }
-              }}
-              className="mt-[30px] cursor-pointer text-blue-600 underline"
-            >
-              여가 예약 페이지로 이동하기
+            <div className="mr-[10px]">
+
+              <Image src="/images/image_jido.svg" alt="카카오맵" width={301} height={287}/>
+
             </div>
           </div>
-
+          <div className="mt-[60px] bg-[#EBEBEB] w-[910px] h-[190px] flex flex-row items-center justify-center">
+            리뷰 내용 구현 예정
+          </div>
         </div>
-        <div className="mt-[30px] bg-[#EBEBEB] w-full h-[375px] flex flex-row items-center justify-center">
-          리뷰 내용 구현 예정
-        </div>
 
-
-        {/* //<p className="mt-4 whitespace-pre-line">{detail.story || "설명 없음"}</p> */}
       </div>
-
-
     </div >
   );
 }

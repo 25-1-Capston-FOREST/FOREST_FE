@@ -75,14 +75,14 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
       }}
     >
       <div
-        className="relative h-full flex items-center cursor-pointer"
+        className="relative z-10 h-full flex items-center cursor-pointer"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onClick={logoButtonClick}
       >
         {/* FOR; 왼쪽 */}
         <div
-          className="left-[-15px] relative pointer-events-auto"
+          className="left-[-15px] relative pointer-events-none"
           style={{ position: "absolute" }}
         >
           <h1
@@ -98,7 +98,7 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
 
         {/* REST 중앙 */}
         <div
-          className="relative pointer-events-auto"
+          className="relative pointer-events-none"
           style={{
             position: "absolute",
             left: "65%",
@@ -128,8 +128,8 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
       <div className="flex height-[20px] bg-white" />
 
       {/* 버튼 영역 */}
-      <div className="border-t border-[#9A9A9A]" />
-      <div className="py-[10px] justify-center flex bg-white w-full flex flex-row justify-between px-[30px] text-[20px] transition-all duration-200">
+      <div className="relative z-30 border-t border-[#9A9A9A]" />
+      <div className="my-[6px] justify-center flex bg-white w-full flex flex-row justify-between px-[30px] text-[20px] transition-all duration-200">
         <div>
           <button
             onClick={chatbotButtonClick}
