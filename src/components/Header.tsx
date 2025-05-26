@@ -87,7 +87,11 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
         >
           <h1
             className="height-auto relative font-semibold text-[#447959] leading-none flex items-center"
-            style={getTextStyle()}
+            style={{
+              ...getTextStyle(),
+              pointerEvents: "none",
+            }}
+
           >
             <span className="block">F</span>
             <span className="absolute inset-0 flex items-center justify-start pointer-events-none">
@@ -114,6 +118,7 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              pointerEvents: "none",
             }}
           >
             <span className="block">R</span>

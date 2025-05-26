@@ -1,10 +1,10 @@
+// pages/leisure_details.tsx
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { postBooking } from "@/lib/api/book";
 import { getDetail } from "@/lib/api/detail";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
-
 
 interface PerformanceDetail {
   performance_id: string;
@@ -46,16 +46,16 @@ export default function Detail() {
     const match = link.match(/https?:\/\/[^\s]+/);
     return match ? match[0] : null;
   };
+
   const TYPE_MAP: { [key: string]: string } = {
     MOVIE: "영화",
     PERFORMANCE: "공연",
     EXHIBITION: "전시",
   };
+
   const handleBook = async (activityId: number) => {
     try {
-      // 임시 예약 날짜, 이후 사용자 입력으로 변경 가능
       const reserveDate = "2025-03-05 00:00:00";
-
       const res = await postBooking(activityId, reserveDate);
       console.log("예약 성공!", res);
       alert("예약이 완료되었습니다!");
@@ -64,27 +64,29 @@ export default function Detail() {
       alert("예약에 실패했어요 😢");
     }
   };
+
   const handleToggleWish = async (item: Activity) => {
     try {
       if (item.isWished) {
-        console.log("삭제할 wish_id:", item.wish_id);
         await deleteWish(item.wish_id!);
         alert("찜이 해제되었습니다!");
       } else {
-        console.log("추가할 activity_id:", item.activity_id);
         await postWish(item.activity_id);
         alert("찜에 추가되었습니다!");
       }
 
-      // 데이터 다시 불러오기
       if (activity_id && typeof activity_id === "string") {
         const updated = await getDetail(activity_id);
-        setActivity(updated.data);
+        // 여기서도 똑같이 복사
+        setActivity({
+          ...updated.data,
+          isWished: updated.data.detail.isWished,
+          wish_id: updated.data.detail.wish_id,
+        });
       }
-
     } catch (error) {
-      console.error("찜 처리 실패", error);
-      alert("찜 처리에 실패했어요");
+      console.error("찜 처리 실패 ❌", error);
+      alert("찜 처리에 실패했어요 😢");
     }
   };
 
@@ -124,7 +126,6 @@ export default function Detail() {
   }
 
   const detail = activity.detail;
-
 
   return (
     <div className="mx-10 pt-[10px] w-max-auto">

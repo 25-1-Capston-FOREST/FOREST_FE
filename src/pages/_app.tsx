@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }) {
 
       <main
         style={{
-          paddingTop: showHeader ? `200px` : "0px",
+          marginTop: showHeader ? `200px` : "0px",
           transition: "padding-top 150ms ease-out",
         }}
       >

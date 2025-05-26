@@ -45,31 +45,32 @@ const Leisure: React.FC<LeisureProps> = ({
   };
 
   return (
-    <div className="w-[280px] h-[380px]">
+    <div className="w-[290px] h-[425px]  bg-[#F6F6F6]">
       <button
         onClick={detailClick}
-        className="flex flex-col justify-center items-center w-[280px] h-[340px] bg-gray-200 overflow-hidden relative"
+        className="mt-[10px] flex flex-col justify-center items-center w-[280px] h-[340px] bg-[#F6F6F6] overflow-hidden relative"
       >
         <Image
           src={image_url}
           alt="포스터"
           width={247}
-          height={340}
+          height={350}
           style={{ objectFit: "cover", objectPosition: "center" }}
+          className="mt-[15px]"
         />
       </button>
 
-      <div className="flex flex-row mt-[20px] border-t">
+      <div className="flex flex-row mt-[8px] px-[20px]">
         <div className="flex font-normal justify-center text-white w-[40px] h-[20px] rounded-[8px] text-[12px] bg-[#447959] pt-[2px] mt-[5px]">
           {getActivityTypeName(activity_type)}
         </div>
-        <div className="font-bold text-[14px] mt-[6px] ml-[6px] max-w-[235px] truncate overflow-hidden whitespace-nowrap">
+        <div className="font-bold text-[14px] mt-[6px] ml-[6px] max-w-[200px] truncate overflow-hidden whitespace-nowrap">
           {title}
         </div>
       </div>
 
       {/* 날짜 출력 */}
-      <div className="text-[13px] text-gray-600 mt-[6px] ml-[4px]">
+      <div className="text-[13px] px-[20px] text-gray-600 mt-[3px] ml-[4px]">
         {renderDate()}
       </div>
 

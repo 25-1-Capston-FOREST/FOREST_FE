@@ -158,11 +158,10 @@ export default function Main() {
 
       <div className="w-full mt-[30px] flex justify-center">
         <div className="max-w-[1500px] w-full px-[70px]">
-          <div className="grid grid-cols-4 gap-x-[50px] gap-y-[80px] justify-items-center">
+          <div className="grid grid-cols-4 gap-x-[50px] gap-y-[35px] justify-items-center">
             {filteredActivities.length > 0 ? (
               filteredActivities.map((activity) => {
                 const detail = activity.detail || {};
-                console.log("activity.detail 안에 뭐가 있는지:", detail);
                 return (
                   <Leisure
                     key={activity.activity_id}
