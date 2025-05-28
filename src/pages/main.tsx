@@ -22,6 +22,8 @@ export default function Main() {
   const [isSortPopupOpen, setIsSortPopupOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [query, setQuery] = useState("");
+
 
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -43,10 +45,10 @@ export default function Main() {
               mappedDetail.start_date = detail.open_dt;
               mappedDetail.end_date = detail.opsnm_dt || "";
             } else if (activity.activity_type === "PERFORMANCE") {
-              mappedDetail.start_date = detail.start_date; // ✅ 고쳤음!
+              mappedDetail.start_date = detail.start_date; 
               mappedDetail.end_date = detail.end_date || "";
             } else if (activity.activity_type === "EXHIBITION") {
-              mappedDetail.start_date = detail.start_date; // ✅ 고쳤음!
+              mappedDetail.start_date = detail.start_date; 
               mappedDetail.end_date = detail.end_date || "";
             }
             return {
@@ -86,6 +88,15 @@ export default function Main() {
     setIsSortPopupOpen(!isSortPopupOpen);
   };
   const headerHeight = 150;
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // 폼 제출 방지
+      if (query.trim()) {
+        router.push(`/search?keyword=${query}`);
+      }
+    }
+  };
 
   return (
     <div
@@ -131,7 +142,7 @@ export default function Main() {
               <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
                 추천순
               </button>
-              
+
               <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
                 시간순
               </button>
@@ -147,10 +158,14 @@ export default function Main() {
 
         {/* 검색창 */}
         <div className="w-[480px] h-[40px] rounded-[10px] items-center border border-[#000000] text-[14px] ml-[100px] mr-[45px]">
-          <textarea
-            className="resize-none w-[450px] h-[59px] bg-transparent text-[14px] outline-none px-[0px] py-[10px] px-[10px]"
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Search"
-          ></textarea>
+            className="w-[450px] h-[38px] bg-transparent text-[14px] outline-none px-[10px] py-[0px]"
+          />
         </div>
       </div>
 

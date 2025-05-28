@@ -6,12 +6,10 @@ export const postChatMessage = async (questionId: string, message: string) => {
     question_id: questionId,
     message: message,
   })
-
   // 응답 형식: { status: "success", reply: "..." }
   return response.data
 }
 
-// 챗봇 마지막 메시지 저장 API (종료 이유 포함)
 export const saveChatMessage = async () => {
   const response = await instance.post("/api/chatbot/save")
   console.log("~~", response.data)
