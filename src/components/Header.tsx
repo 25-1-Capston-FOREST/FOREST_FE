@@ -134,7 +134,7 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
 
       {/* 버튼 영역 */}
       <div className="relative z-30 border-t border-[#9A9A9A]" />
-      <div className="my-[6px] justify-center flex bg-white w-full flex flex-row justify-between px-[30px] text-[20px] transition-all duration-200">
+      <div className="bg-[#FFFFFF] py-[4px] justify-center flex bg-white w-full flex flex-row justify-between px-[20px] text-[18px] transition-all duration-200">
         <div>
           <button
             onClick={chatbotButtonClick}
@@ -158,7 +158,7 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
           </button>
         </div>
       </div>
-      <div className="border-t border-[#9A9A9A]" />
+      <div className="bg-[#000000] border-t border-[#9A9A9A]" />
     </header>
   );
 };
