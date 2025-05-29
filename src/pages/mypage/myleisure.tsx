@@ -153,12 +153,12 @@ export default function Myleisure() {
       <MypageSidebar />
       <div className="">
         {/* 탭 메뉴 */}
-        <div className="flex flex-col ml-[520px] py-[3px] gap-0.5">
-          {["찜 목록", "예정된 여가", "완료된 여가"].map((tab) => (
+        <div className="flex flex-row ml-[475px] py-[3px] ">
+          {["Wish List", "Planned Leisure", "Completed Leisure"].map((tab) => (
             <button
               key={tab}
               onClick={() => setSelectedTab(tab)}
-              className={`text-left w-[80px] text-[13px] ${selectedTab === tab
+              className={`text-left mx-[8px] text-[13px] ${selectedTab === tab
                 ? "text-[#000000]"
                 : "text-[#9A9A9A]"
                 }`}

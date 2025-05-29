@@ -165,7 +165,7 @@ export default function Detail() {
       <div>
         <div className="flex flex-row ml-[10px] items-center gap-3">
           <p className="flex flex-row items-center justify-center text-white w-[46px] h-[24px] rounded-[14px] text-[14px] bg-[#447959] pt-[2px]">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
-          <h1 className="text-[23px] font-bold">{detail.title}</h1>
+          <h1 className="flex flex-row items-center justify-center text-[21px] font-bold">{detail.title}</h1>
 
           {(() => {
             switch (activity.activity_type) {
@@ -283,10 +283,12 @@ export default function Detail() {
                   {(() => {
                     switch (activity.activity_type) {
                       case "MOVIE": {
-                        const movie = detail as MovieDetail;
                         return (
-                          <>
-                          </>
+                          <div
+                            className="text-[#757575] w-[300px] mt-[55px]"
+                          >
+                            영화의 예매 페이지는 제공하지 않습니다.
+                          </div>
                         );
                       }
 
@@ -333,13 +335,14 @@ export default function Detail() {
                       default:
                         return (
                           <>
+                            ㅇㅇ
                           </>
                         );
                     }
                   })()}
                 </div>
 
-                <div className="flex flex-row mt-[80px]">
+                <div className="flex flex-row mt-[90px]">
                   <button
                     onClick={() => handleBook(Number(activity.activity_id))}
                     className="text-[14px] border border-[#447959] text-[#447959] w-[152px] h-[25px] rounded-[20px]"
@@ -348,9 +351,9 @@ export default function Detail() {
                   </button>
 
                   <button onClick={() => handleToggleWish(activity)}
-                    className="ml-[15px] border border-black w-[80px] h-[25px] rounded-[20px] ">
-                    <span className={`text-[14px] font-bold${detail.isWished ? "bg-[#000000] text-white" : "border-black text-black"
+                    className={`flex flex-row items-center justify-center ml-[15px] border border-black w-[90px] h-[25px] rounded-[20px] ${detail.isWished ? "bg-[#000000] text-white" : "border-black text-black"
                       }`}>
+                    <span className="text-[14px]">
                       {detail.isWished ? "찜 해제" : "찜하기"}
                     </span>
                   </button>

@@ -106,18 +106,18 @@ export default function Main() {
         backgroundColor: "white",
         minHeight: "100vh",
       }}        >
-      <div className=" w-full flex flex-row items-center">
-        <div className="flex flex-row items-center ml-[45px] text-[18px]">
+      <div className="mt-[-10px] w-full flex flex-row items-center">
+        <div className="flex flex-row items-center ml-[45px] text-[15px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
             <button
               key={category}
               onClick={() => handleCategoryClick(category)}
-              className={`w-[110px] rounded-[20px] py-2 text-white text-center text-left 
+              className={`w-[80px] rounded-[20px] py-1 text-white text-center text-left 
               ${selectedCategories.includes(category)
                   ? "bg-[#447959]"
                   : "bg-[#D0D0D0]"
-                } ${index > 0 ? "ml-[20px]" : ""}`}
+                } ${index > 0 ? "ml-[10px]" : ""}`}
             >
               {category === "MOVIE"
                 ? "영화"
@@ -128,7 +128,7 @@ export default function Main() {
           ))}
 
           <button
-            className="justify-left items-center px-[15px] py-[2px] flex flex-row text-[17px] ml-[30px] border border-black rounded-[10px] w-[143px] h-[40px]"
+            className="justify-left items-center px-[15px] py-[2px] flex flex-row text-[14px] ml-[30px] border border-black rounded-[10px] w-[103px] h-[30px]"
           >
             추천순
           </button>
@@ -157,7 +157,7 @@ export default function Main() {
 
 
         {/* 검색창 */}
-        <div className="w-[480px] h-[40px] rounded-[10px] items-center border border-[#000000] text-[14px] ml-[100px] mr-[45px]">
+        <div className="w-[480px] h-[30px] rounded-[10px] items-center flex flex-row border border-[#000000] ml-[230px] text-[14px]">
           <input
             type="text"
             value={query}
