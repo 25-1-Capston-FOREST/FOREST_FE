@@ -4,6 +4,7 @@ import Image from "next/image";
 import { postBooking } from "@/lib/api/book";
 import { getDetail } from "@/lib/api/detail";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
+import KakaoMapImage from "@/components/KakaoMapImage";
 
 interface PerformanceDetail {
   performance_id: string;
@@ -25,6 +26,8 @@ interface PerformanceDetail {
   status: string;
   isWished?: boolean;
   wish_id?: string;
+  latitude: number;
+  longitude: number;
 }
 
 interface MovieDetail {
@@ -40,6 +43,8 @@ interface MovieDetail {
   actors: string;
   isWished?: boolean;
   wish_id?: string;
+  latitude: number;
+  longitude: number;
 }
 
 interface ExhibitionDetail {
@@ -51,12 +56,14 @@ interface ExhibitionDetail {
   start_date: string;
   end_date: string;
   location: string;
-  area: string; 서울만?
+  // area: string; 
   contents: string;
   price: string;
   url: string;
   isWished?: boolean;
   wish_id?: string;
+  latitude: number;
+  longitude: number;
 }
 
 interface Activity {
@@ -70,7 +77,6 @@ interface Activity {
 export default function Detail() {
   const router = useRouter();
   const { activity_id } = router.query;
-
   const [activity, setActivity] = useState<Activity | null>(null);
 
   const extractURL = (link: string) => {
@@ -248,7 +254,7 @@ export default function Detail() {
                         const exhibition = detail as ExhibitionDetail;
                         return (
                           <>
-                            <p>전시장: {exhibition.location || exhibition.area || null}</p>
+                            <p>전시장: {exhibition.location || null}</p>
                             <p>전시 기간: {exhibition.start_date} ~ {exhibition.end_date}</p>
                             <p>입장료: {exhibition.price}</p>
                             <p>내용: {exhibition.contents || "설명 없음"}</p>
@@ -363,12 +369,44 @@ export default function Detail() {
 
 
               <div className="mr-[10px]">
-                <Image src="/images/image_jido.svg" alt="카카오맵" width={331} height={287} />
+
+                {(() => {
+                  switch (activity.activity_type) {
+                    case "MOVIE": {
+                      return (
+                        <div
+                          className="text-[#757575] w-[300px] mt-[55px]"
+                        >
+                          영화관의 지도 사진은 제공하지 않습니다.
+                        </div>
+                      );
+                    }
+                    case "PERFORMANCE": {
+                      return (
+                        <>
+                          {detail.latitude && detail.longitude ? (
+                            <KakaoMapImage
+                              la={Number(detail.latitude)}
+                              lo={Number(detail.longitude)}
+                            />
+                          ) : (
+                            <div className="w-[331px] h-[287px] bg-[#D9D9D9] flex items-center justify-center text-[#888] text-sm">
+                              위치 정보 없음
+                            </div>
+                          )
+                          }
+                        </>
+                      );
+                    }
+
+                  }
+                })()}
+
               </div>
 
             </div>
 
-            <div className="mt-[40px] bg-[#EBEBEB] w-[1010px] h-[180px] flex flex-row items-center justify-center">
+            <div className="mt-[40px] bg-[#EBEBEB] w-[1050px] h-[180px] flex flex-row items-center justify-center">
               리뷰 내용 구현 예정
             </div>
 
@@ -376,6 +414,6 @@ export default function Detail() {
 
         </div>
       </div >
-    </div>
+    </div >
   );
 }

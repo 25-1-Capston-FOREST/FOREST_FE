@@ -7,14 +7,28 @@ import { postBooking, getBookedActivities } from "@/lib/api/book";
 
 export default function Myleisure() {
   const router = useRouter();
-  const [selectedTab, setSelectedTab] = useState("찜 목록");
+  const [selectedTab, setSelectedTab] = useState("Wish List");
   const [bookmarkedLeisure, setBookmarkedLeisure] = useState([]);
   const [reservedLeisure, setReservedLeisure] = useState([]);
+  const [finishedLeisure, setFinishedLeisure] = useState([]);
 
   const TYPE_MAP: { [key: string]: string } = {
     MOVIE: "영화",
     PERFORMANCE: "공연",
     EXHIBITION: "전시",
+  };
+
+  const getCurrentList = () => {
+    switch (selectedTab) {
+      case "Wish List":
+        return bookmarkedLeisure;
+      case "Planned Leisure":
+        return reservedLeisure;
+      case "Completed Leisure":
+        return finishedLeisure;
+      default:
+        return [];
+    }
   };
 
   const handleToggleWish = async (item) => {
@@ -29,9 +43,9 @@ export default function Myleisure() {
         alert("찜에 추가되었습니다!");
       }
       // 목록 새로고침
-      if (selectedTab === "찜 목록") {
+      if (selectedTab === "Wish List") {
         const res = await getWishlist();
-        console.log("찜 목록 응답:", res);
+        console.log("Wish List 응답:", res);
         setBookmarkedLeisure(
           res.data.map((item) => ({
             ...item,
@@ -45,6 +59,7 @@ export default function Myleisure() {
     }
   };
 
+
   useEffect(() => {
     const fetchReservedLeisure = async () => {
       try {
@@ -56,7 +71,7 @@ export default function Myleisure() {
       }
     };
 
-    if (selectedTab === "예정된 여가") {
+    if (selectedTab === "Planned Leisure") {
       fetchReservedLeisure();
     }
   }, [selectedTab]);
@@ -64,52 +79,38 @@ export default function Myleisure() {
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        const res = await getWishlist();
-        //const res = await fetch("/data/activities.json")
-        console.log("찜 목록 응답", res);
 
+        //로컬용
+        //const res = await fetch("/data/activities.json")
         // setBookmarkedLeisure(
-        //   res.data.map((item) => ({
-        //     ...item,
-        //     isWished: true,
-        //   }))
-        // );
+        // ~~
         //const data = await res.json();
         //setBookmarkedLeisure(data)
 
+        //배포용
+        const res = await getWishlist();
+        console.log("Wish List 응답", res);
         setBookmarkedLeisure(
           res.data.map((item) => ({
             ...item,
             isWished: true,
           }))
         );
-        //const data = await res.json();
-        //setBookmarkedLeisure(data.data)
 
       } catch (error) {
-        console.error("찜 목록 불러오기 실패", error);
+        console.error("Wish List 불러오기 실패", error);
       }
     };
 
-    if (selectedTab === "찜 목록") {
+    if (selectedTab === "Wish List") {
       fetchWishlist();
     }
   }, [selectedTab]);
 
-  const getCurrentList = () => {
-    switch (selectedTab) {
-      case "찜 목록":
-        return bookmarkedLeisure;
-      case "예정된 여가":
-        return reservedLeisure;
-      // 나머지 예정된 여가, 완료된 여가
-      default:
-        return [];
-    }
-  };
+
   const handleBook = async (activityId: number) => {
     try {
-      // 임시 예약 날짜, 이후 사용자 입력으로 변경 가능
+      // 임시 예약 날짜,
       const reserveDate = "2025-03-05 00:00:00";
 
       const res = await postBooking(activityId, reserveDate);
@@ -130,35 +131,21 @@ export default function Myleisure() {
     }
   };
 
-  const renderLeisureTitle = (item) => {
-    if (!item) return "정보 없음";
+  const handleReview=() => {
 
-    const { detailedInfo, activity_type } = item;
-
-    if (detailedInfo?.title) return detailedInfo.title;
-
-    switch (activity_type) {
-      case "MOVIE":
-        return "영화 정보 없음";
-      case "PERFORMANCE":
-        return "공연 정보 없음";
-      case "EXHIBITION":
-        return "전시 정보 없음";
-      default:
-        return "제목 없음";
-    }
   };
+  
   return (
-    <div className="">
+    <div>
       <MypageSidebar />
       <div className="">
         {/* 탭 메뉴 */}
-        <div className="flex flex-row ml-[475px] py-[3px] ">
+        <div className="flex flex-col ml-[472px] my-[3px]">
           {["Wish List", "Planned Leisure", "Completed Leisure"].map((tab) => (
             <button
               key={tab}
               onClick={() => setSelectedTab(tab)}
-              className={`text-left mx-[8px] text-[13px] ${selectedTab === tab
+              className={`text-left mx-[8px] text-[12.5px] ${selectedTab === tab
                 ? "text-[#000000]"
                 : "text-[#9A9A9A]"
                 }`}
@@ -173,7 +160,6 @@ export default function Myleisure() {
           {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ? (
             getCurrentList().map((item) => (
               <li key={item.wish_id ?? item.activity_id} className="pb-[15px] flex justify-center w-[1300px] mx-auto border-b flex items-center">
-
                 {item.detailedInfo?.image_url ? (
                   <img
                     src={item.detailedInfo.image_url}
@@ -235,25 +221,36 @@ export default function Myleisure() {
 
                     {/* 버튼 모음*/}
                     <div className="flex flex-row">
+                      {selectedTab === "Wish List" && (
+                        <button
+                          onClick={() => handleBook(item.activity_id)}
+                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
+                        >
+                          일정 등록하기
+                        </button>
+                      )}
 
-                      <button
-                        onClick={() => handleBook(item.activity_id)}
-                        className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
-                      >
-                        예약 취소하기
-                      </button>
+                      {selectedTab === "Planned Leisure" && (
+                        <button
+                          onClick={() => alert("일정 변경 기능은 구현 예정입니다!")}
+                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
+                        >
+                          일정 변경하기
+                        </button>
+                      )}
 
-                      <button onClick={() => handleToggleWish(item)}>
-                        <Image
-                          src={
-                            item.isWished
-                              ? "/images/icon_heart.svg"
-                              : "/images/icon_emptyheart.svg"
-                          }
-                          alt="하트"
-                          width={27}
-                          height={27}
-                        />
+                      {selectedTab === "Completed Leisure" && (
+                        <button
+                          onClick={() => handleReview()}
+                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
+                        >
+                          리뷰 작성하기
+                        </button>
+                      )}
+
+                      <button onClick={() => handleToggleWish(item)}
+                        className="">
+                        찜 버튼
                       </button>
                     </div>
                   </div>
@@ -262,7 +259,12 @@ export default function Myleisure() {
               </li>
             ))
           ) : (
-            <p className="text-gray-500">리스트가 비어 있습니다.</p>
+            <p className="text-gray-500">
+            <button onClick={handleReview}>
+              테스트
+            </button>
+            리스트가 비어 있습니다.
+            </p>
           )}
         </ul>
       </div>

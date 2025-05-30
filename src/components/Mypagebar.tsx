@@ -5,7 +5,7 @@ const MypageSidebar = () => {
   const router = useRouter();
 
   const menuItems = [
-    { name: "Profile", path: "/mypage/modify" },
+    { name: "Profile", path: "/mypage/profile" },
     { name: "My Leisure", path: "/mypage/myleisure" },
     { name: "Review", path: "/mypage/myreview" },
     { name: "Delete Account", path: "/mypage/delete" }
