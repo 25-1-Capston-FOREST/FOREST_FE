@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 import Image from "next/image";
 import { postBooking, getBookedActivities } from "@/lib/api/book";
+import { getPlannedlist, getCompletedlist } from "@/lib/api/useractivities";
 
 export default function Myleisure() {
   const router = useRouter();
@@ -41,6 +42,11 @@ export default function Myleisure() {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
   };
+
+  useEffect(() => {
+  const savedTab = localStorage.getItem("selectedTab");
+  if (savedTab) setSelectedTab(savedTab);
+}, []);
 
 
   const TYPE_MAP: { [key: string]: string } = {
@@ -94,11 +100,11 @@ export default function Myleisure() {
   useEffect(() => {
     const fetchReservedLeisure = async () => {
       try {
-        const res = await getBookedActivities();
-        console.log("예약된 여가 응답:", res);
+        const res = await getPlannedlist();
+        console.log("Planned Leisure 응답", res);
         setReservedLeisure(res.data);
       } catch (error) {
-        console.error("예약된 여가 불러오기 실패", error);
+        console.error("Planned Leisure 불러오기 실패", error);
       }
     };
 
@@ -107,10 +113,27 @@ export default function Myleisure() {
     }
   }, [selectedTab]);
 
+
+  useEffect(() => {
+    const fetchFinishedLeisure = async () => {
+      try {
+        const res = await getCompletedlist();
+        console.log("Completed Leisure 응답", res);
+        setFinishedLeisure(res.data);
+      } catch (error) {
+        console.error("Completed Leisure 불러오기 실패", error);
+      }
+    };
+
+    if (selectedTab === "Completed Leisure") {
+      fetchFinishedLeisure();
+    }
+  }, [selectedTab]);
+
+
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-
         //로컬용
         //const res = await fetch("/data/activities.json")
         // setBookmarkedLeisure(
@@ -147,6 +170,11 @@ export default function Myleisure() {
       const res = await postBooking(activityId, reserveDate);
       console.log("예약 성공!", res);
       alert("예약이 완료되었습니다!");
+
+      if (selectedTab === "Planned Leisure") {
+        const refreshed = await getPlannedlist();
+        setReservedLeisure(refreshed.data);
+      }
     } catch (error) {
       console.error("예약 실패", error);
       alert("예약에 실패했어요 😢");
@@ -275,9 +303,8 @@ export default function Myleisure() {
                         </button>
                       )}
 
-                      <button onClick={() => handleToggleWish(item)}
-                        className="">
-                        찜 버튼
+                      <button onClick={() => handleToggleWish(item)}>
+                        {item.isWished ? "찜 취소" : "찜하기"}
                       </button>
                     </div>
                   </div>
