@@ -1,5 +1,5 @@
 import MypageSidebar from "@/components/Mypagebar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 import Image from "next/image";
@@ -11,6 +11,37 @@ export default function Myleisure() {
   const [bookmarkedLeisure, setBookmarkedLeisure] = useState([]);
   const [reservedLeisure, setReservedLeisure] = useState([]);
   const [finishedLeisure, setFinishedLeisure] = useState([]);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [rating, setRating] = useState(0);
+  const starRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const [reviewText, setReviewText] = useState("");
+
+  // 별점 핸들러
+  const handleStarClick = (index: number) => setRating(index);
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging.current || !starRef.current) return;
+    const rect = starRef.current.getBoundingClientRect();
+    let offsetX = e.clientX - rect.left;
+    offsetX = Math.max(0, Math.min(offsetX, rect.width)); // 바깥 클릭 방지
+
+    const percent = offsetX / rect.width;
+    const newRating = Math.round(percent * 10) / 2; // 0.5 단위 반올림
+    setRating(Math.min(5, Math.max(0, newRating)));
+  };
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
+    window.removeEventListener("mousemove", handleMouseMove);
+    window.removeEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleMouseDown = () => {
+    isDragging.current = true;
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+  };
+
 
   const TYPE_MAP: { [key: string]: string } = {
     MOVIE: "영화",
@@ -131,10 +162,21 @@ export default function Myleisure() {
     }
   };
 
-  const handleReview=() => {
-
+  // 저장 핸들러
+  const handleReviewSave = () => {
+    console.log("리뷰 저장됨!");
+    console.log("별점:", rating);
+    console.log("내용:", reviewText);
+    setShowReviewModal(false); // 팝업 닫기
+    setRating(0);
+    setReviewText("");
   };
-  
+
+  // 팝업 여는 함수
+  const handleReview = () => {
+    setShowReviewModal(true);
+  };
+
   return (
     <div>
       <MypageSidebar />
@@ -260,14 +302,92 @@ export default function Myleisure() {
             ))
           ) : (
             <p className="text-gray-500">
-            <button onClick={handleReview}>
-              테스트
-            </button>
-            리스트가 비어 있습니다.
+              <button onClick={handleReview}>
+                테스트
+              </button>
+              리스트가 비어 있습니다.
             </p>
           )}
         </ul>
       </div>
+
+      {showReviewModal && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="relative bg-white p-6 rounded-xl shadow-md w-[450px] h-[300px] border border-gray-300">
+            {/* 닫기 버튼 */}
+            <button
+              onClick={() => setShowReviewModal(false)}
+              className="absolute top-3 right-3 text-gray-400 text-xl hover:text-gray-600"
+            >
+              &times;
+            </button>
+
+            <h2 className="text-lg font-semibold mb-3">리뷰 작성하기</h2>
+            <div
+              ref={starRef}
+              className="flex mb-4 w-[150px] cursor-pointer select-none gap-1.5"
+              onMouseDown={handleMouseDown}
+            >
+              {[1, 2, 3, 4, 5].map((index) => (
+                <svg
+                  key={index}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  className="w-7 h-7"
+                >
+                  <defs>
+                    <linearGradient id={`half-${index}`}>
+                      <stop
+                        offset={
+                          rating >= index
+                            ? "100%"
+                            : rating >= index - 0.5
+                              ? "50%"
+                              : "0%"
+                        }
+                        stopColor="#FACC15"
+                      />
+                      <stop
+                        offset={
+                          rating >= index
+                            ? "100%"
+                            : rating >= index - 0.5
+                              ? "50%"
+                              : "0%"
+                        }
+                        stopColor="#D1D5DB"
+                        stopOpacity="1"
+                      />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    fill={`url(#half-${index})`}
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.956
+           1.476 8.268L12 18.896l-7.412 4.634
+           1.476-8.268-6.064-5.956 8.332-1.151z"
+                  />
+                </svg>
+              ))}
+            </div>
+
+            <textarea
+              className="w-full h-[120px] border border-gray-300 rounded-lg p-2 mb-3 text-sm resize-none"
+              placeholder="후기를 입력하세요."
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+            ></textarea>
+
+            <div className="flex justify-end mt-auto">
+              <button
+                onClick={handleReviewSave}
+                className="justify-center items-center text-center bg-[#2D2D2D] hover:bg-[#1d1d1d] text-white text-sm rounded-md w-[130px] h-[34px]"
+              >
+                저장하기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
