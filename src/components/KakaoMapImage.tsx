@@ -52,7 +52,7 @@ const KakaoMapImage: React.FC<KakaoMapProps> = ({ la, lo }) => {
     if (!existingScript) {
       console.log("스크립트가 없어서 새로 추가함");
       const script = document.createElement("script");
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&autoload=true&libraries=services`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&autoload=false&libraries=services`;
       script.async = true;
 
       script.onload = () => {
