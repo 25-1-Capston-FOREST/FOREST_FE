@@ -29,7 +29,7 @@ export default function Chatbot() {
       alert("대화 저장 중 에러가 발생했습니다.")
     }
   }
-  // ✅ 메시지 전송
+  // 메시지 전송
   const handleSend = async () => {
     if (!input.trim()) return
 
@@ -57,7 +57,7 @@ export default function Chatbot() {
   }
 
 
-  // ✅ 자동 스크롤
+  //  자동 스크롤
   useEffect(() => {
     const container = containerRef.current
     if (container) {

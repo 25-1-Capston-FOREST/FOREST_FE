@@ -131,29 +131,29 @@ export default function Detail() {
     if (!activity_id || typeof activity_id !== "string") return; if (!activity_id) return;
     console.log(activity_id)
     //로컬용
-    const fetchActivity = async () => {
-      try {
-        const res = await fetch("/data/activities.json");
-        const json = await res.json();
-
-        setActivity(json.data);
-        console.log(activity)
-      } catch (error) {
-        console.error("여가 정보 불러오기 실패", error);
-        alert("여가 정보를 불러오는 데 실패했어요 😢");
-      }
-    };
-    //배포용
     // const fetchActivity = async () => {
     //   try {
-    //     const data = await getDetail(activity_id);
-    //     console.log("받은 데이터:", data);
-    //     setActivity(data.data);
+    //     const res = await fetch("/data/activities.json");
+    //     const json = await res.json();
+
+    //     setActivity(json.data);
+    //     console.log(activity)
     //   } catch (error) {
     //     console.error("여가 정보 불러오기 실패", error);
     //     alert("여가 정보를 불러오는 데 실패했어요 😢");
     //   }
     // };
+    //배포용
+    const fetchActivity = async () => {
+      try {
+        const data = await getDetail(activity_id);
+        console.log("받은 데이터:", data);
+        setActivity(data.data);
+      } catch (error) {
+        console.error("여가 정보 불러오기 실패", error);
+        alert("여가 정보를 불러오는 데 실패했어요 😢");
+      }
+    };
 
     fetchActivity();
   }, [activity_id]);
