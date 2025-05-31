@@ -28,7 +28,7 @@ const MypageSidebar = () => {
   const handleMouseLeave = () => {
     timerRef.current = setTimeout(() => {
       setShowSubMenu(false);
-    }, 1000); // 1초 후 사라짐
+    }, 100); // 1초 후 사라짐
   };
 
   return (
@@ -56,7 +56,7 @@ const MypageSidebar = () => {
             {/* 서브 메뉴 (My Leisure일 때만) */}
             {isMyLeisure && (
               <div
-                className={`absolute left-0 top-[25px] transition-all duration-10
+                className={`absolute left-0 top-[25px] transition-all duration-300
                   ${showSubMenu ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1 pointer-events-none"}
                 `}
               >
