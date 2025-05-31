@@ -5,7 +5,7 @@ declare global {
     kakao: any;
   }
 }
-
+//
 export interface KakaoMapProps {
   la: number;
   lo: number;
