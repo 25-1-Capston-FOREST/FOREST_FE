@@ -256,7 +256,7 @@ export default function Myleisure() {
                   </p>
 
                   {/* 기간 */}
-                  <p className="text-[143px] text-[#757575] mb-[14px]">
+                  <p className="text-[13px] text-[#757575] mb-[14px]">
                     {item.activity_type === "MOVIE"
                       ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
                       : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
@@ -280,7 +280,7 @@ export default function Myleisure() {
                       {selectedTab === "Wish List" && (
                         <button
                           onClick={() => handleBook(item.activity_id)}
-                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
+                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[25px] rounded-[20px]"
                         >
                           일정 등록하기
                         </button>
@@ -305,7 +305,7 @@ export default function Myleisure() {
                       )}
 
                       <button onClick={() => handleToggleWish(item)}>
-                        {item.isWished ? "찜 취소" : "찜하기"}
+                        {item.isWished ? "찜 해제" : "찜하기"}
                       </button>
                     </div>
                   </div>
