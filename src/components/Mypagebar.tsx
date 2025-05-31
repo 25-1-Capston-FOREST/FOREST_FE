@@ -6,7 +6,6 @@ const MypageSidebar = () => {
   const router = useRouter();
   const [showSubMenu, setShowSubMenu] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-
   const [selectedTab, setSelectedTab] = useState<string | null>(null);
 
   useEffect(() => {
@@ -16,7 +15,7 @@ const MypageSidebar = () => {
     } else {
       setSelectedTab(null);
     }
-  }, [router.pathname]);
+  }, [router.pathname, router.query.tab]);
 
   const menuItems = [
     { name: "Profile", path: "/mypage/profile" },
