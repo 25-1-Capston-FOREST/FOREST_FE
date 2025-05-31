@@ -38,7 +38,6 @@ export default function Search() {
         const data = await getSearch(keyword);
         console.log("받은 데이터:", data);
         setResults(data.data);
-        console.log
 
         // 이미 필터링된 데이터를 타입에 맞게 변환해서 results에 저장
         // const converted: Activity[] = json.map((item: any) => ({
