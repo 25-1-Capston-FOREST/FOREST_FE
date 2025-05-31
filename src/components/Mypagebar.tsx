@@ -18,6 +18,7 @@ const MypageSidebar = () => {
       setSelectedTab(null);
     }
   }, [router.pathname, router.query.tab]);
+  
   const menuItems = [
     { name: "Profile", path: "/mypage/profile" },
     { name: "My Leisure", path: "/mypage/myleisure" },

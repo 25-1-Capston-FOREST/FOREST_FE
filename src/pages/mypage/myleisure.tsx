@@ -232,20 +232,20 @@ export default function Myleisure() {
 
                 <div className="ml-[60px] w-[785px] h-[170px]">
                   {/* 여가 유형 */}
-                  <p className="mb-[10px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
+                  <p className="mb-[8px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
                     {TYPE_MAP[item.activity_type] ?? "기타"}
                   </p>
 
                   {/* 제목 */}
                   <button
-                    className="text-[21px] font-bold"
+                    className="text-[19px] font-bold"
                     onClick={() => handleLeisureClick(item)}
                   >
                     {item.detailedInfo?.title ?? "제목 없음"}
                   </button>
 
                   {/* 장소 */}
-                  <p className="text-[16px] whitespace-pre-line">
+                  <p className="text-[15px] text-[#757575] whitespace-pre-line">
                     {item.activity_type === "MOVIE"
                       ? "\n"
                       : item.activity_type === "PERFORMANCE"
@@ -256,7 +256,7 @@ export default function Myleisure() {
                   </p>
 
                   {/* 기간 */}
-                  <p className="text-[14px] mb-[14px]">
+                  <p className="text-[143px] text-[#757575] mb-[14px]">
                     {item.activity_type === "MOVIE"
                       ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
                       : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
@@ -272,7 +272,7 @@ export default function Myleisure() {
                       <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
                       <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
                       <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                      <p className="pt-[3px] ml-[6px]">평균 평점 5</p>
+                      <p className="pt-[3px] ml-[6px] text-[13px]">평균 평점 5</p>
                     </div>
 
                     {/* 버튼 모음*/}
