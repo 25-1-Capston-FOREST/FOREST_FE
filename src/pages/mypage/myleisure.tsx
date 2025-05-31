@@ -180,22 +180,7 @@ export default function Myleisure() {
   return (
     <div>
       <MypageSidebar />
-      <div className="">
-        {/* 탭 메뉴 */}
-        <div className="flex flex-col ml-[472px] my-[3px]">
-          {["Wish List", "Planned Leisure", "Completed Leisure"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setSelectedTab(tab)}
-              className={`text-left mx-[8px] text-[12.5px] ${selectedTab === tab
-                ? "text-[#000000]"
-                : "text-[#9A9A9A]"
-                }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+      <div className="mt-[70px]">
 
         {/* 리스트 출력 */}
         <ul className="flex mx-auto mt-4 w-[1300px] justify-center flex-col gap-8">
