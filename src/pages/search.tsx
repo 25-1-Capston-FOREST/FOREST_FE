@@ -34,7 +34,7 @@ export default function Search() {
         // const res = await fetch("/data/activities.json");
         // const json = await res.json();
 
-        //배포용
+        //배포용//
         const data = await getSearch(keyword);
         console.log("받은 데이터:", data);
         const converted: Activity[] = data.map((item: any) => ({
