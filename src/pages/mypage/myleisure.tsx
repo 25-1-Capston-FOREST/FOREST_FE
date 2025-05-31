@@ -43,9 +43,21 @@ export default function Myleisure() {
     window.addEventListener("mouseup", handleMouseUp);
   };
 
-  useEffect(() => {
+useEffect(() => {
   const savedTab = localStorage.getItem("selectedTab");
   if (savedTab) setSelectedTab(savedTab);
+
+  const handleStorageChange = (e: StorageEvent) => {
+    if (e.key === "selectedTab" && e.newValue) {
+      setSelectedTab(e.newValue);
+    }
+  };
+
+  window.addEventListener("storage", handleStorageChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+  };
 }, []);
 
 

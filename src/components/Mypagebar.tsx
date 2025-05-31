@@ -1,11 +1,22 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const MypageSidebar = () => {
   const router = useRouter();
   const [showSubMenu, setShowSubMenu] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [selectedTab, setSelectedTab] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (router.pathname === "/mypage/myleisure") {
+      const savedTab = localStorage.getItem("selectedTab");
+      setSelectedTab(savedTab);
+    } else {
+      setSelectedTab(null);
+    }
+  }, [router.pathname]);
 
   const menuItems = [
     { name: "Profile", path: "/mypage/profile" },
@@ -28,7 +39,14 @@ const MypageSidebar = () => {
   const handleMouseLeave = () => {
     timerRef.current = setTimeout(() => {
       setShowSubMenu(false);
-    }, 100); // 1초 후 사라짐
+    }, 100);
+  };
+
+  // 서브 메뉴 클릭 시 localStorage에 탭 저장 + 바로 상태 변경도 해줘야 UI 바로 반영됨
+  const handleSubMenuClick = (tabName: string) => {
+    localStorage.setItem("selectedTab", tabName);
+    setSelectedTab(tabName);
+    router.push("/mypage/myleisure");
   };
 
   return (
@@ -46,14 +64,13 @@ const MypageSidebar = () => {
             <Link href={item.path}>
               <button
                 className={`flex flex-row text-[16px] px-4 transition-colors  
-      ${router.pathname === item.path ? "text-[#000000]" : "text-[#9A9A9A]"} hover:text-black
-    `}
+                  ${router.pathname === item.path ? "text-[#000000]" : "text-[#9A9A9A]"} hover:text-black
+                `}
               >
                 <span>{item.name}</span>
               </button>
             </Link>
 
-            {/* 서브 메뉴 (My Leisure일 때만) */}
             {isMyLeisure && (
               <div
                 className={`absolute left-0 top-[25px] transition-all duration-300
@@ -64,11 +81,14 @@ const MypageSidebar = () => {
                   {leisureSubItems.map((sub) => (
                     <button
                       key={sub.tab}
-                      className="text-left px-2 text-[12.5px] text-[#9A9A9A] hover:text-black whitespace-nowrap w-fit"
-                      onClick={() => {
-                        router.push("/mypage/myleisure");
-                        localStorage.setItem("selectedTab", sub.tab);
-                      }}
+                      className={`text-left px-2 text-[12.5px] whitespace-nowrap w-fit
+                        ${
+                          selectedTab === sub.tab
+                            ? "text-black font-semibold"
+                            : "text-[#9A9A9A] hover:text-black"
+                        }
+                      `}
+                      onClick={() => handleSubMenuClick(sub.tab)}
                     >
                       {sub.name}
                     </button>
