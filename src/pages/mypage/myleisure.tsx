@@ -8,6 +8,7 @@ import { getPlannedlist, getCompletedlist } from "@/lib/api/useractivities";
 
 export default function Myleisure() {
   const router = useRouter();
+  const { tab } = router.query;
   const [selectedTab, setSelectedTab] = useState("Wish List");
   const [bookmarkedLeisure, setBookmarkedLeisure] = useState([]);
   const [reservedLeisure, setReservedLeisure] = useState([]);
@@ -43,23 +44,11 @@ export default function Myleisure() {
     window.addEventListener("mouseup", handleMouseUp);
   };
 
-useEffect(() => {
-  const savedTab = localStorage.getItem("selectedTab");
-  if (savedTab) setSelectedTab(savedTab);
-
-  const handleStorageChange = (e: StorageEvent) => {
-    if (e.key === "selectedTab" && e.newValue) {
-      setSelectedTab(e.newValue);
+  useEffect(() => {
+    if (typeof tab === "string") {
+      setSelectedTab(tab);
     }
-  };
-
-  window.addEventListener("storage", handleStorageChange);
-
-  return () => {
-    window.removeEventListener("storage", handleStorageChange);
-  };
-}, []);
-
+  }, [tab]);
 
   const TYPE_MAP: { [key: string]: string } = {
     MOVIE: "영화",

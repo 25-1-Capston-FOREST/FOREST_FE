@@ -42,13 +42,6 @@ const MypageSidebar = () => {
     }, 100);
   };
 
-  // 서브 메뉴 클릭 시 localStorage에 탭 저장 + 바로 상태 변경도 해줘야 UI 바로 반영됨
-  const handleSubMenuClick = (tabName: string) => {
-    localStorage.setItem("selectedTab", tabName);
-    setSelectedTab(tabName);
-    router.push("/mypage/myleisure");
-  };
-
   return (
     <div className="relative mt-[-10px] w-full flex flex-row justify-between items-center px-[35px] text-[16px] z-10">
       {menuItems.map((item) => {
@@ -82,13 +75,17 @@ const MypageSidebar = () => {
                     <button
                       key={sub.tab}
                       className={`text-left px-2 text-[12.5px] whitespace-nowrap w-fit
-                        ${
-                          selectedTab === sub.tab
-                            ? "text-black font-semibold"
-                            : "text-[#9A9A9A] hover:text-black"
+                        ${selectedTab === sub.tab
+                          ? "text-black"
+                          : "text-[#9A9A9A] hover:text-black"
                         }
                       `}
-                      onClick={() => handleSubMenuClick(sub.tab)}
+                      onClick={() => {
+                        router.push({
+                          pathname: "/mypage/myleisure",
+                          query: { tab: sub.tab }
+                        });
+                      }}
                     >
                       {sub.name}
                     </button>
