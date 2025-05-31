@@ -10,13 +10,14 @@ const MypageSidebar = () => {
 
   useEffect(() => {
     if (router.pathname === "/mypage/myleisure") {
-      const savedTab = localStorage.getItem("selectedTab");
-      setSelectedTab(savedTab);
+      const { tab } = router.query;
+      if (typeof tab === "string") {
+        setSelectedTab(tab);
+      }
     } else {
       setSelectedTab(null);
     }
   }, [router.pathname, router.query.tab]);
-
   const menuItems = [
     { name: "Profile", path: "/mypage/profile" },
     { name: "My Leisure", path: "/mypage/myleisure" },
