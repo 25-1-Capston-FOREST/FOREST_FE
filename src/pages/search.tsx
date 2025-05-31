@@ -37,7 +37,20 @@ export default function Search() {
         //배포용
         const data = await getSearch(keyword);
         console.log("받은 데이터:", data);
-        setResults(data.data);
+        const converted: Activity[] = data.map((item: any) => ({
+          activity_id: item.activity_id,
+          activity_type: item.type,
+          detail: {
+            title: item.title,
+            image_url: item.image_url,
+            start_date: item.start_date,
+            end_date: item.end_date,
+          },
+        }));
+        setResults(converted);
+
+
+        //setResults(data.data);
 
         // 이미 필터링된 데이터를 타입에 맞게 변환해서 results에 저장
         // const converted: Activity[] = json.map((item: any) => ({
