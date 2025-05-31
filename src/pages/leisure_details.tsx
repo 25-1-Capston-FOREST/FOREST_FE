@@ -406,7 +406,7 @@ export default function Detail() {
 
             </div>
 
-            <div className="mt-[40px] bg-[#EBEBEB] w-[1050px] h-[180px] flex flex-row items-center justify-center">
+            <div className="mt-[40px] bg-[#EBEBEB] w-[1050px] h-[150px] flex flex-row items-center justify-center">
               리뷰 내용 구현 예정
             </div>
 
