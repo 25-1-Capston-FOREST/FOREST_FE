@@ -254,6 +254,36 @@ export default function Detail() {
                 {detail.isWished ? "찜 해제" : "찜하기"}
               </button>
             </div>
+            {/* 리뷰 구간 */}
+            <div className="flex gap-8 mt-6">
+              {/* 포스터 빈 공간 맞추기 */}
+              <div className="min-w-[331px]" />
+
+              {/* 리뷰 리스트 */}
+              <div className="flex-1">
+                <div className="flex items-center mb-4">
+                  <div className="flex text-yellow-400 mr-2">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                        <path d="M10 15l-5.878 3.09 1.122-6.545L.489 6.91l6.564-.955L10 0l2.947 5.955 6.564.955-4.755 4.635 1.122 6.545z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="font-semibold">평균 평점 {averageRating}</span>
+                </div>
+                <div className="flex overflow-x-auto gap-4 pb-2">
+                  {reviews.map((review, index) => (
+                    <div
+                      key={index}
+                      className="min-w-[240px] max-w-[240px] h-[150px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
+                    >
+                      <p className="text-sm mb-2">⭐ {review.rate}</p>
+                      <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* 카카오맵 영역 (상세정보 + 버튼 세로 길이에 맞춤) */}
@@ -270,36 +300,7 @@ export default function Detail() {
           </div>
         </div>
 
-        {/* 리뷰 구간 (포스터 옆, 세로 정렬) */}
-        <div className="flex gap-8 mt-6">
-          {/* 포스터 빈 공간 맞추기 */}
-          <div className="min-w-[331px]" />
 
-          {/* 리뷰 리스트 */}
-          <div className="flex-1">
-            <div className="flex items-center mb-4">
-              <div className="flex text-yellow-400 mr-2">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                    <path d="M10 15l-5.878 3.09 1.122-6.545L.489 6.91l6.564-.955L10 0l2.947 5.955 6.564.955-4.755 4.635 1.122 6.545z" />
-                  </svg>
-                ))}
-              </div>
-              <span className="font-semibold">평균 평점 {averageRating}</span>
-            </div>
-            <div className="flex overflow-x-auto gap-4 pb-2">
-              {reviews.map((review, index) => (
-                <div
-                  key={index}
-                  className="min-w-[240px] max-w-[240px] h-[150px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
-                >
-                  <p className="text-sm mb-2">⭐ {review.rate}</p>
-                  <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
