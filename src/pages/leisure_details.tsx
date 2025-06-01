@@ -196,7 +196,7 @@ export default function Detail() {
 
           <div className="flex flex-col justify-between">
 
-            <div className="flex flex-row mx-10 w-[1400px] justify-between">
+            <div className="flex flex-row mx-10 w-[1200px] justify-between">
               {/* 상세정보 + 버튼 */}
               <div className="flex flex-col justify-between flex-grow min-h-[260px]">
                 <div className="text-[13px] text-gray-700 space-y-2 mb-4">
