@@ -182,7 +182,7 @@ export default function Detail() {
         </div>
 
         {/* 메인 레이아웃 */}
-        <div className="flex gap-8 justify-between">
+        <div className="flex gap-6 justify-between">
           {/* 포스터 영역 (세로 전체 높이 고정) */}
           <div className="min-w-[331px] flex justify-center">
             <Image
@@ -195,8 +195,7 @@ export default function Detail() {
           </div>
 
           <div className="flex flex-col justify-between">
-
-            <div className="flex flex-row mx-10 w-[1200px] justify-between">
+            <div className="flex flex-row mx-8 w-[1200px] justify-between">
               {/* 상세정보 + 버튼 */}
               <div className="flex flex-col justify-between flex-grow min-h-[260px]">
                 <div className="text-[13px] text-gray-700 space-y-2 mb-4">
