@@ -198,7 +198,7 @@ export default function Detail() {
 
             <div className="flex flex-row mx-10 w-[1400px] justify-between">
               {/* 상세정보 + 버튼 */}
-              <div className="flex flex-col justify-between flex-grow min-h-[300px]">
+              <div className="flex flex-col justify-between flex-grow min-h-[260px]">
                 <div className="text-[13px] text-gray-700 space-y-2 mb-4">
                   {/* 상세정보 - 기존 조건문 유지 */}
                   {activity.activity_type === "MOVIE" && (
@@ -282,7 +282,7 @@ export default function Detail() {
               </div>
 
               {/* 카카오맵 */}
-              <div className="min-w-[280px] min-h-[300px]">
+              <div className="min-w-[280px] min-h-[260px]">
                 {activity.activity_type === "PERFORMANCE" && detail.latitude && detail.longitude ? (
                   <KakaoMapImage la={detail.latitude} lo={detail.longitude} />
                 ) : (

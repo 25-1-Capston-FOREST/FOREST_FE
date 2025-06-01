@@ -93,7 +93,7 @@ const KakaoMapImage: React.FC<KakaoMapProps> = ({ la, lo }) => {
   return (
     <div
       id="map"
-      style={{ width: "400px", height: "247px", backgroundColor: "#eee" }}
+      style={{ width: "400px", height: "260px", backgroundColor: "#eee" }}
     />
   );
 };
