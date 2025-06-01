@@ -28,9 +28,9 @@ export const getUserReview = async () => {
 
 
 //특정 여가 리뷰 조회
-export const getActivityReview = async(activityId: string) => {
+export const getActivityReview = async (activityId: string) => {
   const response = await instance.get("/api/detail/reviews", {
     params: { id: activityId },
   });
-  return response.data;
+  return response.data.data; 
 };
