@@ -212,7 +212,7 @@ export default function Myleisure() {
       <div className="mt-[80px]">
 
         {/* 리스트 출력 */}
-        <ul className="flex mx-auto mt-2 w-[1300px] justify-center flex-col gap-8">
+        <ul className="flex mx-auto mt-2 w-[1300px] justify-center flex-col gap-6">
           {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ? (
             getCurrentList().map((item) => (
               <li key={item.wish_id ?? item.activity_id} className="pb-[15px] flex justify-center w-[1300px] mx-auto border-b flex items-center">
@@ -306,7 +306,7 @@ export default function Myleisure() {
 
                       <button
                         onClick={() => handleToggleWish(item)}
-                        className={`items-center justify-center text-center flex flex-row w-[70px] h-[28px] rounded-[20px]
+                        className={`items-center justify-center text-center flex flex-row w-[80px] h-[28px] rounded-[20px]
     ${item.isWished
                             ? "bg-black text-white"
                             : "text-black border border-black"
