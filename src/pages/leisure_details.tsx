@@ -155,7 +155,8 @@ export default function Detail() {
     const fetchReviews = async () => {
       try {
         const data = await getActivityReview(activity_id as string);
-        setReviews(data);
+        console.log("API 응답 데이터:", data); // ← 여기를 꼭 확인!
+        setReviews(Array.isArray(data) ? data : data.reviews || []);
       } catch (error) {
         console.error("리뷰 불러오기 실패", error);
       } finally {
