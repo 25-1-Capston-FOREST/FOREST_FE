@@ -196,9 +196,9 @@ export default function Detail() {
 
           <div className="flex flex-col justify-between">
 
-<div className="flex flex-row">
+<div className="flex flex-row justify-between">
             {/* 상세정보 + 버튼 */}
-            <div className="flex flex-col justify-between flex-grow min-h-[445px]">
+            <div className="flex flex-col justify-between flex-grow min-h-[350px]">
               <div className="text-[13px] text-gray-700 space-y-2 mb-4">
                 {/* 상세정보 - 기존 조건문 유지 */}
                 {activity.activity_type === "MOVIE" && (
@@ -282,7 +282,7 @@ export default function Detail() {
             </div>
 
             {/* 카카오맵 */}
-            <div className="min-w-[280px] min-h-[445px]">
+            <div className="min-w-[280px] min-h-[350px]">
               {activity.activity_type === "PERFORMANCE" && detail.latitude && detail.longitude ? (
                 <KakaoMapImage la={detail.latitude} lo={detail.longitude} />
               ) : (
@@ -297,7 +297,7 @@ export default function Detail() {
 
 
             {/* 리뷰 영역 */}
-            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-[calc(100%-331px)] ml-[331px]">
+            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-[calc(100%-331px)]">
               {reviews.map((review, index) => (
                 <div
                   key={index}
