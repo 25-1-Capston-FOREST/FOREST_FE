@@ -182,7 +182,7 @@ export default function Detail() {
         </div>
 
         {/* 메인 레이아웃 */}
-        <div className="flex gap-8">
+        <div className="flex gap-8 justify-between">
           {/* 포스터 영역 (세로 전체 높이 고정) */}
           <div className="min-w-[331px] flex justify-center">
             <Image
@@ -297,7 +297,7 @@ export default function Detail() {
 
 
             {/* 리뷰 영역 */}
-            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-[calc(100%-331px)]">
+            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-auto mx-10">
               {reviews.map((review, index) => (
                 <div
                   key={index}
