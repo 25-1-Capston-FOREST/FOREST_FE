@@ -194,19 +194,10 @@ export default function Detail() {
             />
           </div>
 
-          {/* 상세정보 + 버튼 (세로 스택) */}
-          <div className="flex flex-col justify-between flex-1 text-[13px] text-gray-700">
-            {/* 공연 카테고리 타이틀 */}
-            <div className="mb-3">
-              <h3 className="text-lg font-semibold">
-                {activity.activity_type === "MOVIE" && "영화 정보"}
-                {activity.activity_type === "EXHIBITION" && "전시 정보"}
-                {activity.activity_type === "PERFORMANCE" && "공연 정보"}
-              </h3>
-            </div>
-
-            {/* 상세 정보 */}
-            <div className="space-y-2 flex-1">
+          {/* 상세정보 + 버튼 */}
+          <div className="flex flex-col justify-between flex-grow min-h-[445px]">
+            <div className="text-[13px] text-gray-700 space-y-2 mb-4">
+              {/* 상세정보 - 기존 조건문 유지 */}
               {activity.activity_type === "MOVIE" && (
                 <>
                   <p>개봉일: {(detail as MovieDetail).open_dt}</p>
@@ -239,60 +230,60 @@ export default function Detail() {
             </div>
 
             {/* 버튼 영역 */}
-            <div className="mt-6 flex gap-4">
-              <button
-                onClick={() => handleBook(Number(activity.activity_id))}
-                className="text-sm border border-[#447959] text-[#447959] w-[152px] h-[30px] rounded-[20px]"
-              >
-                일정 등록하기
-              </button>
-              <button
-                onClick={handleToggleWish}
-                className={`border w-[90px] h-[30px] rounded-[20px] text-sm ${detail.isWished ? "bg-black text-white" : "text-black border-black"
-                  }`}
-              >
-                {detail.isWished ? "찜 해제" : "찜하기"}
-              </button>
-            </div>
+            <div className="space-y-2">
+              <div className="text-[#757575]">
+                {activity.activity_type === "MOVIE" &&
+                  "영화의 예매 페이지는 제공하지 않습니다."}
+                {activity.activity_type === "EXHIBITION" && (
+                  <button
+                    onClick={() => {
+                      const url = extractURL((detail as ExhibitionDetail).url);
+                      if (url) window.open(url, "_blank");
+                      else alert("유효한 링크가 없습니다");
+                    }}
+                    className="underline text-sm"
+                  >
+                    전시 예약 페이지로 이동하기
+                  </button>
+                )}
+                {activity.activity_type === "PERFORMANCE" && (
+                  <button
+                    onClick={() => {
+                      const url = extractURL((detail as PerformanceDetail).link);
+                      if (url) window.open(url, "_blank");
+                      else alert("유효한 링크가 없습니다");
+                    }}
+                    className="underline text-sm"
+                  >
+                    공연 예약 페이지로 이동하기
+                  </button>
+                )}
+              </div>
 
-            {/* 리뷰 구간 */}
-            <div className="mt-10 border border-t flex flex-row justify-start gap-8 mt-6">
-              {/* 포스터 빈 공간 맞추기 */}
-              <div className="min-w-[331px]" />
-
-              {/* 리뷰 리스트 */}
-              <div className="flex-1">
-                <div className="flex mb-4">
-                  <div className="flex text-yellow-400 mr-2">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                        <path d="M10 15l-5.878 3.09 1.122-6.545L.489 6.91l6.564-.955L10 0l2.947 5.955 6.564.955-4.755 4.635 1.122 6.545z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <span className="font-semibold">평균 평점 {averageRating}</span>
-                </div>
-                <div className="flex overflow-x-auto gap-4 pb-2 justify-start">
-                  {reviews.map((review, index) => (
-                    <div
-                      key={index}
-                      className="min-w-[240px] max-w-[240px] h-[150px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
-                    >
-                      <p className="text-sm mb-2">⭐ {review.rate}</p>
-                      <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
-                    </div>
-                  ))}
-                </div>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => handleBook(Number(activity.activity_id))}
+                  className="text-sm border border-[#447959] text-[#447959] w-[152px] h-[30px] rounded-[20px]"
+                >
+                  일정 등록하기
+                </button>
+                <button
+                  onClick={handleToggleWish}
+                  className={`border w-[90px] h-[30px] rounded-[20px] text-sm ${detail.isWished ? "bg-black text-white" : "text-black border-black"
+                    }`}
+                >
+                  {detail.isWished ? "찜 해제" : "찜하기"}
+                </button>
               </div>
             </div>
           </div>
 
-          {/* 카카오맵 영역 */}
-          <div className="min-w-[331px] h-[445px]">
+          {/* 카카오맵 */}
+          <div className="min-w-[280px] min-h-[445px]">
             {activity.activity_type === "PERFORMANCE" && detail.latitude && detail.longitude ? (
               <KakaoMapImage la={detail.latitude} lo={detail.longitude} />
             ) : (
-              <div className="text-sm text-gray-500 flex items-center justify-center h-full">
+              <div className="text-sm text-gray-500">
                 {activity.activity_type === "MOVIE" || activity.activity_type === "EXHIBITION"
                   ? "지도는 제공하지 않습니다."
                   : "위치 정보 없음"}
@@ -301,7 +292,18 @@ export default function Detail() {
           </div>
         </div>
 
-
+        {/* 리뷰 영역 - 포스터 아래 아닌 포스터 오른쪽 아래 */}
+        <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-[calc(100%-331px)] ml-[331px]">
+          {reviews.map((review, index) => (
+            <div
+              key={index}
+              className="min-w-[240px] max-w-[240px] h-[150px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
+            >
+              <p className="text-sm mb-2">⭐ {review.rate}</p>
+              <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
