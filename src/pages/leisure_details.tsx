@@ -196,7 +196,7 @@ export default function Detail() {
 
           <div className="flex flex-col justify-between">
 
-
+<div className="flex flex-row">
             {/* 상세정보 + 버튼 */}
             <div className="flex flex-col justify-between flex-grow min-h-[445px]">
               <div className="text-[13px] text-gray-700 space-y-2 mb-4">
@@ -293,21 +293,25 @@ export default function Detail() {
                 </div>
               )}
             </div>
+</div>
+
+
+            {/* 리뷰 영역 */}
+            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-[calc(100%-331px)] ml-[331px]">
+              {reviews.map((review, index) => (
+                <div
+                  key={index}
+                  className="min-w-[240px] max-w-[240px] h-[150px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
+                >
+                  <p className="text-sm mb-2">⭐ {review.rate}</p>
+                  <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
 
-          {/* 리뷰 영역 */}
-          <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-[calc(100%-331px)] ml-[331px]">
-            {reviews.map((review, index) => (
-              <div
-                key={index}
-                className="min-w-[240px] max-w-[240px] h-[150px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
-              >
-                <p className="text-sm mb-2">⭐ {review.rate}</p>
-                <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
-              </div>
-            ))}
-          </div>
+
         </div>
 
 
