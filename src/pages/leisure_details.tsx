@@ -272,7 +272,7 @@ export default function Detail() {
                   </div>
                   <span className="font-semibold">평균 평점 {averageRating}</span>
                 </div>
-                <div className="flex overflow-x-auto gap-4 pb-2">
+                <div className="flex overflow-x-auto gap-4 pb-2 justify-start">
                   {reviews.map((review, index) => (
                     <div
                       key={index}
