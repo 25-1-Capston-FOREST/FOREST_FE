@@ -264,7 +264,7 @@ export default function Myleisure() {
                         : ""}
                   </p>
 
-                  <div className="w-full flex items-center justify-between">
+                  <div className="w-full mt-[10px] flex items-center justify-between">
                     {/* 별점 */}
                     <div className="flex flex-row items-center gap-1 text-[17px]">
                       <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
