@@ -289,7 +289,7 @@ export default function Myleisure() {
                       {selectedTab === "Planned Leisure" && (
                         <button
                           onClick={() => alert("일정 변경 기능은 구현 예정입니다!")}
-                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
+                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
                         >
                           일정 변경하기
                         </button>
@@ -298,13 +298,20 @@ export default function Myleisure() {
                       {selectedTab === "Completed Leisure" && (
                         <button
                           onClick={() => handleReview()}
-                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[41px] rounded-[20px]"
+                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
                         >
                           리뷰 작성하기
                         </button>
                       )}
 
-                      <button onClick={() => handleToggleWish(item)}>
+                      <button
+                        onClick={() => handleToggleWish(item)}
+                        className={`text-center flex flex-row w-[128px] h-[28px] rounded-[20px]
+    ${item.isWished
+                            ? "bg-black text-white"
+                            : "text-black border border-black"
+                          }`}
+                      >
                         {item.isWished ? "찜 해제" : "찜하기"}
                       </button>
                     </div>
