@@ -254,8 +254,9 @@ export default function Detail() {
                 {detail.isWished ? "찜 해제" : "찜하기"}
               </button>
             </div>
+
             {/* 리뷰 구간 */}
-            <div className="flex gap-8 mt-6">
+            <div className="mt-10 border border-t flex flex-row justify-start gap-8 mt-6">
               {/* 포스터 빈 공간 맞추기 */}
               <div className="min-w-[331px]" />
 
