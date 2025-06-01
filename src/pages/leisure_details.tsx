@@ -262,7 +262,7 @@ export default function Detail() {
 
               {/* 리뷰 리스트 */}
               <div className="flex-1">
-                <div className="flex items-center mb-4">
+                <div className="flex mb-4">
                   <div className="flex text-yellow-400 mr-2">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
@@ -287,7 +287,7 @@ export default function Detail() {
             </div>
           </div>
 
-          {/* 카카오맵 영역 (상세정보 + 버튼 세로 길이에 맞춤) */}
+          {/* 카카오맵 영역 */}
           <div className="min-w-[331px] h-[445px]">
             {activity.activity_type === "PERFORMANCE" && detail.latitude && detail.longitude ? (
               <KakaoMapImage la={detail.latitude} lo={detail.longitude} />
