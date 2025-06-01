@@ -220,8 +220,8 @@ export default function Myleisure() {
                   <img
                     src={item.detailedInfo.image_url}
                     alt="이미지"
-                    width={127}
-                    height={170}
+                    width={120}
+                    height={160}
                     className="object-cover"
                   />
                 ) : (
@@ -238,14 +238,14 @@ export default function Myleisure() {
 
                   {/* 제목 */}
                   <button
-                    className="text-[19px] font-bold"
+                    className="text-[18px] font-bold"
                     onClick={() => handleLeisureClick(item)}
                   >
                     {item.detailedInfo?.title ?? "제목 없음"}
                   </button>
 
                   {/* 장소 */}
-                  <p className="text-[15px] text-[#757575] whitespace-pre-line">
+                  <p className="text-[14px] text-[#757575] whitespace-pre-line">
                     {item.activity_type === "MOVIE"
                       ? "\n"
                       : item.activity_type === "PERFORMANCE"
