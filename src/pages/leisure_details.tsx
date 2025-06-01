@@ -117,8 +117,11 @@ export default function Detail() {
         // 여기서도 똑같이 복사
         setActivity({
           ...updated.data,
-          isWished: updated.data.detail.isWished,
-          wish_id: updated.data.detail.wish_id,
+          detail: {
+            ...updated.data.detail,
+            isWished: updated.data.detail.isWished,
+            wish_id: updated.data.detail.wish_id,
+          },
         });
       }
     } catch (error) {
