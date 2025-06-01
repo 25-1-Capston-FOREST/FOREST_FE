@@ -209,7 +209,7 @@ export default function Myleisure() {
   return (
     <div>
       <MypageSidebar />
-      <div className="mt-[70px]">
+      <div className="mt-[65px]">
 
         {/* 리스트 출력 */}
         <ul className="flex mx-auto mt-2 w-[1300px] justify-center flex-col gap-4">
