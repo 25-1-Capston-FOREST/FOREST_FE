@@ -67,7 +67,7 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
 
   return (
     <header
-      className="px-10 flex-col items-start fixed top-0 w-full z-10 bg-white"
+      className="px-10 flex-col items-start fixed top-0 w-full z-[50] bg-white"
       style={{
         height: `${headerHeight}px`,
         minHeight: `${headerHeight}px`,
