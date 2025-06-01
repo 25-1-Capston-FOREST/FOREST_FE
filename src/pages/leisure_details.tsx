@@ -174,6 +174,12 @@ export default function Detail() {
 
   const detail = activity.detail;
 
+  const averageRating = reviews.length
+    ? (
+      reviews.reduce((sum, review) => sum + parseFloat(review.rate), 0) / reviews.length
+    ).toFixed(1)
+    : "정보 없음";
+
   return (
     <div className="mx-10 mt-[3px] w-max-auto">
       <div>
@@ -299,7 +305,7 @@ export default function Detail() {
 
             {/* 리뷰 영역 */}
             <div className="mt-4 border-t pt-4">
-              {/* 평균 평점 (하드코딩) */}
+              {/* 평균 평점*/}
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400 mr-2">
                   {Array.from({ length: 5 }).map((_, i) => (
@@ -308,7 +314,7 @@ export default function Detail() {
                     </svg>
                   ))}
                 </div>
-                <span className="font-semibold">평균 평점 4.8</span>
+                <span className="font-semibold">평균 평점 {averageRating}</span>
               </div>
 
               {/* 리뷰 카드 리스트 */}
