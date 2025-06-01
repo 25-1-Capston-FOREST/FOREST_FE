@@ -195,7 +195,7 @@ export default function Detail() {
           </div>
 
           <div className="flex flex-col justify-between">
-            <div className="flex flex-row w-[1200px] justify-between">
+            <div className="flex flex-row w-[1100px] justify-between">
               {/* 상세정보 + 버튼 */}
               <div className="flex flex-col justify-between flex-grow min-h-[260px]">
                 <div className="text-[13px] text-gray-700 space-y-2 mb-4">
@@ -296,7 +296,7 @@ export default function Detail() {
 
 
             {/* 리뷰 영역 */}
-            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-auto mx-10">
+            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-auto">
               {reviews.map((review, index) => (
                 <div
                   key={index}
