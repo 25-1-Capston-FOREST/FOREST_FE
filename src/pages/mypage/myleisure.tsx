@@ -256,7 +256,7 @@ export default function Myleisure() {
                   </p>
 
                   {/* 기간 */}
-                  <p className="text-[13px] text-[#757575] mb-[14px]">
+                  <p className="text-[13px] text-[#757575] mb-[25px]">
                     {item.activity_type === "MOVIE"
                       ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
                       : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
