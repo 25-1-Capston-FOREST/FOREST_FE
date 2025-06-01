@@ -181,50 +181,60 @@ export default function Detail() {
           )}
         </div>
 
-        {/* 본문 레이아웃 */}
-        <div className="flex gap-8 items-start">
+        <div className="flex gap-8">
           {/* 포스터 */}
           <div className="min-w-[331px] flex justify-center">
-            <Image src={detail.image_url} alt="썸네일" width={331} height={445} className="rounded-lg" />
+            <Image
+              src={detail.image_url}
+              alt="썸네일"
+              width={331}
+              height={445}
+              className="rounded-lg"
+            />
           </div>
 
-          {/* 상세 정보 + 지도 */}
-          <div className="flex flex-col justify-between w-full min-h-[445px]">
-            <div className="text-[13px] text-gray-700 space-y-2">
-              {/* 상세 정보 */}
-              {activity.activity_type === "MOVIE" && (
-                <>
-                  <p>개봉일: {(detail as MovieDetail).open_dt}</p>
-                  <p>러닝 타임: {(detail as MovieDetail).show_tm}분</p>
-                  <p>감독: {(detail as MovieDetail).director}</p>
-                  <p>출연진: {(detail as MovieDetail).actors || "정보 없음"}</p>
-                  <p>장르: {(detail as MovieDetail).genre_nm}</p>
-                </>
-              )}
-              {activity.activity_type === "EXHIBITION" && (
-                <>
-                  <p>전시장: {(detail as ExhibitionDetail).location}</p>
-                  <p>전시 기간: {(detail as ExhibitionDetail).start_date} ~ {(detail as ExhibitionDetail).end_date}</p>
-                  <p>입장료: {(detail as ExhibitionDetail).price}</p>
-                  <p>내용: {(detail as ExhibitionDetail).contents || "설명 없음"}</p>
-                </>
-              )}
-              {activity.activity_type === "PERFORMANCE" && (
-                <>
-                  <p>일시: {(detail as PerformanceDetail).time}</p>
-                  <p>러닝타임: {(detail as PerformanceDetail).runtime}</p>
-                  <p>출연진: {(detail as PerformanceDetail).cast || "정보 없음"}</p>
-                  <p>장르: {(detail as PerformanceDetail).genre}</p>
-                  <p>티켓 가격: {(detail as PerformanceDetail).cost}</p>
-                </>
-              )}
-            </div>
+          {/* 상세정보+버튼 + 카카오맵 */}
+          <div className="flex w-full max-w-[700px] h-[445px]">
+            {/* 상세정보 + 버튼 (세로 스택) */}
+            <div className="flex flex-col justify-between w-1/2 pr-4 overflow-hidden">
+              {/* 상세정보 (스크롤 가능) */}
+              <div className="overflow-auto text-[13px] text-gray-700">
+                {activity.activity_type === "MOVIE" && (
+                  <>
+                    <p>개봉일: {(detail as MovieDetail).open_dt}</p>
+                    <p>러닝 타임: {(detail as MovieDetail).show_tm}분</p>
+                    <p>감독: {(detail as MovieDetail).director}</p>
+                    <p>출연진: {(detail as MovieDetail).actors || "정보 없음"}</p>
+                    <p>장르: {(detail as MovieDetail).genre_nm}</p>
+                  </>
+                )}
+                {activity.activity_type === "EXHIBITION" && (
+                  <>
+                    <p>전시장: {(detail as ExhibitionDetail).location}</p>
+                    <p>
+                      전시 기간: {(detail as ExhibitionDetail).start_date} ~{" "}
+                      {(detail as ExhibitionDetail).end_date}
+                    </p>
+                    <p>입장료: {(detail as ExhibitionDetail).price}</p>
+                    <p>내용: {(detail as ExhibitionDetail).contents || "설명 없음"}</p>
+                  </>
+                )}
+                {activity.activity_type === "PERFORMANCE" && (
+                  <>
+                    <p>일시: {(detail as PerformanceDetail).time}</p>
+                    <p>러닝타임: {(detail as PerformanceDetail).runtime}</p>
+                    <p>출연진: {(detail as PerformanceDetail).cast || "정보 없음"}</p>
+                    <p>장르: {(detail as PerformanceDetail).genre}</p>
+                    <p>티켓 가격: {(detail as PerformanceDetail).cost}</p>
+                  </>
+                )}
+              </div>
 
-            {/* 버튼 & 지도 */}
-            <div className="mt-6 flex justify-between items-end">
-              <div className="space-y-2">
-                <div className="text-[#757575]">
-                  {activity.activity_type === "MOVIE" && "영화의 예매 페이지는 제공하지 않습니다."}
+              {/* 버튼 영역 */}
+              <div className="mt-4 flex flex-col space-y-2">
+                <div className="text-[#757575] text-sm">
+                  {activity.activity_type === "MOVIE" &&
+                    "영화의 예매 페이지는 제공하지 않습니다."}
                   {activity.activity_type === "EXHIBITION" && (
                     <button
                       onClick={() => {
@@ -232,7 +242,7 @@ export default function Detail() {
                         if (url) window.open(url, "_blank");
                         else alert("유효한 링크가 없습니다");
                       }}
-                      className="underline text-sm"
+                      className="underline"
                     >
                       전시 예약 페이지로 이동하기
                     </button>
@@ -244,7 +254,7 @@ export default function Detail() {
                         if (url) window.open(url, "_blank");
                         else alert("유효한 링크가 없습니다");
                       }}
-                      className="underline text-sm"
+                      className="underline"
                     >
                       공연 예약 페이지로 이동하기
                     </button>
@@ -267,23 +277,24 @@ export default function Detail() {
                   </button>
                 </div>
               </div>
+            </div>
 
-              <div>
-                {activity.activity_type === "PERFORMANCE" && detail.latitude && detail.longitude ? (
-                  <KakaoMapImage la={detail.latitude} lo={detail.longitude} />
-                ) : (
-                  <div className="text-sm text-gray-500">
-                    {activity.activity_type === "MOVIE" || activity.activity_type === "EXHIBITION"
-                      ? "지도는 제공하지 않습니다."
-                      : "위치 정보 없음"}
-                  </div>
-                )}
-              </div>
+            {/* 카카오맵*/}
+            <div className="w-1/2 h-full border rounded-lg overflow-hidden">
+              {detail.latitude && detail.longitude ? (
+                <KakaoMapImage la={detail.latitude} lo={detail.longitude} />
+              ) : (
+                <div className="text-sm text-gray-500 flex items-center justify-center h-full">
+                  {activity.activity_type === "MOVIE" || activity.activity_type === "EXHIBITION"
+                    ? "지도는 제공하지 않습니다."
+                    : "위치 정보 없음"}
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* 리뷰 */}
+        {/* 리뷰 영역*/}
         <div className="mt-6 border-t pt-4">
           <div className="flex items-center mb-4">
             <div className="flex text-yellow-400 mr-2">
@@ -310,4 +321,6 @@ export default function Detail() {
       </div>
     </div>
   );
+
+
 }
