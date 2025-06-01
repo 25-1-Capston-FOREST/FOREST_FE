@@ -102,19 +102,26 @@ export default function Detail() {
     }
   };
 
-  const handleToggleWish = async (item) => {
+  const handleToggleWish = async () => {
     try {
-      if (item.isWished) {
-        await deleteWish(item.wish_id);
+      if (!activity || !activity.detail) return;
+
+      if (activity.detail.isWished) {
+        if (!activity.detail.wish_id) {
+          console.error("wish_id가 없습니다 ❌");
+          alert("찜 해제에 실패했어요 😢");
+          return;
+        }
+
+        await deleteWish(activity.detail.wish_id);
         alert("찜이 해제되었습니다!");
       } else {
-        await postWish(item.activity_id);
+        await postWish(activity.activity_id);
         alert("찜에 추가되었습니다!");
       }
 
       if (activity_id && typeof activity_id === "string") {
         const updated = await getDetail(activity_id);
-        // 여기서도 똑같이 복사
         setActivity({
           ...updated.data,
           detail: {
