@@ -62,7 +62,7 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
 
   const chatbotButtonClick = () => router.push("/chatbot");
   const logoButtonClick = () => router.push("/main");
-  const mypageButtonClick = () => router.push("/mypage/profile");
+  const mypageButtonClick = () => router.push("/mypage/myleisure");
   const logoutButtonClick = () => router.push("/");
 
   return (
