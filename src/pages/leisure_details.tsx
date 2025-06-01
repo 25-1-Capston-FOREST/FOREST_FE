@@ -105,7 +105,7 @@ export default function Detail() {
   const handleToggleWish = async (item: Activity) => {
     try {
       if (item.isWished) {
-        await deleteWish(item.wish_id!);
+        await deleteWish(item.wish_id);
         alert("찜이 해제되었습니다!");
       } else {
         await postWish(item.activity_id);
