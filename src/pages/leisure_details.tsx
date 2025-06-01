@@ -298,21 +298,31 @@ export default function Detail() {
             </div>
 
             {/* 리뷰 영역 */}
-            <div className="mt-[40px] bg-[#EBEBEB] w-[1050px] min-h-[150px] p-4 rounded">
-              {loadingReviews ? (
-                <p>리뷰를 불러오는 중입니다...</p>
-              ) : reviews.length === 0 ? (
-                <p>아직 등록된 리뷰가 없어요 😢</p>
-              ) : (
-                <div className="flex flex-col gap-2">
-                  {reviews.map((review, index) => (
-                    <div key={index} className="bg-white p-3 rounded shadow">
-                      <div className="text-sm text-gray-600 mb-1">평점: {review.rate} / 5</div>
-                      <div className="text-base">{review.content}</div>
-                    </div>
+            <div className="mt-4 border-t pt-4">
+              {/* 평균 평점 (하드코딩) */}
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-400 mr-2">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.122-6.545L.489 6.91l6.564-.955L10 0l2.947 5.955 6.564.955-4.755 4.635 1.122 6.545z" />
+                    </svg>
                   ))}
                 </div>
-              )}
+                <span className="font-semibold">평균 평점 4.8</span>
+              </div>
+
+              {/* 리뷰 카드 리스트 */}
+              <div className="flex overflow-x-auto space-x-4 pb-2">
+                {reviews.map((review, index) => (
+                  <div
+                    key={index}
+                    className="min-w-[240px] max-w-[240px] h-[150px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
+                  >
+                    <p className="text-sm mb-2">⭐ {review.rate}</p>
+                    <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
