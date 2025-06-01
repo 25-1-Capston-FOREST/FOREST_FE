@@ -203,7 +203,7 @@ export default function Myleisure() {
       console.error("userActivityId가 없습니다.");
       return;
     }
-
+    console.log(selectedUserActivityId)
     try {
       await postReview(selectedUserActivityId, rating, reviewText);
       console.log("리뷰 저장 성공!");
