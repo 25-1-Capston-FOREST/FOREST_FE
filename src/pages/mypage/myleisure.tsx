@@ -199,11 +199,6 @@ export default function Myleisure() {
 
   // 저장 핸들러
   const handleReviewSave = async () => {
-    if (selectedUserActivityId === null) {
-      console.error("userActivityId가 없습니다.");
-      return;
-    }
-    console.log(selectedUserActivityId)
     try {
       await postReview(selectedUserActivityId, rating, reviewText);
       console.log("리뷰 저장 성공!");
