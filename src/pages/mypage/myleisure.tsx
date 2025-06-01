@@ -19,7 +19,7 @@ export default function Myleisure() {
   const starRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const [reviewText, setReviewText] = useState("");
-  const [selectedUserActivityId, setSelectedUserActivityId] = useState<number | null>(null);
+  const [selectedUserActivityId, setSelectedUserActivityId] = useState<string | null>(null);
 
   // 별점 핸들러
   const handleMouseMove = (e: MouseEvent) => {
@@ -192,7 +192,7 @@ export default function Myleisure() {
     }
   };
 
-  const handleReview = (userActivityId: number) => {
+  const handleReview = (userActivityId: string) => {
     setSelectedUserActivityId(userActivityId);
     setShowReviewModal(true);
   };

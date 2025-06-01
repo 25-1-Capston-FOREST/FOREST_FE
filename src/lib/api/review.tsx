@@ -1,6 +1,6 @@
 import instance from "@/lib/axios";
 
-export const postReview = async (userActivityId: number, rate: number, content: string) => {
+export const postReview = async (userActivityId: string, rate: string, content: string) => {
   try {
     const response = await instance.post(`/api/review`,
       {
