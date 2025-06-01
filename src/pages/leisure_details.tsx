@@ -207,8 +207,16 @@ export default function Detail() {
           )}
         </div>
 
-        <div className="ml-[10px] mt-[10px] flex flex-row">
-          <Image src={detail.image_url} alt="썸네일" width={331} height={445} />
+        <div className="ml-[10px] mt-[10px] flex flex-row items-start justify-start gap-5">
+          <div className="flex items-start justify-center h-full">
+            <Image
+              src={detail.image_url}
+              alt="썸네일"
+              width={331}
+              height={0}
+              className="h-auto object-contain max-h-[550px]"
+            />
+          </div>
           <div className="flex flex-col mx-auto px-1">
             <div className="flex flex-row justify-between">
               <div className="flex flex-col">
@@ -241,8 +249,10 @@ export default function Detail() {
                   )}
 
                   {/* 예약 버튼 */}
-                  <div className="text-[#757575] w-[300px] mt-[55px]">
-                    {activity.activity_type === "MOVIE" && "영화의 예매 페이지는 제공하지 않습니다."}
+                  <div className="text-[#757575] mt-4 mb-2">
+                    {activity.activity_type === "MOVIE" && (
+                      <p>영화의 예매 페이지는 제공하지 않습니다.</p>
+                    )}
                     {activity.activity_type === "EXHIBITION" && (
                       <button
                         onClick={() => {
@@ -250,7 +260,7 @@ export default function Detail() {
                           if (url) window.open(url, "_blank");
                           else alert("유효한 링크가 없습니다");
                         }}
-                        className="w-[155px] cursor-pointer underline"
+                        className="underline text-blue-600"
                       >
                         전시 예약 페이지로 이동하기
                       </button>
@@ -262,72 +272,75 @@ export default function Detail() {
                           if (url) window.open(url, "_blank");
                           else alert("유효한 링크가 없습니다");
                         }}
-                        className="w-[155px] cursor-pointer underline"
+                        className="underline text-blue-600"
                       >
                         공연 예약 페이지로 이동하기
                       </button>
                     )}
                   </div>
-                </div>
 
-                <div className="flex flex-row mt-[90px]">
-                  <button
-                    onClick={() => handleBook(Number(activity.activity_id))}
-                    className="text-[14px] border border-[#447959] text-[#447959] w-[152px] h-[25px] rounded-[20px]"
-                  >
-                    일정 등록하기
-                  </button>
-                  <button
-                    onClick={handleToggleWish}
-                    className={`ml-[15px] border w-[90px] h-[25px] rounded-[20px] text-[14px] ${detail.isWished ? "bg-black text-white" : "text-black border-black"}`}
-                  >
-                    {detail.isWished ? "찜 해제" : "찜하기"}
-                  </button>
-                </div>
-              </div>
-
-              <div className="mr-[10px]">
-                {activity.activity_type === "PERFORMANCE" ? (
-                  detail.latitude && detail.longitude ? (
-                    <KakaoMapImage la={detail.latitude} lo={detail.longitude} />
-                  ) : (
-                    <div className="w-[400px] h-[247px] bg-[#D9D9D9] flex items-center justify-center text-[#888] text-sm">
-                      위치 정보 없음
-                    </div>
-                  )
-                ) : (
-                  <div className="text-[#757575] w-[300px] mt-[55px]">
-                    영화관/전시장 지도는 제공하지 않습니다.
+                  {/* 버튼 영역 */}
+                  <div className="flex flex-row gap-3 mt-2">
+                    <button
+                      onClick={() => handleBook(Number(activity.activity_id))}
+                      className="text-sm border border-[#447959] text-[#447959] px-4 py-[2px] rounded-[20px]"
+                    >
+                      일정 등록하기
+                    </button>
+                    <button
+                      onClick={handleToggleWish}
+                      className={`text-sm px-4 py-[2px] rounded-[20px] border ${detail.isWished ? "bg-black text-white border-black" : "text-black border-black"
+                        }`}
+                    >
+                      {detail.isWished ? "찜 해제" : "찜하기"}
+                    </button>
                   </div>
-                )}
-              </div>
-            </div>
 
-            {/* 리뷰 영역 */}
-            <div className="mt-4 border-t pt-4">
-              {/* 평균 평점*/}
-              <div className="flex items-center mb-4">
-                <div className="flex text-yellow-400 mr-2">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
-                      <path d="M10 15l-5.878 3.09 1.122-6.545L.489 6.91l6.564-.955L10 0l2.947 5.955 6.564.955-4.755 4.635 1.122 6.545z" />
-                    </svg>
+                </div>
+
+                <div className="mr-[10px]">
+                  {activity.activity_type === "PERFORMANCE" ? (
+                    detail.latitude && detail.longitude ? (
+                      <KakaoMapImage la={detail.latitude} lo={detail.longitude} />
+                    ) : (
+                      <div className="w-[400px] h-[247px] bg-[#D9D9D9] flex items-center justify-center text-[#888] text-sm">
+                        위치 정보 없음
+                      </div>
+                    )
+                  ) : (
+                    <div className="text-[#757575] w-[300px] mt-[55px]">
+                      영화관/전시장 지도는 제공하지 않습니다.
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* 리뷰 영역 */}
+              <div className="mt-4 border-t pt-4">
+                {/* 평균 평점*/}
+                <div className="flex items-center mb-4">
+                  <div className="flex text-yellow-400 mr-2">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                        <path d="M10 15l-5.878 3.09 1.122-6.545L.489 6.91l6.564-.955L10 0l2.947 5.955 6.564.955-4.755 4.635 1.122 6.545z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="font-semibold">평균 평점 {averageRating}</span>
+                </div>
+
+                {/* 리뷰 카드 리스트 */}
+                <div className="flex overflow-x-auto space-x-4 pb-2">
+                  {reviews.map((review, index) => (
+                    <div
+                      key={index}
+                      className="min-w-[240px] max-w-[240px] h-[150px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
+                    >
+                      <p className="text-sm mb-2">⭐ {review.rate}</p>
+                      <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
+                    </div>
                   ))}
                 </div>
-                <span className="font-semibold">평균 평점 {averageRating}</span>
-              </div>
-
-              {/* 리뷰 카드 리스트 */}
-              <div className="flex overflow-x-auto space-x-4 pb-2">
-                {reviews.map((review, index) => (
-                  <div
-                    key={index}
-                    className="min-w-[240px] max-w-[240px] h-[150px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
-                  >
-                    <p className="text-sm mb-2">⭐ {review.rate}</p>
-                    <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
