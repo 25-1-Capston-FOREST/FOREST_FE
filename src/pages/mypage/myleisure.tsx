@@ -1,10 +1,11 @@
-import MypageSidebar from "@/components/Mypagebar";
 import { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/router";
-import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import MypageSidebar from "@/components/Mypagebar";
+import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 import { postBooking, getBookedActivities } from "@/lib/api/book";
 import { getPlannedlist, getCompletedlist } from "@/lib/api/useractivities";
+import { postReview } from "@/lib/api/review";
 
 export default function Myleisure() {
   const router = useRouter();
@@ -18,9 +19,9 @@ export default function Myleisure() {
   const starRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const [reviewText, setReviewText] = useState("");
+  const [selectedUserActivityId, setSelectedUserActivityId] = useState<number | null>(null);
 
   // 별점 핸들러
-  const handleStarClick = (index: number) => setRating(index);
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDragging.current || !starRef.current) return;
     const rect = starRef.current.getBoundingClientRect();
@@ -191,19 +192,32 @@ export default function Myleisure() {
     }
   };
 
-  // 저장 핸들러
-  const handleReviewSave = () => {
-    console.log("리뷰 저장됨!");
-    console.log("별점:", rating);
-    console.log("내용:", reviewText);
-    setShowReviewModal(false); // 팝업 닫기
-    setRating(0);
-    setReviewText("");
+  const handleReview = (userActivityId: number) => {
+    setSelectedUserActivityId(userActivityId);
+    setShowReviewModal(true);
   };
 
-  // 팝업 여는 함수
-  const handleReview = () => {
-    setShowReviewModal(true);
+  // 저장 핸들러
+  const handleReviewSave = async () => {
+    if (selectedUserActivityId === null) {
+      console.error("userActivityId가 없습니다.");
+      return;
+    }
+
+    try {
+      await postReview(selectedUserActivityId, rating, reviewText);
+      console.log("리뷰 저장 성공!");
+
+      alert("리뷰가 저장되었습니다!");
+
+      // UI 상태 초기화
+      setShowReviewModal(false);
+      setRating(0);
+      setReviewText("");
+    } catch (error) {
+      console.error("리뷰 저장 실패:", error);
+      alert("리뷰 저장에 실패했어요 😢");
+    }
   };
 
   return (
@@ -213,121 +227,119 @@ export default function Myleisure() {
 
         {/* 리스트 출력 */}
         <ul className="flex mx-auto mt-2 w-[1200px] justify-center flex-col gap-4">
-          {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ? (
-            getCurrentList().map((item) => (
-              <li key={item.wish_id ?? item.activity_id} className="pb-[15px] flex justify-center w-[1200px] mx-auto border-b flex items-center">
-                {item.detailedInfo?.image_url ? (
-                  <img
-                    src={item.detailedInfo.image_url}
-                    alt="이미지"
-                    width={120}
-                    height={160}
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="w-[127px] h-[170px] bg-gray-200 flex items-center justify-center text-sm text-gray-500">
-                    No Image
-                  </div>
-                )}
+          {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ?
+            (
+              getCurrentList().map((item) => (
+                <li key={item.wish_id ?? item.activity_id} className="pb-[15px] flex justify-center w-[1200px] mx-auto border-b flex items-center">
+                  {item.detailedInfo?.image_url ? (
+                    <img
+                      src={item.detailedInfo.image_url}
+                      alt="이미지"
+                      width={120}
+                      height={160}
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="w-[127px] h-[170px] bg-gray-200 flex items-center justify-center text-sm text-gray-500">
+                      No Image
+                    </div>
+                  )}
 
-                <div className="ml-[50px] w-[785px] h-[170px]">
-                  {/* 여가 유형 */}
-                  <p className="mt-[3px] mb-[7px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
-                    {TYPE_MAP[item.activity_type] ?? "기타"}
-                  </p>
+                  <div className="ml-[50px] w-[785px] h-[170px]">
+                    {/* 여가 유형 */}
+                    <p className="mt-[3px] mb-[7px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
+                      {TYPE_MAP[item.activity_type] ?? "기타"}
+                    </p>
 
-                  {/* 제목 */}
-                  <button
-                    className="text-[18px] font-bold"
-                    onClick={() => handleLeisureClick(item)}
-                  >
-                    {item.detailedInfo?.title ?? "제목 없음"}
-                  </button>
+                    {/* 제목 */}
+                    <button
+                      className="text-[18px] font-bold"
+                      onClick={() => handleLeisureClick(item)}
+                    >
+                      {item.detailedInfo?.title ?? "제목 없음"}
+                    </button>
 
-                  {/* 장소 */}
-                  <p className="text-[14px] text-[#757575] whitespace-pre-line">
-                    {item.activity_type === "MOVIE"
-                      ? "\n"
-                      : item.activity_type === "PERFORMANCE"
-                        ? item.detailedInfo?.location ?? "지역 정보 없음"
-                        : item.activity_type === "EXHIBITION"
-                          ? item.detailedInfo?.location ?? "장소 정보 없음"
+                    {/* 장소 */}
+                    <p className="text-[14px] text-[#757575] whitespace-pre-line">
+                      {item.activity_type === "MOVIE"
+                        ? "\n"
+                        : item.activity_type === "PERFORMANCE"
+                          ? item.detailedInfo?.location ?? "지역 정보 없음"
+                          : item.activity_type === "EXHIBITION"
+                            ? item.detailedInfo?.location ?? "장소 정보 없음"
+                            : ""}
+                    </p>
+
+                    {/* 기간 */}
+                    <p className="text-[13px] text-[#757575] mb-[35px]">
+                      {item.activity_type === "MOVIE"
+                        ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
+                        : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
+                          ? `${item.detailedInfo?.start_date ?? "시작일 정보 없음"} ~ ${item.detailedInfo?.end_date ?? "종료일 정보 없음"}`
                           : ""}
-                  </p>
+                    </p>
 
-                  {/* 기간 */}
-                  <p className="text-[13px] text-[#757575] mb-[35px]">
-                    {item.activity_type === "MOVIE"
-                      ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
-                      : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
-                        ? `${item.detailedInfo?.start_date ?? "시작일 정보 없음"} ~ ${item.detailedInfo?.end_date ?? "종료일 정보 없음"}`
-                        : ""}
-                  </p>
+                    <div className="w-full mt-[10px] flex items-center justify-between">
+                      {/* 별점 */}
+                      <div className="flex flex-row items-center gap-1 text-[17px]">
+                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
+                        <p className="pt-[3px] ml-[6px] text-[13px]">평균 평점 5</p>
+                      </div>
 
-                  <div className="w-full mt-[10px] flex items-center justify-between">
-                    {/* 별점 */}
-                    <div className="flex flex-row items-center gap-1 text-[17px]">
-                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                      <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                      <p className="pt-[3px] ml-[6px] text-[13px]">평균 평점 5</p>
+                      {/* 버튼 모음*/}
+                      <div className="flex flex-row text-[13px]">
+                        {selectedTab === "Wish List" && (
+                          <button
+                            onClick={() => handleBook(item.activity_id)}
+                            className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
+                          >
+                            일정 등록하기
+                          </button>
+                        )}
+
+                        {selectedTab === "Planned Leisure" && (
+                          <button
+                            onClick={() => alert("일정 변경 기능은 구현 예정입니다!")}
+                            className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
+                          >
+                            일정 변경하기
+                          </button>
+                        )}
+
+                        {selectedTab === "Completed Leisure" && (
+                          <button
+                            onClick={() => handleReview(item.user_activity_id)}
+                            className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
+                          >
+                            리뷰 작성하기
+                          </button>
+                        )}
+
+                        <button
+                          onClick={() => handleToggleWish(item)}
+                          className={`items-center justify-center text-center flex flex-row w-[80px] h-[28px] rounded-[20px]
+                              ${item.isWished
+                              ? "bg-black text-white"
+                              : "text-black border border-black"
+                            }`}
+                        >
+                          {item.isWished ? "찜 해제" : "찜하기"}
+                        </button>
+                      </div>
                     </div>
 
-                    {/* 버튼 모음*/}
-                    <div className="flex flex-row text-[13px]">
-                      {selectedTab === "Wish List" && (
-                        <button
-                          onClick={() => handleBook(item.activity_id)}
-                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
-                        >
-                          일정 등록하기
-                        </button>
-                      )}
-
-                      {selectedTab === "Planned Leisure" && (
-                        <button
-                          onClick={() => alert("일정 변경 기능은 구현 예정입니다!")}
-                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
-                        >
-                          일정 변경하기
-                        </button>
-                      )}
-
-                      {selectedTab === "Completed Leisure" && (
-                        <button
-                          onClick={() => handleReview()}
-                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
-                        >
-                          리뷰 작성하기
-                        </button>
-                      )}
-
-                      <button
-                        onClick={() => handleToggleWish(item)}
-                        className={`items-center justify-center text-center flex flex-row w-[80px] h-[28px] rounded-[20px]
-    ${item.isWished
-                            ? "bg-black text-white"
-                            : "text-black border border-black"
-                          }`}
-                      >
-                        {item.isWished ? "찜 해제" : "찜하기"}
-                      </button>
-                    </div>
                   </div>
-
-                </div>
-              </li>
-            ))
-          ) : (
-            <p className="text-gray-500">
-              <button onClick={handleReview}>
-                테스트
-              </button>
-              리스트가 비어 있습니다.
-            </p>
-          )}
+                </li>
+              ))
+            ) : (
+              <p className="text-gray-500">
+                로딩 중...
+              </p>
+            )}
         </ul>
       </div>
 
@@ -383,8 +395,8 @@ export default function Myleisure() {
                   <path
                     fill={`url(#half-${index})`}
                     d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.956
-           1.476 8.268L12 18.896l-7.412 4.634
-           1.476-8.268-6.064-5.956 8.332-1.151z"
+                        1.476 8.268L12 18.896l-7.412 4.634
+                        1.476-8.268-6.064-5.956 8.332-1.151z"
                   />
                 </svg>
               ))}
