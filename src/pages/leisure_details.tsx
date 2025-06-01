@@ -102,7 +102,7 @@ export default function Detail() {
     }
   };
 
-  const handleToggleWish = async (item: Activity) => {
+  const handleToggleWish = async (item) => {
     try {
       if (item.isWished) {
         await deleteWish(item.wish_id);
