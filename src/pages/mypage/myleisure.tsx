@@ -212,7 +212,7 @@ export default function Myleisure() {
       <div className="mt-[80px]">
 
         {/* 리스트 출력 */}
-        <ul className="flex mx-auto mt-2 w-[1300px] justify-center flex-col gap-6">
+        <ul className="flex mx-auto mt-2 w-[1300px] justify-center flex-col gap-5">
           {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ? (
             getCurrentList().map((item) => (
               <li key={item.wish_id ?? item.activity_id} className="pb-[15px] flex justify-center w-[1300px] mx-auto border-b flex items-center">
@@ -232,7 +232,7 @@ export default function Myleisure() {
 
                 <div className="ml-[60px] w-[785px] h-[170px]">
                   {/* 여가 유형 */}
-                  <p className="mb-[7px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
+                  <p className="mt-[3px] mb-[7px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
                     {TYPE_MAP[item.activity_type] ?? "기타"}
                   </p>
 
