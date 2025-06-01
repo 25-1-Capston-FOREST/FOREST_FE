@@ -366,7 +366,7 @@ export default function Detail() {
                     일정 등록하기
                   </button>
 
-                  <button onClick={() => handleToggleWish(activity)}
+                  <button onClick={() => handleToggleWish}
                     className={`flex flex-row items-center justify-center ml-[15px] border border-black w-[90px] h-[25px] rounded-[20px] ${detail.isWished ? "bg-[#000000] text-white" : "border-black text-black"
                       }`}>
                     <span className="text-[14px]">
