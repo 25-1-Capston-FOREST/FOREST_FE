@@ -18,7 +18,7 @@ const MypageSidebar = () => {
       setSelectedTab(null);
     }
   }, [router.pathname, router.query.tab]);
-  
+
   const menuItems = [
     { name: "Profile", path: "/mypage/profile" },
     { name: "My Leisure", path: "/mypage/myleisure" },
@@ -67,9 +67,10 @@ const MypageSidebar = () => {
 
             {isMyLeisure && (
               <div
-                className={`absolute left-0 top-[25px] transition-all duration-300
-                  ${showSubMenu ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1 pointer-events-none"}
-                `}
+                className={`absolute left-0 top-[25px] transition-all duration-300 bg-white
+      ${showSubMenu ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1 pointer-events-none"}
+    `}
+                style={{ zIndex: 0 }}
               >
                 <div className="flex flex-col px-2 ">
                   {leisureSubItems.map((sub) => (

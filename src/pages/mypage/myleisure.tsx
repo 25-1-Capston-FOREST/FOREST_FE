@@ -232,7 +232,7 @@ export default function Myleisure() {
 
                 <div className="ml-[60px] w-[785px] h-[170px]">
                   {/* 여가 유형 */}
-                  <p className="mb-[8px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
+                  <p className="mb-[7px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
                     {TYPE_MAP[item.activity_type] ?? "기타"}
                   </p>
 
@@ -276,11 +276,11 @@ export default function Myleisure() {
                     </div>
 
                     {/* 버튼 모음*/}
-                    <div className="flex flex-row">
+                    <div className="flex flex-row text-[13px]">
                       {selectedTab === "Wish List" && (
                         <button
                           onClick={() => handleBook(item.activity_id)}
-                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[25px] rounded-[20px]"
+                          className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
                         >
                           일정 등록하기
                         </button>
