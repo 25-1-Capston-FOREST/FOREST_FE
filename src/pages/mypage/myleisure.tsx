@@ -306,7 +306,7 @@ export default function Myleisure() {
 
                       <button
                         onClick={() => handleToggleWish(item)}
-                        className={`text-center flex flex-row w-[128px] h-[28px] rounded-[20px]
+                        className={`items-center justify-center text-center flex flex-row w-[60px] h-[28px] rounded-[20px]
     ${item.isWished
                             ? "bg-black text-white"
                             : "text-black border border-black"
