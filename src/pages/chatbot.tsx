@@ -60,10 +60,12 @@ export default function Chatbot() {
     if (!container) return;
 
     if (messages.length > 1) {
-      container.scrollTo({
-        top: container.scrollHeight,
-        behavior: "smooth",
-      });
+      setTimeout(() => {
+        container.scrollTo({
+          top: container.scrollHeight,
+          behavior: "smooth",
+        });
+      }, 50);
     }
   }, [messages]);
 
@@ -86,7 +88,7 @@ export default function Chatbot() {
       </div>
 
       {/* 입력창 */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-10 w-full max-w-[550px] flex items-center space-x-2 px-4 bg-[#FFFFFF] h-[70px]">
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-10 w-full max-w-[550px] flex items-center space-x-2 px-4 bg-[#FFFFFF] h-[80px]">
         <div className="flex flex-1 h-[40px] rounded-[10px] border items-center bg-white shadow-md px-2">
           <input
             className="flex-1 px-2 outline-none text-[14px]"
