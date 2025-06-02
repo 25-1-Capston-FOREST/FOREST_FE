@@ -296,7 +296,7 @@ export default function Detail() {
 
 
             {/* 리뷰 영역 */}
-            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-auto h-[150px]">
+            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-auto h-[180px]">
               {reviews.map((review, index) => (
                 <div
                   key={index}
