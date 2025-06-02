@@ -55,32 +55,36 @@ export default function Chatbot() {
     }
   }
 
-useEffect(() => {
-  const container = containerRef.current;
-  if (!container) return;
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
-  if (messages.length > 1) {
-    setTimeout(() => {
-      container.scrollTo({
-        top: container.scrollHeight,
-        behavior: "smooth",
-      });
-    }, 50);
-  }
-}, [messages]);
+    if (messages.length > 1) {
+      setTimeout(() => {
+        container.scrollTo({
+          top: container.scrollHeight,
+          behavior: "smooth",
+        });
+      }, 50);
+    }
+  }, [messages]);
 
   return (
     <div className="pt-[10px] pb-[90px] px-4 bg-white min-h-screen flex flex-col items-center">
       {/* 메시지 영역 */}
       <div
         ref={containerRef}
-        className="w-full max-w-[527px] flex-1 overflow-y-auto flex flex-col space-y-2"
+        className="w-full max-w-[527px] overflow-y-auto flex flex-col space-y-2"
+        style={{
+          maxHeight: `calc(100vh - ${HEADER_HEIGHT + 90}px)`,
+          paddingTop: "10px",
+          paddingBottom: "10px"
+        }}
       >
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
-              }`}
+            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"}`}
           >
             {msg.text}
           </div>
