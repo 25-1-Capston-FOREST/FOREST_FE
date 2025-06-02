@@ -233,7 +233,7 @@ export default function Detail() {
 
                 {/* 버튼 영역 */}
                 <div className="space-y-2">
-                  <div className="text-[#757575]">
+                  <div className="text-[#757575] text-sm">
                     {activity.activity_type === "MOVIE" &&
                       "영화의 예매 페이지는 제공하지 않습니다."}
                     {activity.activity_type === "EXHIBITION" && (
@@ -296,7 +296,7 @@ export default function Detail() {
 
 
             {/* 리뷰 영역 */}
-            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-auto">
+            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-auto h-[150px]">
               {reviews.map((review, index) => (
                 <div
                   key={index}
