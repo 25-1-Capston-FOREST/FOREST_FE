@@ -84,8 +84,8 @@ export default function ReviewPage() {
                     <p className="text-sm text-gray-500">
                       {review.detailedInfo.location} | {review.detailedInfo.start_date} ~ {review.detailedInfo.end_date}
                     </p>
-                    <p className="text-sm mt-3 mb-2">⭐ {review.rate}</p>
-                    <p className="mt-2 text-gray-800">{review.content}</p>
+                    <p className="text-sm mt-3">⭐ {review.rate}</p>
+                    <p className="mt-1 text-gray-800">{review.content}</p>
                     <p className="text-xs text-gray-400 mt-1">
                       작성일: {new Date(review.created_at).toLocaleDateString()}
                     </p>
