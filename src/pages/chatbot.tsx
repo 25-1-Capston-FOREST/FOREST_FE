@@ -78,7 +78,7 @@ export default function Chatbot() {
         style={{
           maxHeight: `calc(100vh - ${HEADER_HEIGHT + 90}px)`,
           paddingTop: "10px",
-          paddingBottom: "10px"
+          paddingBottom: "100px"
         }}
       >
         {messages.map((msg, idx) => (
