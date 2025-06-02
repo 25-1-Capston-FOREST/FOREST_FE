@@ -106,8 +106,8 @@ useEffect(() => {
             <Image
               src="/images/icon_arrow.svg"
               alt="화살표"
-              width={30}
-              height={30}
+              width={26}
+              height={26}
               className="transform -rotate-90"
             />
           </button>
