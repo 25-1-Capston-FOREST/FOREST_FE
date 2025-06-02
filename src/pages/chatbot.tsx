@@ -82,8 +82,8 @@ export default function Chatbot() {
       </div>
 
       {/* 입력창 */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-10 w-full max-w-[527px] flex items-center space-x-2 px-4 bg-white">
-        <div className="flex flex-1 h-[38px] rounded-[10px] border items-center bg-white shadow-md px-2">
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-10 w-full max-w-[650px] flex items-center space-x-2 px-4 bg-[#000000]">
+        <div className="flex flex-1 h-[40px] rounded-[10px] border items-center bg-white shadow-md px-2">
           <input
             className="flex-1 px-2 outline-none text-[14px]"
             value={input}
