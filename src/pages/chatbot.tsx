@@ -66,7 +66,7 @@ export default function Chatbot() {
   }, [messages])
 
   return (
-    <div className="mt-[-30px] flex flex-col items-center bg-white px-4 pt-10">
+    <div className="mt-[-30px] flex flex-col items-center bg-white pt-30">
       {/* 메시지 영역 */}
       <div
         ref={containerRef}
