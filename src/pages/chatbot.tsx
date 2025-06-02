@@ -70,7 +70,7 @@ export default function Chatbot() {
       {/* 메시지 영역 */}
       <div
         ref={containerRef}
-        className="flex flex-col justify-end w-full max-w-[527px] space-y-2 overflow-y-auto px-4 pt-4"
+        className="flex flex-col justify-end w-full max-w-[527px] space-y-2 overflow-y-auto px-4 pt-4 pb-[100px]"
         style={{
           minHeight: 150,
           maxHeight: "calc(100vh - 160px)",
