@@ -70,7 +70,7 @@ export default function Chatbot() {
   }, [messages]);
 
   return (
-    <div className="mb-[50px] pt-[10px] pb-[90px] px-4 bg-white min-h-[calc(100vh-150px)] flex flex-col items-center">
+    <div className="mb-[50px] pt-[10px] pb-[90px] px-4 bg-white min-h-[calc(100vh-200px)] flex flex-col items-center">
       {/* 메시지 영역 */}
       <div
         ref={containerRef}
