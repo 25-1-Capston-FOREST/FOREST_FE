@@ -218,7 +218,7 @@ export default function Myleisure() {
   return (
     <div>
       <MypageSidebar />
-      <div className="mt-[65px]">
+      <div className="">
         <div className="mx-10 mt-6">
           <h2 className="text-[15px] font-semibold mb-4 px-2">
             {selectedTab === "Wish List" && "찜 목록"}
