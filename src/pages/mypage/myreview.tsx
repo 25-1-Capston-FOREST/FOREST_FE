@@ -61,7 +61,7 @@ export default function ReviewPage() {
       <MypageSidebar />
 
       <div className="flex flex-col mx-10 my-6">
-        <h1 className="text-[15px] font-semibold mb-4">내가 작성한 리뷰</h1>
+        <h1 className="text-[15px] font-semibold mb-4 px-2">내가 작성한 리뷰</h1>
 
         {reviews.length === 0 ? (
           <p>작성한 리뷰가 없습니다.</p>
@@ -83,6 +83,7 @@ export default function ReviewPage() {
                     <p className="text-sm text-gray-500">
                       {review.detailedInfo.location} | {review.detailedInfo.start_date} ~ {review.detailedInfo.end_date}
                     </p>
+                    {/* <p className="text-sm mb-2">⭐ {review.rate}</p> */}
                     <p className="mt-2 text-gray-800">{review.content}</p>
                     <p className="text-xs text-gray-400 mt-1">
                       작성일: {new Date(review.created_at).toLocaleDateString()}
