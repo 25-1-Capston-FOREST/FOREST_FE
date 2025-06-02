@@ -43,13 +43,13 @@ export default function ReviewPage() {
       try {
         const res = await getUserReview()
         if (res?.success) {
-          console.log("✅ 사용자 리뷰 리스트:", res.data)
+          console.log("사용자 리뷰 리스트:", res.data)
           setReviews(res.data)
         } else {
-          console.warn("⚠️ 리뷰 불러오기 실패:", res?.message)
+          console.warn("리뷰 불러오기 실패:", res?.message)
         }
       } catch (error) {
-        console.error("❌ 리뷰 리스트를 불러오는 중 오류 발생:", error)
+        console.error("리뷰 리스트를 불러오는 중 오류 발생:", error)
       }
     }
 
