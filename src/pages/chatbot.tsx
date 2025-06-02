@@ -76,7 +76,7 @@ export default function Chatbot() {
         ref={containerRef}
         className="w-full max-w-[527px] flex flex-col space-y-2"
         style={{
-          maxHeight: `calc(100vh - ${HEADER_HEIGHT + 90}px)`,
+          maxHeight: `calc(100vh - 300}px)`,
           paddingTop: "10px",
           paddingBottom: "100px"
         }}
