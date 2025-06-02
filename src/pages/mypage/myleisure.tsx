@@ -226,13 +226,13 @@ export default function Myleisure() {
             (
               getCurrentList().map((item) => (
                 <li key={item.wish_id ?? item.activity_id}
-                  className="w-full mx-auto border rounded-lg shadow-sm border-gray-300 py-4 px-3 flex gap-6 items-center justify-between">
+                  className="w-full mx-auto border rounded-lg shadow-sm py-4 px-3 flex gap-6 items-center justify-between">
                   {item.detailedInfo?.image_url ? (
                     <img
                       src={item.detailedInfo.image_url}
                       alt="이미지"
-                      width={110}
-                      height={145}
+                      width={100}
+                      height={135}
                       className="object-cover rounded-lg"
                     />
                   ) : (
@@ -268,7 +268,7 @@ export default function Myleisure() {
                       </p>
                           |
                       {/* 기간 */}
-                      <p className="mb-[35px]">
+                      <p className="mb-[40px]">
                         {item.activity_type === "MOVIE"
                           ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
                           : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"

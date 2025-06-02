@@ -28,6 +28,7 @@ interface Review {
   user_activity_id: string
   user_id: string
   activity_id: string
+  rate: string
   content: string
   created_at: string
   updated_at: string
@@ -83,7 +84,7 @@ export default function ReviewPage() {
                     <p className="text-sm text-gray-500">
                       {review.detailedInfo.location} | {review.detailedInfo.start_date} ~ {review.detailedInfo.end_date}
                     </p>
-                    {/* <p className="text-sm mb-2">⭐ {review.rate}</p> */}
+                    <p className="text-sm mb-2">⭐ {review.rate}</p>
                     <p className="mt-2 text-gray-800">{review.content}</p>
                     <p className="text-xs text-gray-400 mt-1">
                       작성일: {new Date(review.created_at).toLocaleDateString()}
