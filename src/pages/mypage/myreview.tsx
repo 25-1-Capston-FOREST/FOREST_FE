@@ -60,8 +60,8 @@ export default function ReviewPage() {
     <div className="flex flex-col">
       <MypageSidebar />
 
-      <div className="flex flex-col p-6">
-        <h1 className="text-xl font-semibold mb-4">내가 작성한 리뷰</h1>
+      <div className="flex flex-col p-20">
+        <h1 className="text-[15px] font-semibold mb-4">내가 작성한 리뷰</h1>
 
         {reviews.length === 0 ? (
           <p>작성한 리뷰가 없습니다.</p>
