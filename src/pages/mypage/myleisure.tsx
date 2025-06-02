@@ -225,8 +225,8 @@ export default function Myleisure() {
           {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ?
             (
               getCurrentList().map((item) => (
-                <li key={item.wish_id ?? item.activity_id} 
-                className="w-full mx-auto border rounded-lg shadow-sm border-gray-300 py-4 px-3 flex gap-6 items-center justify-between">
+                <li key={item.wish_id ?? item.activity_id}
+                  className="w-full mx-auto border rounded-lg shadow-sm border-gray-300 py-4 px-3 flex gap-6 items-center justify-between">
                   {item.detailedInfo?.image_url ? (
                     <img
                       src={item.detailedInfo.image_url}
@@ -255,26 +255,28 @@ export default function Myleisure() {
                       {item.detailedInfo?.title ?? "제목 없음"}
                     </button>
 
-                    {/* 장소 */}
-                    <p className="text-[14px] text-[#757575] whitespace-pre-line">
-                      {item.activity_type === "MOVIE"
-                        ? "\n"
-                        : item.activity_type === "PERFORMANCE"
-                          ? item.detailedInfo?.location ?? "지역 정보 없음"
-                          : item.activity_type === "EXHIBITION"
-                            ? item.detailedInfo?.location ?? "장소 정보 없음"
+                    <div className="flex text-sm flex-row text-[#757575]">
+                      {/* 장소 */}
+                      <p className=" whitespace-pre-line">
+                        {item.activity_type === "MOVIE"
+                          ? "영화관 "
+                          : item.activity_type === "PERFORMANCE"
+                            ? item.detailedInfo?.location ?? "지역 정보 없음 "
+                            : item.activity_type === "EXHIBITION"
+                              ? item.detailedInfo?.location ?? "장소 정보 없음 "
+                              : ""}
+                      </p>
+                          |
+                      {/* 기간 */}
+                      <p className="mb-[35px]">
+                        {item.activity_type === "MOVIE"
+                          ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
+                          : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
+                            ? `${item.detailedInfo?.start_date ?? "시작일 정보 없음"} ~ ${item.detailedInfo?.end_date ?? "종료일 정보 없음"}`
                             : ""}
-                    </p>
+                      </p>
 
-                    {/* 기간 */}
-                    <p className="text-[13px] text-[#757575] mb-[35px]">
-                      {item.activity_type === "MOVIE"
-                        ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
-                        : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
-                          ? `${item.detailedInfo?.start_date ?? "시작일 정보 없음"} ~ ${item.detailedInfo?.end_date ?? "종료일 정보 없음"}`
-                          : ""}
-                    </p>
-
+                    </div>
                     <div className="w-full mt-[10px] flex items-center justify-between">
                       {/* 별점 */}
                       <div className="flex flex-row items-center gap-1 text-[17px]">
