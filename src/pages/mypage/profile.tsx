@@ -5,7 +5,7 @@ export default function Modify() {
 
 
   return (
-    <div className="flex">
+    <div className="flex flex-col">
 
       <MypageSidebar />
 
