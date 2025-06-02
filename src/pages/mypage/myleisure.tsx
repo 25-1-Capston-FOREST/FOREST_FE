@@ -225,7 +225,8 @@ export default function Myleisure() {
           {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ?
             (
               getCurrentList().map((item) => (
-                <li key={item.wish_id ?? item.activity_id} className="pb-[15px] flex justify-center w-[1200px] mx-auto border-b flex items-center">
+                <li key={item.wish_id ?? item.activity_id} 
+                className="w-[1200px] mx-auto border-b border-gray-300 py-4 px-3 flex gap-6 items-center">
                   {item.detailedInfo?.image_url ? (
                     <img
                       src={item.detailedInfo.image_url}
