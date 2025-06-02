@@ -236,7 +236,7 @@ export default function Myleisure() {
                       className="object-cover"
                     />
                   ) : (
-                    <div className="w-[127px] h-[170px] bg-gray-200 flex items-center justify-center text-sm text-gray-500">
+                    <div className="w-24 h-32 bg-gray-200 flex items-center justify-center text-sm text-gray-500">
                       No Image
                     </div>
                   )}
