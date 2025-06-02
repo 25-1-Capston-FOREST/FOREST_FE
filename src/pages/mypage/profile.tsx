@@ -5,9 +5,11 @@ export default function Modify() {
 
 
   return (
-    <div className="flex justify-center">
+    <div className="flex">
 
       <MypageSidebar />
+
+
       <div className="mt-[100px] flex flex-col justify-center items-center">
         <div className="grid grid-cols-[115px_auto] grid-rows-4 w-[590px] h-[272px] border rounded-[17px] shadow-custom">
 
