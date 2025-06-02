@@ -241,7 +241,7 @@ export default function Myleisure() {
                     </div>
                   )}
 
-                  <div className="ml-[50px] w-[785px] h-[170px]">
+                  <div className="ml-[50px] w-[1305px] h-[150px]">
                     {/* 여가 유형 */}
                     <p className="mt-[3px] mb-[7px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
                       {TYPE_MAP[item.activity_type] ?? "기타"}
