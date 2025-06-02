@@ -66,11 +66,11 @@ export default function Chatbot() {
   }, [messages])
 
   return (
-    <div className="mt-[-30px] flex flex-col items-center bg-white ">
+    <div className="flex flex-col h-screen items-center bg-white">
       {/* 메시지 영역 */}
       <div
         ref={containerRef}
-        className="flex flex-col justify-end w-full max-w-[527px] space-y-2 overflow-y-auto pt-4 pb-[110px]"
+        className="flex flex-col justify-end w-full max-w-[527px] flex-grow space-y-2 overflow-y-auto pt-4 pb-[110px]"
         style={{
           minHeight: 150,
           maxHeight: "calc(100vh - 160px)",
@@ -89,12 +89,10 @@ export default function Chatbot() {
         ))}
       </div>
 
-      {/* 입력창 + 전송버튼 + 대화종료 버튼 컨테이너 */}
-      {/* 입력 영역 전체 감싸는 컨테이너 */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-10 flex items-center space-x-2 w-[527px]">
-
-        {/* 입력창 + 전송 버튼 (border 박스) */}
-        <div className="flex flex-1 h-[38px] rounded-[10px] border items-center bg-white shadow-md px-2">
+      {/* 입력창 + 전송버튼 + 대화종료 버튼 */}
+      <div className="w-full max-w-[527px] px-4 py-3 bg-white shadow-inner flex items-center space-x-2 border-t">
+        {/* 입력창 */}
+        <div className="flex flex-1 h-[42px] rounded-[10px] border items-center bg-white shadow-sm px-2">
           <input
             className="flex-1 px-2 outline-none text-[14px]"
             value={input}
@@ -121,12 +119,11 @@ export default function Chatbot() {
         {/* 대화 종료 버튼 */}
         <button
           onClick={handleEndChat}
-          className="bg-[#FFA6A6] text-white rounded-[10px] px-4 h-[38px] text-sm font-semibold hover:bg-red-700 transition-colors"
+          className="bg-[#FFA6A6] text-white rounded-[10px] px-4 h-[42px] text-sm font-semibold hover:bg-red-700 transition-colors"
         >
           대화 종료
         </button>
       </div>
-
     </div>
   )
 }
