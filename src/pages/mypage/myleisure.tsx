@@ -219,7 +219,13 @@ export default function Myleisure() {
     <div>
       <MypageSidebar />
       <div className="mt-[65px]">
-
+        <div className="mx-10 mt-6">
+          <h2 className="text-[15px] font-semibold mb-4 px-2">
+            {selectedTab === "Wish List" && "찜 목록"}
+            {selectedTab === "Planned Leisure" && "예정된 여가"}
+            {selectedTab === "Completed Leisure" && "완료된 여가"}
+          </h2>
+        </div>
         {/* 리스트 출력 */}
         <ul className="flex mx-10 my-2 justify-center flex-col gap-4">
           {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ?
@@ -266,7 +272,7 @@ export default function Myleisure() {
                               ? item.detailedInfo?.location ?? "장소 정보 없음 "
                               : ""}
                       </p>
-                          
+
                       {/* 기간 */}
                       <p className="mb-[35px]">
                         {item.activity_type === "MOVIE"
@@ -277,15 +283,15 @@ export default function Myleisure() {
                       </p>
 
                     </div>
-                    <div className="w-full mt-[10px] flex items-center justify-between">
+                    <div className="w-full mt-[5px] flex items-center justify-between">
                       {/* 별점 */}
                       <div className="flex flex-row items-center gap-1 text-[17px]">
+                        {/* <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
                         <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
                         <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
                         <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                        <p className="pt-[3px] ml-[6px] text-[13px]">평균 평점 5</p>
+                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} /> */}
+                        <p className="pt-[3px] ml-[6px] text-[13px]">⭐⭐⭐⭐⭐ 평균 평점 5 (하드코딩)</p>
                       </div>
 
                       {/* 버튼 모음*/}
