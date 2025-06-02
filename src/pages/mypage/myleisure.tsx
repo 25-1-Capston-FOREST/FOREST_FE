@@ -231,9 +231,9 @@ export default function Myleisure() {
                     <img
                       src={item.detailedInfo.image_url}
                       alt="이미지"
-                      width={120}
-                      height={160}
-                      className="object-cover"
+                      width={110}
+                      height={145}
+                      className="object-cover rounded-lg"
                     />
                   ) : (
                     <div className="w-24 h-32 bg-gray-200 flex items-center justify-center text-sm text-gray-500">
@@ -241,7 +241,7 @@ export default function Myleisure() {
                     </div>
                   )}
 
-                  <div className="ml-[50px] w-[1305px] h-[150px]">
+                  <div className="w-[1305px] h-[150px]">
                     {/* 여가 유형 */}
                     <p className="mt-[3px] mb-[7px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
                       {TYPE_MAP[item.activity_type] ?? "기타"}
