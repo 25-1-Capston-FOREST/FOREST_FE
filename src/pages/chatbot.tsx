@@ -74,7 +74,7 @@ export default function Chatbot() {
       {/* 메시지 영역 */}
       <div
         ref={containerRef}
-        className="w-full max-w-[527px] overflow-y-auto flex flex-col space-y-2"
+        className="w-full max-w-[527px] flex flex-col space-y-2"
         style={{
           maxHeight: `calc(100vh - ${HEADER_HEIGHT + 90}px)`,
           paddingTop: "10px",
@@ -92,7 +92,7 @@ export default function Chatbot() {
       </div>
 
       {/* 입력창 */}
-      <div className="fixed bottom-3 flex left-1/2 -translate-x-1/2 z-10 w-full max-w-[550px] flex items-center space-x-2 px-4 bg-[#FFFFFF] h-[80px]">
+      <div className="fixed bottom-3 flex left-1/2 -translate-x-1/2 z-10 w-full max-w-[550px] flex items-center space-x-2 px-4 bg-[#FFFFFF] h-[60px]">
         <div className="flex flex-1 flex-row h-[40px] rounded-[10px] border items-center bg-white shadow-md px-2">
           <input
             className="flex-1 px-2 outline-none text-[14px]"
