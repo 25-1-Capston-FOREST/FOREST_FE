@@ -249,13 +249,13 @@ export default function Myleisure() {
 
                     {/* 제목 */}
                     <button
-                      className="text-[18px] font-bold"
+                      className="pt-2 text-[18px] font-bold"
                       onClick={() => handleLeisureClick(item)}
                     >
                       {item.detailedInfo?.title ?? "제목 없음"}
                     </button>
 
-                    <div className="flex text-sm flex-row text-[#757575]">
+                    <div className="flex text-sm flex-col text-[#757575]">
                       {/* 장소 */}
                       <p className=" whitespace-pre-line">
                         {item.activity_type === "MOVIE"
@@ -266,7 +266,7 @@ export default function Myleisure() {
                               ? item.detailedInfo?.location ?? "장소 정보 없음 "
                               : ""}
                       </p>
-                          |
+                          
                       {/* 기간 */}
                       <p className="mb-[40px]">
                         {item.activity_type === "MOVIE"
