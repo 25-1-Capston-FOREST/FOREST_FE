@@ -221,12 +221,12 @@ export default function Myleisure() {
       <div className="mt-[65px]">
 
         {/* 리스트 출력 */}
-        <ul className="flex mx-auto mt-2 w-[1200px] justify-center flex-col gap-4">
+        <ul className="flex mx-10 my-2 justify-center flex-col gap-4">
           {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ?
             (
               getCurrentList().map((item) => (
                 <li key={item.wish_id ?? item.activity_id} 
-                className="w-[1200px] mx-auto border-b border-gray-300 py-4 px-3 flex gap-6 items-center">
+                className="w-full mx-auto border-b border-gray-300 py-4 px-3 flex gap-6 items-center">
                   {item.detailedInfo?.image_url ? (
                     <img
                       src={item.detailedInfo.image_url}
