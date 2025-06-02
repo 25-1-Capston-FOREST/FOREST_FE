@@ -1,4 +1,3 @@
-"use client"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { postChatMessage, saveChatMessage } from "@/lib/api/chatbot"
@@ -14,6 +13,7 @@ export default function Chatbot() {
   const router = useRouter()
 
   const QUESTION_ID = "1"
+  const HEADER_HEIGHT = 150 // 최대 높이에 맞춤
 
   const handleEndChat = async () => {
     try {
@@ -29,7 +29,7 @@ export default function Chatbot() {
       alert("대화 저장 중 에러가 발생했습니다.")
     }
   }
-  // 메시지 전송
+
   const handleSend = async () => {
     if (!input.trim()) return
 
@@ -48,7 +48,6 @@ export default function Chatbot() {
       })
     } catch (error: any) {
       console.error("메시지 전송 에러:", error)
-      console.error("서버 응답:", error.response?.data)
       setMessages(prev => {
         const withoutLoading = prev.filter(m => m.text !== "...")
         return [...withoutLoading, { role: "bot", text: "에러가 발생했습니다. 다시 시도해주세요." }]
@@ -56,8 +55,6 @@ export default function Chatbot() {
     }
   }
 
-
-  //  자동 스크롤
   useEffect(() => {
     const container = containerRef.current
     if (container) {
@@ -66,33 +63,27 @@ export default function Chatbot() {
   }, [messages])
 
   return (
-    <div className="flex flex-col h-screen items-center bg-white">
+    <div className="pt-[160px] pb-[90px] px-4 bg-white min-h-screen flex flex-col items-center">
       {/* 메시지 영역 */}
       <div
         ref={containerRef}
-        className="flex flex-col justify-end w-full max-w-[527px] flex-grow space-y-2 overflow-y-auto pt-4 pb-[110px]"
-        style={{
-          minHeight: 150,
-          maxHeight: "calc(100vh - 160px)",
-          width: "100%",
-          margin: "0 auto",
-        }}
+        className="w-full max-w-[527px] flex-1 overflow-y-auto flex flex-col space-y-2"
       >
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
-              }`}
+            className={`text-sm w-fit max-w-[80%] px-3 py-2 rounded-[17px] ${
+              msg.role === "user" ? "bg-[#EBEBEB] self-end" : "self-start"
+            }`}
           >
             {msg.text}
           </div>
         ))}
       </div>
 
-      {/* 입력창 + 전송버튼 + 대화종료 버튼 */}
-      <div className="w-full max-w-[527px] px-4 py-3 bg-white shadow-inner flex items-center space-x-2 border-t">
-        {/* 입력창 */}
-        <div className="flex flex-1 h-[42px] rounded-[10px] border items-center bg-white shadow-sm px-2">
+      {/* 입력창 */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-10 w-full max-w-[527px] flex items-center space-x-2 px-4">
+        <div className="flex flex-1 h-[38px] rounded-[10px] border items-center bg-white shadow-md px-2">
           <input
             className="flex-1 px-2 outline-none text-[14px]"
             value={input}
@@ -115,11 +106,9 @@ export default function Chatbot() {
             />
           </button>
         </div>
-
-        {/* 대화 종료 버튼 */}
         <button
           onClick={handleEndChat}
-          className="bg-[#FFA6A6] text-white rounded-[10px] px-4 h-[42px] text-sm font-semibold hover:bg-red-700 transition-colors"
+          className="bg-[#FFA6A6] text-white rounded-[10px] px-4 h-[38px] text-sm font-semibold hover:bg-red-700 transition-colors"
         >
           대화 종료
         </button>
