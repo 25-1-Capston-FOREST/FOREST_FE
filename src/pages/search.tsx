@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Leisure from "@/components/Leisure";
 import { getSearch } from "@/lib/api/search";
+import Image from "next/image";
 
 interface ActivityDetail {
   title: string;
@@ -26,7 +27,7 @@ export default function Search() {
   useEffect(() => {
     if (!keyword || typeof keyword !== "string") return;
 
-    setQuery(keyword); 
+    setQuery(keyword);
 
     const fetchActivity = async () => {
       setIsLoading(true);
@@ -130,14 +131,15 @@ export default function Search() {
         </div>
 
         {/* 검색창 */}
-        <div className="w-[480px] h-[30px] rounded-[10px] items-center flex flex-row border border-[#000000] text-[14px]">
+        <div className="flex flex-row w-[500px] h-[30px] rounded-[10px] items-center flex flex-row text-[14px]">
+          <Image src="/images/icon_search.svg" alt="검색 아이콘" width={25} height={25} />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search"
-            className="w-[450px] h-[38px] bg-transparent text-[14px] outline-none px-[10px] py-[0px]"
+            className="rounded-[10px] border border-[#000000] flex flex-row items-center ml-[15px] w-[450px] h-[30px] bg-transparent text-[14px] outline-none px-[10px] py-[0px]"
           />
         </div>
       </div>
