@@ -48,7 +48,7 @@ const Leisure: React.FC<LeisureProps> = ({
     <div className="w-[200px] h-[300px] border rounded-lg">
       <button
         onClick={detailClick}
-        className="mt-[10px] flex flex-col justify-center items-center w-[280px] h-[340px] bg-[#F6F6F6] overflow-hidden relative"
+        className="mt-[10px] flex justify-center items-center w-[170px] h-[226px] bg-[#FFFFFF] overflow-hidden relative"
       >
         <Image
           src={image_url}
