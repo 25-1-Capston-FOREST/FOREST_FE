@@ -130,7 +130,7 @@ export default function Main() {
 
         {/* 검색창 */}
         <div className="flex flex-row w-[480px] h-[30px] rounded-[10px] items-center flex flex-row border border-[#000000] text-[14px]">
-          <Image src="images/icon_search" alt="검색 아이콘" width={25} height={25} />
+          <Image src="/images/icon_search.svg" alt="검색 아이콘" width={25} height={25} />
           <input
             type="text"
             value={query}
