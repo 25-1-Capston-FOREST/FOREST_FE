@@ -138,7 +138,7 @@ export default function Main() {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search"
-            className="rounded-[10px] border border-[#000000] flex flex-row items-center ml-[10px] w-[450px] h-[38px] bg-transparent text-[14px] outline-none px-[10px] py-[0px]"
+            className="rounded-[10px] border border-[#000000] flex flex-row items-center ml-[15px] w-[450px] h-[30px] bg-transparent text-[14px] outline-none px-[10px] py-[0px]"
           />
         </div>
       </div>
