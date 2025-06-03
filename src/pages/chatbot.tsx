@@ -11,6 +11,7 @@ export default function Chatbot() {
   const [input, setInput] = useState("")
   const containerRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
+  const [isComposing, setIsComposing] = useState(false) // 맥북오류해결
 
   const QUESTION_ID = "1"
   const HEADER_HEIGHT = 150 // 최대 높이에 맞춤
@@ -98,8 +99,10 @@ export default function Chatbot() {
             className="flex-1 px-2 outline-none text-[14px]"
             value={input}
             onChange={e => setInput(e.target.value)}
+            onCompositionStart={() => setIsComposing(true)}
+            onCompositionEnd={() => setIsComposing(false)}
             onKeyDown={e => {
-              if (e.key === "Enter") {
+              if (e.key === "Enter" && !isComposing) {
                 e.preventDefault()
                 handleSend()
               }
