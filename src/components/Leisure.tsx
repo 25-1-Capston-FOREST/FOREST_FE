@@ -60,11 +60,11 @@ const Leisure: React.FC<LeisureProps> = ({
         />
       </button>
 
-      <div className="flex flex-row mt-[8px] px-[20px]">
+      <div className="flex flex-row items-center mt-[8px] px-[20px]">
         <div className="flex font-normal justify-center text-white w-[40px] h-[20px] rounded-[8px] text-[12px] bg-[#447959] pt-[2px] mt-[5px]">
           {getActivityTypeName(activity_type)}
         </div>
-        <div className="font-bold text-[14px] mt-[6px] ml-2 max-w-[200px] truncate overflow-hidden whitespace-nowrap">
+        <div className="font-bold text-[14px] mt-[6px] ml-2 max-w-[180px] truncate overflow-hidden whitespace-nowrap">
           {title}
         </div>
       </div>
