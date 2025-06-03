@@ -144,7 +144,7 @@ export default function Main() {
       {/* 여가 목록  */}
 
       <div className="w-full mt-[20px] flex justify-center">
-        <div className="max-w-[1500px] w-full px-[70px]">
+        <div className="max-w-[1500px] w-full px-[50px]">
           <div className="grid grid-cols-5 gap-x-[35px] gap-y-[20px] justify-items-center">
             {filteredActivities.length > 0 ? (
               filteredActivities.map((activity) => {
