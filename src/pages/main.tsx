@@ -145,7 +145,7 @@ export default function Main() {
 
       <div className="w-full mt-[20px] flex justify-center">
         <div className="max-w-[1500px] w-full px-[70px]">
-          <div className="grid grid-cols-5 gap-x-[25px] gap-y-[20px] justify-items-center">
+          <div className="grid grid-cols-5 gap-x-[30px] gap-y-[20px] justify-items-center">
             {filteredActivities.length > 0 ? (
               filteredActivities.map((activity) => {
                 const detail = activity.detail || {};
