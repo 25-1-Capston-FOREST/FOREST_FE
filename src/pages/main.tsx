@@ -129,14 +129,15 @@ export default function Main() {
         </div>
 
         {/* 검색창 */}
-        <div className="w-[480px] h-[30px] rounded-[10px] items-center flex flex-row border border-[#000000] text-[14px]">
+        <div className="flex flex-row w-[480px] h-[30px] rounded-[10px] items-center flex flex-row border border-[#000000] text-[14px]">
+          <Image src="images/icon_search" alt="검색 아이콘" width={25} height={25} />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search"
-            className="w-[450px] h-[38px] bg-transparent text-[14px] outline-none px-[10px] py-[0px]"
+            className="ml-[10px] w-[450px] h-[38px] bg-transparent text-[14px] outline-none px-[10px] py-[0px]"
           />
         </div>
       </div>
