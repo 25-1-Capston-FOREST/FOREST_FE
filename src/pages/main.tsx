@@ -91,7 +91,7 @@ export default function Main() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // 폼 제출 방지
+      e.preventDefault();
       if (query.trim()) {
         router.push(`/search?keyword=${query}`);
       }

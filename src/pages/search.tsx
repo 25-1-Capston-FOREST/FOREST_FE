@@ -18,10 +18,10 @@ interface Activity {
 export default function Search() {
   const router = useRouter();
   const { keyword } = router.query;
-  const [isSortPopupOpen, setIsSortPopupOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [results, setResults] = useState<Activity[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     if (!keyword || typeof keyword !== "string") return;
@@ -83,6 +83,16 @@ export default function Search() {
         : [...prev, category]
     );
   };
+
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); 
+      if (query.trim()) {
+        router.push(`/search?keyword=${query}`);
+      }
+    }
+  };
   const filteredActivities =
     selectedCategories.length > 0
       ? results.filter((a) => selectedCategories.includes(a.activity_type))
@@ -91,25 +101,39 @@ export default function Search() {
 
   return (
     <div>
-      <div className="flex flex-row items-center ml-[45px] text-[15px]">
-        {/* 카테고리 버튼 */}
-        {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
-          <button
-            key={category}
-            onClick={() => handleCategoryClick(category)}
-            className={`w-[80px] rounded-[20px] py-1 text-white text-center text-left 
+      <div className="justify-between mt-[-10px] mx-[45px] flex flex-row items-center">
+        <div className="flex flex-row items-center text-[15px]">
+          {/* 카테고리 버튼 */}
+          {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
+            <button
+              key={category}
+              onClick={() => handleCategoryClick(category)}
+              className={`w-[80px] rounded-[20px] py-1 text-white text-center text-left 
               ${selectedCategories.includes(category)
-                ? "bg-[#447959]"
-                : "bg-[#D0D0D0]"
-              } ${index > 0 ? "ml-[10px]" : ""}`}
-          >
-            {category === "MOVIE"
-              ? "영화"
-              : category === "PERFORMANCE"
-                ? "공연"
-                : "전시"}
-          </button>
-        ))}
+                  ? "bg-[#447959]"
+                  : "bg-[#D0D0D0]"
+                } ${index > 0 ? "ml-[10px]" : ""}`}
+            >
+              {category === "MOVIE"
+                ? "영화"
+                : category === "PERFORMANCE"
+                  ? "공연"
+                  : "전시"}
+            </button>
+          ))}
+        </div>
+
+        {/* 검색창 */}
+        <div className="w-[480px] h-[30px] rounded-[10px] items-center flex flex-row border border-[#000000] text-[14px]">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Search"
+            className="w-[450px] h-[38px] bg-transparent text-[14px] outline-none px-[10px] py-[0px]"
+          />
+        </div>
       </div>
 
       <div
