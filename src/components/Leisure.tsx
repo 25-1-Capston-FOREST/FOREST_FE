@@ -45,16 +45,16 @@ const Leisure: React.FC<LeisureProps> = ({
   };
 
   return (
-    <div className="w-[240px] h-[360px] border rounded-lg">
+    <div className="w-[240px] h-[340px] border rounded-lg">
       <button
         onClick={detailClick}
-        className="mt-[10px] flex flex-row justify-center items-center mx-auto w-[180px] h-[234px] bg-[#FFFFFF] overflow-hidden relative"
+        className="mt-[10px] flex flex-row justify-center items-center mx-auto w-[200px] h-[260px] bg-[#FFFFFF] overflow-hidden relative"
       >
         <Image
           src={image_url}
           alt="포스터"
-          width={180}
-          height={234}
+          width={200}
+          height={260}
           style={{ objectFit: "cover", objectPosition: "center" }}
           className="mt-[15px]"
         />
