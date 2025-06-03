@@ -106,8 +106,8 @@ export default function Main() {
         backgroundColor: "white",
         minHeight: "100vh",
       }}        >
-      <div className="mt-[-10px] w-full flex flex-row items-center">
-        <div className="flex flex-row items-center ml-[45px] text-[15px]">
+      <div className="justify-between mt-[-10px] mx-[45px] w-full flex flex-row items-center">
+        <div className="flex flex-row items-center text-[15px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
             <button
@@ -126,38 +126,10 @@ export default function Main() {
                   : "전시"}
             </button>
           ))}
-
-          <button
-            className="justify-left items-center px-[15px] py-[2px] flex flex-row text-[14px] ml-[30px] border border-black rounded-[10px] w-[103px] h-[30px]"
-          >
-            추천순
-          </button>
         </div>
-
-        <div className="ml-[320px]">
-          {/* 정렬버튼 */}
-          {/* 정렬 팝업 (현재는 주석 처리됨) */}
-          {isSortPopupOpen && (
-            <div className="mt-2 w-[90px] bg-white border border-gray-300 rounded-lg shadow-custom absolute left-[1160px] top-[270px]">
-              <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                추천순
-              </button>
-
-              <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                시간순
-              </button>
-              <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                거리순
-              </button>
-            </div>
-          )}
-        </div>
-
-
-
 
         {/* 검색창 */}
-        <div className="w-[480px] h-[30px] rounded-[10px] items-center flex flex-row border border-[#000000] ml-[230px] text-[14px]">
+        <div className="w-[480px] h-[30px] rounded-[10px] items-center flex flex-row border border-[#000000] text-[14px]">
           <input
             type="text"
             value={query}
