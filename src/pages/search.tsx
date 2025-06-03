@@ -100,7 +100,13 @@ export default function Search() {
 
 
   return (
-    <div>
+    <div
+      className="relative"
+      style={{
+        paddingTop: `10px`,
+        backgroundColor: "white",
+        minHeight: "100vh",
+      }}        >
       <div className="justify-between mt-[-10px] mx-[45px] flex flex-row items-center">
         <div className="flex flex-row items-center text-[15px]">
           {/* 카테고리 버튼 */}
@@ -145,14 +151,14 @@ export default function Search() {
         }}        >
         {/* 여가 목록  */}
         <div className="w-full mt-[5px] flex justify-center">
-          <div className="max-w-[1500px] w-full px-[70px]">
+          <div className="max-w-[1500px] w-full px-[50px]">
             <div className="">
               {isLoading ? (
                 <p>검색 중...</p>
               ) : results.length === 0 ? (
                 <p>검색 결과가 없습니다.</p>
               ) : (
-                <div className="grid grid-cols-4 gap-x-[50px] gap-y-[35px] justify-items-center">
+                <div className="grid grid-cols-5 gap-x-[35px] gap-y-[20px] justify-items-center">
                   {filteredActivities.map((activity) => (
                     <Leisure
                       key={activity.activity_id}
