@@ -106,7 +106,7 @@ export default function Main() {
         backgroundColor: "white",
         minHeight: "100vh",
       }}        >
-      <div className="justify-between mt-[-10px] mx-[45px] w-full flex flex-row items-center">
+      <div className="justify-between mt-[-10px] mx-[45px] flex flex-row items-center">
         <div className="flex flex-row items-center text-[15px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
