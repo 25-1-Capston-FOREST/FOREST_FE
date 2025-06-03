@@ -25,18 +25,18 @@ export default function Search() {
 
   useEffect(() => {
     if (!keyword || typeof keyword !== "string") return;
-    console.log("키워드는: " + keyword);
+
+    setQuery(keyword); 
 
     const fetchActivity = async () => {
       setIsLoading(true);
-      try {
-        //로컬용
-        // const res = await fetch("/data/activities.json");
-        // const json = await res.json();
+      //로컬용
+      // const res = await fetch("/data/activities.json");
+      // const json = await res.json();
 
-        //배포용//
+      //배포용//
+      try {
         const data = await getSearch(keyword);
-        console.log("받은 데이터:", data);
         const converted: Activity[] = data.map((item: any) => ({
           activity_id: item.activity_id,
           activity_type: item.type,
@@ -64,7 +64,6 @@ export default function Search() {
         //   },
         // }));
         // setResults(converted);
-
       } catch (error) {
         console.error("검색 정보 불러오기 실패", error);
         alert("검색 정보를 불러오는 데 실패했어요 😢");
@@ -72,6 +71,7 @@ export default function Search() {
         setIsLoading(false);
       }
     };
+
     fetchActivity();
   }, [keyword]);
 
@@ -87,7 +87,7 @@ export default function Search() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      e.preventDefault(); 
+      e.preventDefault();
       if (query.trim()) {
         router.push(`/search?keyword=${query}`);
       }
