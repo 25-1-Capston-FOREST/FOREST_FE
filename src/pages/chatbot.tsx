@@ -75,11 +75,11 @@ export default function Chatbot() {
       {/* 메시지 영역 */}
       <div
         ref={containerRef}
-        className="w-full max-w-[527px] flex flex-col space-y-4"
+        className="w-full max-w-[527px] flex flex-col space-y-6"
         style={{
           maxHeight: `calc(100vh - 300}px)`,
           paddingTop: "10px",
-          paddingBottom: "100px"
+          paddingBottom: "80px"
         }}
       >
         {messages.map((msg, idx) => (
