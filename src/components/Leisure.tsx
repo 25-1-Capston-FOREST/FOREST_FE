@@ -48,13 +48,13 @@ const Leisure: React.FC<LeisureProps> = ({
     <div className="w-[250px] h-[350px] border rounded-lg">
       <button
         onClick={detailClick}
-        className="mt-[10px] flex flex-row justify-center items-center mx-auto w-[200px] h-[260px] bg-[#FFFFFF] overflow-hidden relative"
+        className="mt-[10px] flex flex-row justify-center items-center mx-auto w-[210px] h-[271px] bg-[#FFFFFF] overflow-hidden relative"
       >
         <Image
           src={image_url}
           alt="포스터"
-          width={200}
-          height={260}
+          width={210}
+          height={271}
           style={{ objectFit: "cover", objectPosition: "center" }}
           className="mt-[15px]"
         />
