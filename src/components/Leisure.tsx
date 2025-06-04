@@ -24,10 +24,21 @@ const Leisure: React.FC<LeisureProps> = ({
     router.push(`/leisure_details?activity_id=${activity_id}`);
   };
   const renderDate = () => {
+    const formatDate = (date: string) => {
+      if (!date) return "";
+      // 8자리 숫자면 YYYYMMDD 형식이라고 가정하고 포맷팅
+      if (/^\d{8}$/.test(date)) {
+        return `${date.slice(0, 4)}.${date.slice(4, 6)}.${date.slice(6, 8)}`;
+      }
+      return date; // 이미 포맷팅된 형식일 경우 그대로 반환
+    };
+
     if (activity_type.toUpperCase() === "MOVIE" && start_date)
-      return `개봉일: ${start_date}`;
+      return `개봉일: ${formatDate(start_date)}`;
+
     if (start_date || end_date)
-      return `${start_date} ~ ${end_date}`;
+      return `${formatDate(start_date)} ~ ${formatDate(end_date)}`;
+
     return null;
   };
 
