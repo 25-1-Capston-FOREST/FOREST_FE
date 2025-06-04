@@ -163,6 +163,13 @@ export default function Myleisure() {
     }
   }, [selectedTab]);
 
+  const formatDate = (date: string) => {
+    if (!date) return "";
+    if (/^\d{8}$/.test(date)) {
+      return `${date.slice(0, 4)}.${date.slice(4, 6)}.${date.slice(6, 8)}`;
+    }
+    return date;
+  };
 
   const handleBook = async (activityId: number) => {
     try {
@@ -276,7 +283,7 @@ export default function Myleisure() {
                       {/* 기간 */}
                       <p className="mb-[35px]">
                         {item.activity_type === "MOVIE"
-                          ? `${item.detailedInfo?.open_dt ?? "개봉일 정보 없음"} ~`
+                          ? `${formatDate(item.detailedInfo?.open_dt) ?? "개봉일 정보 없음"} ~`
                           : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
                             ? `${item.detailedInfo?.start_date ?? "시작일 정보 없음"} ~ ${item.detailedInfo?.end_date ?? "종료일 정보 없음"}`
                             : ""}

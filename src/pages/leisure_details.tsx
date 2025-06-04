@@ -73,10 +73,6 @@ interface Activity {
   isWished?: boolean;
   wish_id?: string;
 }
-// pages/detail.tsx
-
-
-// 인터페이스 생략 (이전 코드와 동일)
 
 export default function Detail() {
   const router = useRouter();
@@ -123,6 +119,14 @@ export default function Detail() {
       console.error("찜 처리 실패", error);
       alert("찜 처리에 실패했어요 😢");
     }
+  };
+
+  const formatDate = (date: string) => {
+    if (!date) return "";
+    if (/^\d{8}$/.test(date)) {
+      return `${date.slice(0, 4)}.${date.slice(4, 6)}.${date.slice(6, 8)}`;
+    }
+    return date;
   };
 
   useEffect(() => {
@@ -202,7 +206,7 @@ export default function Detail() {
                   {/* 상세정보 - 기존 조건문 유지 */}
                   {activity.activity_type === "MOVIE" && (
                     <>
-                      <p>개봉일: {(detail as MovieDetail).open_dt}</p>
+                      <p>개봉일: {formatDate((detail as MovieDetail).open_dt)}</p>
                       <p>러닝 타임: {(detail as MovieDetail).show_tm}분</p>
                       <p>감독: {(detail as MovieDetail).director}</p>
                       <p>출연진: {(detail as MovieDetail).actors || "정보 없음"}</p>

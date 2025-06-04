@@ -34,7 +34,7 @@ const Leisure: React.FC<LeisureProps> = ({
     };
 
     if (activity_type.toUpperCase() === "MOVIE" && start_date)
-      return `개봉일: ${formatDate(start_date)}`;
+      return `${formatDate(start_date)} ~`;
 
     if (start_date || end_date)
       return `${formatDate(start_date)} ~ ${formatDate(end_date)}`;
