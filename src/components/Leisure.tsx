@@ -6,8 +6,8 @@ export interface LeisureProps {
   activity_type: string;
   title: string;
   image_url: string;
-  start_date?: string; // optional로 변경
-  end_date?: string;   // optional로 변경
+  start_date?: string;
+  end_date?: string;
 }
 
 const Leisure: React.FC<LeisureProps> = ({
@@ -23,8 +23,9 @@ const Leisure: React.FC<LeisureProps> = ({
   const detailClick = () => {
     router.push(`/leisure_details?activity_id=${activity_id}`);
   };
+
   const renderDate = () => {
-    const formatDate = (date: string) => {
+    const formatDate = (date?: string) => {
       if (!date) return "";
 
       // YYYYMMDD → YYYY.MM.DD
@@ -43,10 +44,13 @@ const Leisure: React.FC<LeisureProps> = ({
     if (activity_type.toUpperCase() === "MOVIE" && start_date)
       return `${formatDate(start_date)} ~`;
 
-    if (start_date || end_date)
-      return `${formatDate(start_date)} ~ ${formatDate(end_date)}`;
+    if (start_date || end_date) {
+      const formattedStart = formatDate(start_date);
+      const formattedEnd = formatDate(end_date);
+      return `${formattedStart}${formattedEnd ? ` ~ ${formattedEnd}` : ""}`;
+    }
 
-    return null;
+    return ""; // 명시적으로 문자열 반환
   };
 
   const getActivityTypeName = (type: string) => {
