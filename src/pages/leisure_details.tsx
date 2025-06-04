@@ -123,9 +123,17 @@ export default function Detail() {
 
   const formatDate = (date: string) => {
     if (!date) return "";
+
+    // YYYYMMDD → YYYY.MM.DD
     if (/^\d{8}$/.test(date)) {
       return `${date.slice(0, 4)}.${date.slice(4, 6)}.${date.slice(6, 8)}`;
     }
+
+    // YYYY-MM-DD → YYYY.MM.DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return date.replace(/-/g, ".");
+    }
+
     return date;
   };
 
@@ -217,8 +225,8 @@ export default function Detail() {
                     <>
                       <p>전시장: {(detail as ExhibitionDetail).location}</p>
                       <p>
-                        전시 기간: {(detail as ExhibitionDetail).start_date} ~{" "}
-                        {(detail as ExhibitionDetail).end_date}
+                        전시 기간: {formatDate((detail as ExhibitionDetail).start_date)} ~{" "}
+                        {formatDate((detail as ExhibitionDetail).end_date)}
                       </p>
                       <p>입장료: {(detail as ExhibitionDetail).price}</p>
                       <p>내용: {(detail as ExhibitionDetail).contents || "설명 없음"}</p>

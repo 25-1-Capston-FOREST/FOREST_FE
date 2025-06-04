@@ -26,11 +26,18 @@ const Leisure: React.FC<LeisureProps> = ({
   const renderDate = () => {
     const formatDate = (date: string) => {
       if (!date) return "";
-      // 8자리 숫자면 YYYYMMDD 형식이라고 가정하고 포맷팅
+
+      // YYYYMMDD → YYYY.MM.DD
       if (/^\d{8}$/.test(date)) {
         return `${date.slice(0, 4)}.${date.slice(4, 6)}.${date.slice(6, 8)}`;
       }
-      return date; // 이미 포맷팅된 형식일 경우 그대로 반환
+
+      // YYYY-MM-DD → YYYY.MM.DD
+      if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        return date.replace(/-/g, ".");
+      }
+
+      return date; // 다른 형식은 그대로 반환
     };
 
     if (activity_type.toUpperCase() === "MOVIE" && start_date)
