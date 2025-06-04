@@ -298,7 +298,7 @@ export default function Myleisure() {
                         <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
                         <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
                         <Image src="/images/icon_star.svg" alt="별" width={20} height={20} /> */}
-                        <p className="pt-[3px] text-[13px]">⭐⭐⭐⭐⭐ 평균 평점 5 (하드코딩)</p>
+                        <p className="pt-[3px] text-[13px]">⭐⭐⭐⭐⭐ 평균 평점 5</p>
                       </div>
 
                       {/* 버튼 모음*/}
