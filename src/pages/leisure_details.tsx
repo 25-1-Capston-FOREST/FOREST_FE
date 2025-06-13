@@ -194,20 +194,19 @@ export default function Detail() {
         </div>
 
         {/* 메인 레이아웃 */}
-        <div className="flex gap-6 justify-between">
+        <div className="flex flex-col md:flex-row gap-6">
           {/* 포스터 영역 (세로 전체 높이 고정) */}
-          <div className="min-w-[331px] flex justify-center">
+          <div className="relative w-full md:w-[360px] aspect-[3/4]">
             <Image
               src={detail.image_url}
-              alt="썸네일"
-              width={331}
-              height={445}
-              className="rounded-lg"
+              alt={detail.title}
+              fill
+              className="object-cover rounded-lg"
             />
           </div>
 
-          <div className="flex flex-col justify-between">
-            <div className="flex flex-row w-[1100px] justify-between">
+          <div className="flex flex-col gap-3 text-sm md:text-base flex-1 leading-relaxed">
+            <div className="flex flex-row w-full justify-between flex-wrap md:flex-nowrap gap-6">
               {/* 상세정보 + 버튼 */}
               <div className="flex flex-col justify-between flex-grow min-h-[260px]">
                 <div className="text-[13px] text-gray-700 space-y-2 mb-4">
@@ -309,6 +308,7 @@ export default function Detail() {
 
             {/* 리뷰 영역 */}
             <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-auto h-[180px]">
+              <p className="text-gray-600 text-sm">평균 평점: {averageRating}</p>
               {reviews.map((review, index) => (
                 <div
                   key={index}
