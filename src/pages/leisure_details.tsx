@@ -314,7 +314,7 @@ export default function Detail() {
               {reviews.map((review, index) => (
                 <div
                   key={index}
-                  className="min-w-[240px] h-[1４0px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
+                  className="min-w-[240px] h-[140px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
                 >
                   <p className="text-sm mb-2">⭐ {review.rate}</p>
                   <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
