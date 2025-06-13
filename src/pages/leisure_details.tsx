@@ -209,7 +209,7 @@ export default function Detail() {
             <div className="flex flex-row w-full justify-between flex-wrap md:flex-nowrap gap-6">
               {/* 상세정보 + 버튼 */}
               <div className="flex flex-col justify-between flex-grow min-h-[260px]">
-                <div className="text-[13px] text-gray-700 space-y-1 mb-3">
+                <div className="text-[13px] text-gray-700 space-y-1 mb-2">
                   {/* 상세정보 - 기존 조건문 유지 */}
                   {activity.activity_type === "MOVIE" && (
                     <>
@@ -243,7 +243,7 @@ export default function Detail() {
                 </div>
 
                 {/* 버튼 영역 */}
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <div className="text-[#757575] text-sm">
                     {activity.activity_type === "MOVIE" &&
                       "영화의 예매 페이지는 제공하지 않습니다."}
