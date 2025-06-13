@@ -163,7 +163,7 @@ export default function Detail() {
     ? (
       reviews.reduce((sum, r) => sum + parseFloat(r.rate), 0) / reviews.length
     ).toFixed(1)
-    : "정보 없음";
+    : "평점 정보 없음";
 
   return (
     <div className="px-4 md:px-10 mt-2 w-full">
@@ -307,8 +307,10 @@ export default function Detail() {
 
 
             {/* 리뷰 영역 */}
-            <div className="mt-6 border-t pt-4 flex overflow-x-auto gap-4 max-w-auto h-[180px]">
+            <div className="mt-6 border-t pt-4 flex flex-col overflow-x-auto gap-4 max-w-auto h-[180px]">
               <p className="text-gray-600 text-sm">평균 평점: {averageRating}</p>
+              <div className="flex flex-row">
+                
               {reviews.map((review, index) => (
                 <div
                   key={index}
@@ -318,6 +320,8 @@ export default function Detail() {
                   <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
                 </div>
               ))}
+              
+              </div>
             </div>
           </div>
 
