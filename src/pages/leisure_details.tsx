@@ -209,7 +209,7 @@ export default function Detail() {
             <div className="flex flex-row w-full justify-between flex-wrap md:flex-nowrap gap-6">
               {/* 상세정보 + 버튼 */}
               <div className="flex flex-col justify-between flex-grow min-h-[260px]">
-                <div className="text-[13px] text-gray-700 space-y-1 mb-4">
+                <div className="text-[13px] text-gray-700 space-y-1 mb-3">
                   {/* 상세정보 - 기존 조건문 유지 */}
                   {activity.activity_type === "MOVIE" && (
                     <>
