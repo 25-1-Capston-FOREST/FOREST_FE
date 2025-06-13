@@ -307,7 +307,7 @@ export default function Detail() {
 
 
             {/* 리뷰 영역 */}
-            <div className="mt-3 border-t pt-4 flex flex-col overflow-x-auto gap-2 max-w-auto h-[180px]">
+            <div className="mt-3 border-t pt-4 flex flex-col overflow-x-auto gap-2 max-w-auto h-[190px]">
               <p className="text-gray-600 text-sm">평균 평점: {averageRating}</p>
               <div className="flex flex-row gap-10">
                 
