@@ -238,75 +238,59 @@ export default function Myleisure() {
           {Array.isArray(getCurrentList()) && getCurrentList().length > 0 ?
             (
               getCurrentList().map((item) => (
-                <li key={item.wish_id ?? item.activity_id}
-                  className="w-full mx-auto border rounded-lg shadow-sm py-4 px-3 flex gap-6 items-center justify-between">
+                <li
+                  key={item.wish_id ?? item.activity_id}
+                  className="flex flex-col md:flex-row gap-4 p-4 border rounded-lg shadow-sm bg-white"
+                >
                   {item.detailedInfo?.image_url ? (
                     <img
                       src={item.detailedInfo.image_url}
                       alt="이미지"
-                      width={100}
-                      height={135}
-                      className="object-cover rounded-lg"
+                      className="w-24 h-32 object-cover rounded-md"
                     />
                   ) : (
-                    <div className="w-24 h-32 bg-gray-200 flex items-center justify-center text-sm text-gray-500">
+                    <div className="w-24 h-32 bg-gray-200 flex items-center justify-center text-sm text-gray-500 rounded-md">
                       No Image
                     </div>
                   )}
 
-                  <div className="w-[1305px] h-[150px]">
-                    {/* 여가 유형 */}
-                    {/* <p className="mt-[3px] mb-[7px] flex items-center justify-center w-[38px] h-[23px] bg-[#447959] text-[#FFFFFF] rounded-[10px] text-[12px]">
-                      {TYPE_MAP[item.activity_type] ?? "기타"}
-                    </p> */}
+                  <div className="flex-1 flex flex-col justify-between">
+                    <div>
+                      <button
+                        className="text-lg font-bold hover:underline"
+                        onClick={() => handleLeisureClick(item)}
+                      >
+                        {item.detailedInfo?.title ?? "제목 없음"}
+                      </button>
 
-                    {/* 제목 */}
-                    <button
-                      className="pt-2 text-[18px] font-bold"
-                      onClick={() => handleLeisureClick(item)}
-                    >
-                      {item.detailedInfo?.title ?? "제목 없음"}
-                    </button>
-
-                    <div className="flex text-sm flex-col text-[#757575]">
-                      {/* 장소 */}
-                      <p className=" whitespace-pre-line">
-                        {item.activity_type === "MOVIE"
-                          ? "영화관 "
-                          : item.activity_type === "PERFORMANCE"
-                            ? item.detailedInfo?.location ?? "지역 정보 없음 "
-                            : item.activity_type === "EXHIBITION"
-                              ? item.detailedInfo?.location ?? "장소 정보 없음 "
+                      <div className="mt-1 text-sm text-gray-500">
+                        <p>
+                          {item.activity_type === "MOVIE"
+                            ? "영화관 "
+                            : item.activity_type === "PERFORMANCE"
+                              ? item.detailedInfo?.location ?? "지역 정보 없음 "
+                              : item.activity_type === "EXHIBITION"
+                                ? item.detailedInfo?.location ?? "장소 정보 없음 "
+                                : ""}
+                        </p>
+                        <p>
+                          {item.activity_type === "MOVIE"
+                            ? `${formatDate(item.detailedInfo?.open_dt) ?? "개봉일 정보 없음"} ~`
+                            : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
+                              ? `${item.detailedInfo?.start_date ?? "시작일 정보 없음"} ~ ${item.detailedInfo?.end_date ?? "종료일 정보 없음"}`
                               : ""}
-                      </p>
-
-                      {/* 기간 */}
-                      <p className="mb-[35px]">
-                        {item.activity_type === "MOVIE"
-                          ? `${formatDate(item.detailedInfo?.open_dt) ?? "개봉일 정보 없음"} ~`
-                          : item.activity_type === "PERFORMANCE" || item.activity_type === "EXHIBITION"
-                            ? `${item.detailedInfo?.start_date ?? "시작일 정보 없음"} ~ ${item.detailedInfo?.end_date ?? "종료일 정보 없음"}`
-                            : ""}
-                      </p>
-
-                    </div>
-                    <div className="w-full mt-[5px] flex items-center justify-between">
-                      {/* 별점 */}
-                      <div className="flex flex-row items-center gap-1 text-[17px]">
-                        {/* <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} />
-                        <Image src="/images/icon_star.svg" alt="별" width={20} height={20} /> */}
-                        <p className="pt-[3px] text-[13px]">⭐⭐⭐⭐⭐ 평균 평점 5</p>
+                        </p>
                       </div>
+                    </div>
 
-                      {/* 버튼 모음*/}
-                      <div className="flex flex-row text-[13px]">
+                    <div className="mt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                      <div className="text-sm text-gray-600">⭐ 평균 평점 5</div>
+
+                      <div className="flex gap-2 text-sm">
                         {selectedTab === "Wish List" && (
                           <button
                             onClick={() => handleBook(item.activity_id)}
-                            className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
+                            className="bg-[#447959] hover:bg-[#356246] text-white px-4 py-1 rounded-full"
                           >
                             일정 등록하기
                           </button>
@@ -315,7 +299,7 @@ export default function Myleisure() {
                         {selectedTab === "Planned Leisure" && (
                           <button
                             onClick={() => alert("일정 변경 기능은 구현 예정입니다!")}
-                            className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
+                            className="bg-[#447959] hover:bg-[#356246] text-white px-4 py-1 rounded-full"
                           >
                             일정 변경하기
                           </button>
@@ -324,7 +308,7 @@ export default function Myleisure() {
                         {selectedTab === "Completed Leisure" && (
                           <button
                             onClick={() => handleReview(item.user_activity_id)}
-                            className="mr-[10px] bg-[#447959] hover:bg-[#356246] text-white w-[128px] h-[28px] rounded-[20px]"
+                            className="bg-[#447959] hover:bg-[#356246] text-white px-4 py-1 rounded-full"
                           >
                             리뷰 작성하기
                           </button>
@@ -332,17 +316,13 @@ export default function Myleisure() {
 
                         <button
                           onClick={() => handleToggleWish(item)}
-                          className={`items-center justify-center text-center flex flex-row w-[80px] h-[28px] rounded-[20px]
-                              ${item.isWished
-                              ? "bg-black text-white"
-                              : "text-black border border-black"
+                          className={`px-4 py-1 rounded-full border ${item.isWished ? "bg-black text-white" : "text-black border-black"
                             }`}
                         >
                           {item.isWished ? "찜 해제" : "찜하기"}
                         </button>
                       </div>
                     </div>
-
                   </div>
                 </li>
               ))
