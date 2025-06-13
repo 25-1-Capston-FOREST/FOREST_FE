@@ -166,14 +166,14 @@ export default function Detail() {
     : "정보 없음";
 
   return (
-    <div className="mx-10 mt-[3px]">
+    <div className="px-4 md:px-10 mt-2 w-full">
       <div className="flex flex-col gap-4">
         {/* 상단 정보 */}
-        <div className="flex items-center gap-3 ml-[10px]">
-          <p className="bg-[#447959] text-white w-[46px] h-[24px] rounded-[14px] text-[14px] flex items-center justify-center pt-[2px]">
+        <div className="flex flex-wrap items-center gap-2 md:gap-3 px-2">
+          <p className="bg-[#447959] text-white px-3 h-[24px] rounded-[14px] text-sm flex items-center justify-center">
             {TYPE_MAP[activity.activity_type] ?? "기타"}
           </p>
-          <h1 className="text-[21px] font-bold">{detail.title}</h1>
+          <h1 className="text-lg md:text-xl font-bold">{detail.title}</h1>
           {activity.activity_type === "MOVIE" && (
             <p className="text-[#757575] text-[16px]">{(detail as MovieDetail).open_dt}~</p>
           )}
