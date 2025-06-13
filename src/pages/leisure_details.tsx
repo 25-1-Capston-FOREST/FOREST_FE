@@ -307,14 +307,14 @@ export default function Detail() {
 
 
             {/* 리뷰 영역 */}
-            <div className="mt-3 border-t pt-4 flex flex-col overflow-x-auto gap-4 max-w-auto h-[180px]">
+            <div className="mt-3 border-t pt-4 flex flex-col overflow-x-auto gap-4 max-w-auto h-[170px]">
               <p className="text-gray-600 text-sm">평균 평점: {averageRating}</p>
               <div className="flex flex-row gap-10">
                 
               {reviews.map((review, index) => (
                 <div
                   key={index}
-                  className="min-w-[240px] h-[140px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
+                  className="min-w-[240px] h-[130px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
                 >
                   <p className="text-sm mb-2">⭐ {review.rate}</p>
                   <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
