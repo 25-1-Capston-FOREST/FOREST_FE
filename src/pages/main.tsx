@@ -91,7 +91,7 @@ export default function Main() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // 폼 제출 방지
+      e.preventDefault();
       if (query.trim()) {
         router.push(`/search?keyword=${query}`);
       }
@@ -106,8 +106,8 @@ export default function Main() {
         backgroundColor: "white",
         minHeight: "100vh",
       }}        >
-      <div className="mt-[-10px] w-full flex flex-row items-center">
-        <div className="flex flex-row items-center ml-[45px] text-[15px]">
+      <div className="justify-between mt-[-10px] mx-[45px] flex flex-row items-center">
+        <div className="flex flex-row items-center text-[15px]">
           {/* 카테고리 버튼 */}
           {["MOVIE", "PERFORMANCE", "EXHIBITION"].map((category, index) => (
             <button
@@ -126,54 +126,28 @@ export default function Main() {
                   : "전시"}
             </button>
           ))}
-
-          <button
-            className="justify-left items-center px-[15px] py-[2px] flex flex-row text-[14px] ml-[30px] border border-black rounded-[10px] w-[103px] h-[30px]"
-          >
-            추천순
-          </button>
         </div>
-
-        <div className="ml-[320px]">
-          {/* 정렬버튼 */}
-          {/* 정렬 팝업 (현재는 주석 처리됨) */}
-          {isSortPopupOpen && (
-            <div className="mt-2 w-[90px] bg-white border border-gray-300 rounded-lg shadow-custom absolute left-[1160px] top-[270px]">
-              <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                추천순
-              </button>
-
-              <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                시간순
-              </button>
-              <button className="block w-full px-4 py-2 text-left hover:bg-gray-100">
-                거리순
-              </button>
-            </div>
-          )}
-        </div>
-
-
-
 
         {/* 검색창 */}
-        <div className="w-[480px] h-[30px] rounded-[10px] items-center flex flex-row border border-[#000000] ml-[230px] text-[14px]">
+        <div className="flex flex-row w-[500px] h-[30px] rounded-[10px] items-center flex flex-row text-[14px]">
+          <Image src="/images/icon_search.svg" alt="검색 아이콘" width={25} height={25} />
+          
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search"
-            className="w-[450px] h-[38px] bg-transparent text-[14px] outline-none px-[10px] py-[0px]"
+            className="rounded-[10px] border border-[#000000] flex flex-row items-center ml-[15px] w-[450px] h-[30px] bg-transparent text-[14px] outline-none px-[10px] py-[0px]"
           />
         </div>
       </div>
 
       {/* 여가 목록  */}
 
-      <div className="w-full mt-[30px] flex justify-center">
-        <div className="max-w-[1500px] w-full px-[70px]">
-          <div className="grid grid-cols-4 gap-x-[50px] gap-y-[35px] justify-items-center">
+      <div className="w-full mt-[20px] flex justify-center">
+        <div className="max-w-[1500px] w-full px-[50px]">
+          <div className="grid grid-cols-5 gap-x-[35px] gap-y-[20px] justify-items-center">
             {filteredActivities.length > 0 ? (
               filteredActivities.map((activity) => {
                 const detail = activity.detail || {};

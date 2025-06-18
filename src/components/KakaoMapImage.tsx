@@ -5,7 +5,7 @@ declare global {
     kakao: any;
   }
 }
-
+//
 export interface KakaoMapProps {
   la: number;
   lo: number;
@@ -13,11 +13,10 @@ export interface KakaoMapProps {
 
 const KakaoMapImage: React.FC<KakaoMapProps> = ({ la, lo }) => {
   useEffect(() => {
-    console.log("useEffect 실행됨");
 
     const loadMap = () => {
-      if (!window.kakao) {
-        console.error("window.kakao가 아직 없습니다!");
+      if (!window.kakao || !window.kakao.maps) {
+        console.error("window.kakao.maps가 없습니다!");
         return;
       }
 
@@ -57,7 +56,7 @@ const KakaoMapImage: React.FC<KakaoMapProps> = ({ la, lo }) => {
       script.async = true;
 
       script.onload = () => {
-        console.log("스크립트 로드 완료");
+        console.log("스크립트 로드 완료, loadMap 실행");
         loadMap();
       };
 
@@ -69,28 +68,32 @@ const KakaoMapImage: React.FC<KakaoMapProps> = ({ la, lo }) => {
     } else {
       console.log("스크립트가 이미 존재함");
 
-      // 여기서 polling으로 kakao.maps가 생길 때까지 100ms마다 체크
-      const checkKakaoMaps = setInterval(() => {
-        if (window.kakao && window.kakao.maps) {
-          console.log("window.kakao.maps가 이제 생김, loadMap 실행");
-          clearInterval(checkKakaoMaps);
-          loadMap();
-        }
-      }, 100);
+      if (window.kakao && window.kakao.maps && window.kakao.maps.load) {
+        console.log("kakao.maps.load 즉시 실행");
+        loadMap();
+      } else {
+        const checkKakaoMaps = setInterval(() => {
+          if (window.kakao && window.kakao.maps && window.kakao.maps.load) {
+            console.log("window.kakao.maps.load 확인됨, loadMap 실행");
+            clearInterval(checkKakaoMaps);
+            loadMap();
+          }
+        }, 100);
 
-      // 10초 후에도 없으면 타임아웃 처리
-      setTimeout(() => {
-        clearInterval(checkKakaoMaps);
-        if (!window.kakao || !window.kakao.maps) {
-          console.error("window.kakao.maps 로딩 타임아웃");
-        }
-      }, 10000);
+        setTimeout(() => {
+          clearInterval(checkKakaoMaps);
+          if (!window.kakao || !window.kakao.maps) {
+            console.error("window.kakao.maps 로딩 타임아웃");
+          }
+        }, 10000);
+      }
     }
   }, [la, lo]);
+
   return (
     <div
       id="map"
-      style={{ width: "400px", height: "247px", backgroundColor: "#eee" }}
+      style={{ width: "400px", height: "260px", backgroundColor: "#eee" }}
     />
   );
 };

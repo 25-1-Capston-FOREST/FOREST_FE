@@ -5,6 +5,7 @@ import { postBooking } from "@/lib/api/book";
 import { getDetail } from "@/lib/api/detail";
 import { getWishlist, deleteWish, postWish } from "@/lib/api/wish";
 import KakaoMapImage from "@/components/KakaoMapImage";
+import { getActivityReview } from "@/lib/api/review";
 
 interface PerformanceDetail {
   performance_id: string;
@@ -56,7 +57,6 @@ interface ExhibitionDetail {
   start_date: string;
   end_date: string;
   location: string;
-  // area: string; 
   contents: string;
   price: string;
   url: string;
@@ -78,6 +78,8 @@ export default function Detail() {
   const router = useRouter();
   const { activity_id } = router.query;
   const [activity, setActivity] = useState<Activity | null>(null);
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [loadingReviews, setLoadingReviews] = useState(true);
 
   const extractURL = (link: string) => {
     const match = link.match(/https?:\/\/[^\s]+/);
@@ -93,8 +95,7 @@ export default function Detail() {
   const handleBook = async (activityId: number) => {
     try {
       const reserveDate = "2025-03-05 00:00:00";
-      const res = await postBooking(activityId, reserveDate);
-      console.log("예약 성공!", res);
+      await postBooking(activityId, reserveDate);
       alert("예약이 완료되었습니다!");
     } catch (error) {
       console.error("예약 실패", error);
@@ -102,318 +103,235 @@ export default function Detail() {
     }
   };
 
-  const handleToggleWish = async (item: Activity) => {
+  const handleToggleWish = async () => {
+    if (!activity || !activity.detail) return;
     try {
-      if (item.isWished) {
-        await deleteWish(item.wish_id!);
-        alert("찜이 해제되었습니다!");
+      if (activity.detail.isWished) {
+        if (!activity.detail.wish_id) return;
+        await deleteWish(activity.detail.wish_id);
       } else {
-        await postWish(item.activity_id);
-        alert("찜에 추가되었습니다!");
+        await postWish(activity.activity_id);
       }
 
-      if (activity_id && typeof activity_id === "string") {
-        const updated = await getDetail(activity_id);
-        // 여기서도 똑같이 복사
-        setActivity({
-          ...updated.data,
-          isWished: updated.data.detail.isWished,
-          wish_id: updated.data.detail.wish_id,
-        });
-      }
+      const updated = await getDetail(activity_id as string);
+      setActivity(updated.data);
     } catch (error) {
-      console.error("찜 처리 실패 ❌", error);
+      console.error("찜 처리 실패", error);
       alert("찜 처리에 실패했어요 😢");
     }
   };
 
-  useEffect(() => {
-    if (!activity_id || typeof activity_id !== "string") return; if (!activity_id) return;
-    console.log(activity_id)
-    //로컬용
-    const fetchActivity = async () => {
-      try {
-        const res = await fetch("/data/activities.json");
-        const json = await res.json();
+  const formatDate = (date: string) => {
+    if (!date) return "";
 
-        setActivity(json.data);
-        console.log(activity)
+    // YYYYMMDD → YYYY.MM.DD
+    if (/^\d{8}$/.test(date)) {
+      return `${date.slice(0, 4)}.${date.slice(4, 6)}.${date.slice(6, 8)}`;
+    }
+
+    // YYYY-MM-DD → YYYY.MM.DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return date.replace(/-/g, ".");
+    }
+
+    return date;
+  };
+
+  useEffect(() => {
+    if (!activity_id || typeof activity_id !== "string") return;
+
+    const fetchData = async () => {
+      try {
+        const activityRes = await getDetail(activity_id);
+        setActivity(activityRes.data);
+        const reviewRes = await getActivityReview(activity_id);
+        setReviews(Array.isArray(reviewRes) ? reviewRes : reviewRes.reviews || []);
       } catch (error) {
-        console.error("여가 정보 불러오기 실패", error);
-        alert("여가 정보를 불러오는 데 실패했어요 😢");
+        console.error("데이터 로딩 실패", error);
+      } finally {
+        setLoadingReviews(false);
       }
     };
-    //배포용
-    // const fetchActivity = async () => {
-    //   try {
-    //     const data = await getDetail(activity_id);
-    //     console.log("받은 데이터:", data);
-    //     setActivity(data.data);
-    //   } catch (error) {
-    //     console.error("여가 정보 불러오기 실패", error);
-    //     alert("여가 정보를 불러오는 데 실패했어요 😢");
-    //   }
-    // };
 
-    fetchActivity();
+    fetchData();
   }, [activity_id]);
 
-  if (!activity || !activity.detail) {
-    return <div>로딩 중...</div>;
-  }
-
+  if (!activity || !activity.detail) return <div>로딩 중...</div>;
   const detail = activity.detail;
 
+  const averageRating = reviews.length
+    ? (
+      reviews.reduce((sum, r) => sum + parseFloat(r.rate), 0) / reviews.length
+    ).toFixed(1)
+    : "평점 정보 없음";
 
   return (
-    <div className="mx-10 mt-[3px] w-max-auto">
-
-      <div>
-        <div className="flex flex-row ml-[10px] items-center gap-3">
-          <p className="flex flex-row items-center justify-center text-white w-[46px] h-[24px] rounded-[14px] text-[14px] bg-[#447959] pt-[2px]">{TYPE_MAP[activity.activity_type] ?? "기타"}</p>
-          <h1 className="flex flex-row items-center justify-center text-[21px] font-bold">{detail.title}</h1>
-
-          {(() => {
-            switch (activity.activity_type) {
-              case "MOVIE": {
-                const movie = detail as MovieDetail;
-                return (
-                  <>
-                    <p className="text-[#757575] text-[16px]">
-                      {(detail as MovieDetail).open_dt}~
-                    </p>
-                  </>
-                );
-              }
-
-              case "EXHIBITION": {
-                const exhibition = detail as ExhibitionDetail;
-                return (
-                  <>
-                    <p className="ml-[6px] font-bold text-[#757575] text-[16px]">
-                      {(detail as ExhibitionDetail).location || null}
-                    </p>
-                    <p className="text-[#757575] text-[16px]">
-                      {(detail as ExhibitionDetail).start_date}~
-                    </p>
-                  </>
-                );
-              }
-              case "PERFORMANCE": {
-                const performance = detail as PerformanceDetail;
-
-                return (
-                  <>
-                    <p className="ml-[6px] font-bold text-[#757575] text-[16px]">
-                      {(detail as PerformanceDetail).location ||
-                        (detail as PerformanceDetail).region ||
-                        null}
-                    </p>
-                    <p className="text-[#757575] text-[16px]">
-                      {(detail as PerformanceDetail).start_date} ~ {(detail as PerformanceDetail).end_date}
-                    </p>
-                  </>
-
-                );
-              }
-            }
-          })()}
-
+    <div className="px-4 md:px-10 mt-2 w-full">
+      <div className="flex flex-col gap-4">
+        {/* 상단 정보 */}
+        <div className="flex flex-wrap items-center gap-2 md:gap-3 px-2">
+          <p className="bg-[#447959] text-white px-3 h-[24px] rounded-[14px] text-sm flex items-center justify-center">
+            {TYPE_MAP[activity.activity_type] ?? "기타"}
+          </p>
+          <h1 className="text-lg md:text-xl font-bold">{detail.title}</h1>
+          {activity.activity_type === "MOVIE" && (
+            <p className="text-[#757575] text-[16px]">{(detail as MovieDetail).open_dt}~</p>
+          )}
+          {activity.activity_type === "EXHIBITION" && (
+            <>
+              <p className="ml-[6px] font-bold text-[#757575]">{(detail as ExhibitionDetail).location}</p>
+              <p className="text-[#757575]">{(detail as ExhibitionDetail).start_date}~</p>
+            </>
+          )}
+          {activity.activity_type === "PERFORMANCE" && (
+            <>
+              <p className="ml-[6px] font-bold text-[#757575]">{(detail as PerformanceDetail).location}</p>
+              <p className="text-[#757575]">
+                {(detail as PerformanceDetail).start_date} ~ {(detail as PerformanceDetail).end_date}
+              </p>
+            </>
+          )}
         </div>
 
-        <div className="ml-[10px] mt-[10px] flex flex-row">
-          <div>
+        {/* 메인 레이아웃 */}
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* 포스터 영역 (세로 전체 높이 고정) */}
+          <div className="relative w-full md:w-[360px] aspect-[3/4]">
             <Image
               src={detail.image_url}
-              alt="공연 이미지"
-              width={331}
-              height={445}
+              alt={detail.title}
+              fill
+              className="object-cover rounded-lg"
             />
           </div>
 
-          <div className="flex flex-col mx-auto px-1">
-            <div className="flex flex-row justify-between">
-              <div className="flex flex-col">
-                <div className="flex mt-[4px] flex-col gap-[6px] text-[13px] w-[651px] h-[125px] text-gray-700">
-                  {(() => {
-                    switch (activity.activity_type) {
-                      case "MOVIE": {
-                        const movie = detail as MovieDetail;
-                        return (
-                          <>
-                            <p>개봉일: {movie.open_dt}</p>
-                            <p>러닝 타임: {movie.show_tm}분</p>
-                            <p>감독: {movie.director}</p>
-                            <p>출연진: {movie.actors || "정보 없음"}</p>
-                            <p>장르: {movie.genre_nm}</p>
-                          </>
-                        );
-                      }
-
-                      case "EXHIBITION": {
-                        const exhibition = detail as ExhibitionDetail;
-                        return (
-                          <>
-                            <p>전시장: {exhibition.location || null}</p>
-                            <p>전시 기간: {exhibition.start_date} ~ {exhibition.end_date}</p>
-                            <p>입장료: {exhibition.price}</p>
-                            <p>내용: {exhibition.contents || "설명 없음"}</p>
-                          </>
-                        );
-                      }
-
-                      case "PERFORMANCE": {
-                        const performance = detail as PerformanceDetail;
-                        return (
-                          <>
-                            <p>일시: {performance.time}</p>
-                            <p>러닝타임: {performance.runtime}</p>
-                            <p>출연진: {performance.cast || "정보 없음"}</p>
-                            <p>장르: {performance.genre}</p>
-                            <p>티켓 가격: {performance.cost}</p>
-                          </>
-                        );
-                      }
-
-                      default:
-                        return (
-                          <>
-                            <p>정보 없음</p>
-                          </>
-                        );
-                    }
-                  })()}
-
-
-
-                  {(() => {
-                    switch (activity.activity_type) {
-                      case "MOVIE": {
-                        return (
-                          <div
-                            className="text-[#757575] w-[300px] mt-[55px]"
-                          >
-                            영화의 예매 페이지는 제공하지 않습니다.
-                          </div>
-                        );
-                      }
-
-                      case "EXHIBITION": {
-                        const exhibition = detail as ExhibitionDetail;
-                        return (
-                          <>
-                            <button
-                              onClick={() => {
-                                const url = extractURL(exhibition.url);
-                                if (url) {
-                                  window.open(url, "_blank");
-                                } else {
-                                  alert("유효한 링크가 없습니다");
-                                }
-                              }}
-                              className="w-[155px] mt-[55px] cursor-pointer underline"
-                            >
-                              전시 예약 페이지로 이동하기
-                            </button>
-                          </>
-                        );
-                      }
-
-                      case "PERFORMANCE": {
-                        const performance = detail as PerformanceDetail;
-                        return (
-                          <button
-                            onClick={() => {
-                              const link = extractURL(performance.link);
-                              if (link) {
-                                window.open(link, "_blank");
-                              } else {
-                                alert("유효한 링크가 없습니다");
-                              }
-                            }}
-                            className="w-[155px] mt-[55px] cursor-pointer underline"
-                          >
-                            공연 예약 페이지로 이동하기
-                          </button>
-                        );
-                      }
-
-                      default:
-                        return (
-                          <>
-                            ㅇㅇ
-                          </>
-                        );
-                    }
-                  })()}
+          <div className="flex flex-col gap-3 text-sm md:text-base flex-1 leading-relaxed">
+            <div className="flex flex-row w-full justify-between flex-wrap md:flex-nowrap gap-6">
+              {/* 상세정보 + 버튼 */}
+              <div className="flex flex-col justify-between flex-grow min-h-[260px]">
+                <div className="text-[13px] text-gray-700 space-y-1 mb-2">
+                  {/* 상세정보 - 기존 조건문 유지 */}
+                  {activity.activity_type === "MOVIE" && (
+                    <>
+                      <p>개봉일: {formatDate((detail as MovieDetail).open_dt)}</p>
+                      <p>러닝 타임: {(detail as MovieDetail).show_tm}분</p>
+                      <p>감독: {(detail as MovieDetail).director}</p>
+                      <p>출연진: {(detail as MovieDetail).actors || "정보 없음"}</p>
+                      <p>장르: {(detail as MovieDetail).genre_nm}</p>
+                    </>
+                  )}
+                  {activity.activity_type === "EXHIBITION" && (
+                    <>
+                      <p>전시장: {(detail as ExhibitionDetail).location}</p>
+                      <p>
+                        전시 기간: {formatDate((detail as ExhibitionDetail).start_date)} ~{" "}
+                        {formatDate((detail as ExhibitionDetail).end_date)}
+                      </p>
+                      <p>입장료: {(detail as ExhibitionDetail).price}</p>
+                      <p>내용: {(detail as ExhibitionDetail).contents || "설명 없음"}</p>
+                    </>
+                  )}
+                  {activity.activity_type === "PERFORMANCE" && (
+                    <>
+                      <p>일시: {(detail as PerformanceDetail).time}</p>
+                      <p>러닝타임: {(detail as PerformanceDetail).runtime}</p>
+                      <p>출연진: {(detail as PerformanceDetail).cast || "정보 없음"}</p>
+                      <p>장르: {(detail as PerformanceDetail).genre}</p>
+                      <p>티켓 가격: {(detail as PerformanceDetail).cost}</p>
+                    </>
+                  )}
                 </div>
 
-                <div className="flex flex-row mt-[90px]">
-                  <button
-                    onClick={() => handleBook(Number(activity.activity_id))}
-                    className="text-[14px] border border-[#447959] text-[#447959] w-[152px] h-[25px] rounded-[20px]"
-                  >
-                    일정 등록하기
-                  </button>
+                {/* 버튼 영역 */}
+                <div className="space-y-1">
+                  <div className="text-[#757575] text-sm">
+                    {activity.activity_type === "MOVIE" &&
+                      "영화의 예매 페이지는 제공하지 않습니다."}
+                    {activity.activity_type === "EXHIBITION" && (
+                      <button
+                        onClick={() => {
+                          const url = extractURL((detail as ExhibitionDetail).url);
+                          if (url) window.open(url, "_blank");
+                          else alert("유효한 링크가 없습니다");
+                        }}
+                        className="underline text-sm"
+                      >
+                        전시 예약 페이지로 이동하기
+                      </button>
+                    )}
+                    {activity.activity_type === "PERFORMANCE" && (
+                      <button
+                        onClick={() => {
+                          const url = extractURL((detail as PerformanceDetail).link);
+                          if (url) window.open(url, "_blank");
+                          else alert("유효한 링크가 없습니다");
+                        }}
+                        className="underline text-sm"
+                      >
+                        공연 예약 페이지로 이동하기
+                      </button>
+                    )}
+                  </div>
 
-                  <button onClick={() => handleToggleWish(activity)}
-                    className={`flex flex-row items-center justify-center ml-[15px] border border-black w-[90px] h-[25px] rounded-[20px] ${detail.isWished ? "bg-[#000000] text-white" : "border-black text-black"
-                      }`}>
-                    <span className="text-[14px]">
+                  <div className="flex gap-4">
+                    <button
+                      onClick={() => handleBook(Number(activity.activity_id))}
+                      className="text-sm border border-[#447959] text-[#447959] w-[152px] h-[30px] rounded-[20px]"
+                    >
+                      일정 등록하기
+                    </button>
+                    <button
+                      onClick={handleToggleWish}
+                      className={`border w-[90px] h-[30px] rounded-[20px] text-sm ${detail.isWished ? "bg-black text-white" : "text-black border-black"
+                        }`}
+                    >
                       {detail.isWished ? "찜 해제" : "찜하기"}
-                    </span>
-                  </button>
+                    </button>
+                  </div>
                 </div>
-
               </div>
 
-
-              <div className="mr-[10px]">
-
-                {(() => {
-                  switch (activity.activity_type) {
-                    case "MOVIE": {
-                      return (
-                        <div
-                          className="text-[#757575] w-[300px] mt-[55px]"
-                        >
-                          영화관의 지도 사진은 제공하지 않습니다.
-                        </div>
-                      );
-                    }
-                    case "PERFORMANCE": {
-                      return (
-                        <>
-                          {detail.latitude && detail.longitude ? (
-                            <KakaoMapImage
-                              la={Number(detail.latitude)}
-                              lo={Number(detail.longitude)}
-                            />
-                          ) : (
-                            <div className="w-[331px] h-[287px] bg-[#D9D9D9] flex items-center justify-center text-[#888] text-sm">
-                              위치 정보 없음
-                            </div>
-                          )
-                          }
-                        </>
-                      );
-                    }
-
-                  }
-                })()}
-
+              {/* 카카오맵 */}
+              <div className="min-w-[280px] min-h-[260px]">
+                {activity.activity_type === "PERFORMANCE" && detail.latitude && detail.longitude ? (
+                  <KakaoMapImage la={detail.latitude} lo={detail.longitude} />
+                ) : (
+                  <div className="text-sm text-gray-500">
+                    {activity.activity_type === "MOVIE" || activity.activity_type === "EXHIBITION"
+                      ? "지도는 제공하지 않습니다."
+                      : "위치 정보 없음"}
+                  </div>
+                )}
               </div>
-
             </div>
 
-            <div className="mt-[40px] bg-[#EBEBEB] w-[1050px] h-[150px] flex flex-row items-center justify-center">
-              리뷰 내용 구현 예정
-            </div>
 
+            {/* 리뷰 영역 */}
+            <div className="mt-3 border-t pt-4 flex flex-col overflow-x-auto gap-2 max-w-auto h-[190px]">
+              <p className="text-gray-600 text-sm">평균 평점: {averageRating}</p>
+              <div className="flex flex-row gap-10">
+                
+              {reviews.map((review, index) => (
+                <div
+                  key={index}
+                  className="min-w-[240px] h-[140px] border rounded-lg p-3 shadow-sm bg-white flex-shrink-0"
+                >
+                  <p className="text-sm mb-2">⭐ {review.rate}</p>
+                  <p className="text-gray-700 text-sm line-clamp-4">{review.content}</p>
+                </div>
+              ))}
+              
+              </div>
+            </div>
           </div>
 
+
+
         </div>
-      </div >
-    </div >
+
+
+
+      </div>
+    </div>
   );
 }

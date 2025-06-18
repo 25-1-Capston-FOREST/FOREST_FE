@@ -1,11 +1,23 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const MypageSidebar = () => {
   const router = useRouter();
   const [showSubMenu, setShowSubMenu] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [selectedTab, setSelectedTab] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (router.pathname === "/mypage/myleisure") {
+      const { tab } = router.query;
+      if (typeof tab === "string") {
+        setSelectedTab(tab);
+      }
+    } else {
+      setSelectedTab(null);
+    }
+  }, [router.pathname, router.query.tab]);
 
   const menuItems = [
     { name: "Profile", path: "/mypage/profile" },
@@ -28,7 +40,7 @@ const MypageSidebar = () => {
   const handleMouseLeave = () => {
     timerRef.current = setTimeout(() => {
       setShowSubMenu(false);
-    }, 100); // 1초 후 사라짐
+    }, 100);
   };
 
   return (
@@ -46,28 +58,35 @@ const MypageSidebar = () => {
             <Link href={item.path}>
               <button
                 className={`flex flex-row text-[16px] px-4 transition-colors  
-      ${router.pathname === item.path ? "text-[#000000]" : "text-[#9A9A9A]"} hover:text-black
-    `}
+                  ${router.pathname === item.path ? "text-[#000000]" : "text-[#9A9A9A]"} hover:text-black
+                `}
               >
                 <span>{item.name}</span>
               </button>
             </Link>
 
-            {/* 서브 메뉴 (My Leisure일 때만) */}
             {isMyLeisure && (
               <div
-                className={`absolute left-0 top-[25px] transition-all duration-300
-                  ${showSubMenu ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1 pointer-events-none"}
-                `}
+                className={`absolute left-0 top-[25px] transition-all duration-300 bg-white
+      ${showSubMenu ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1 pointer-events-none"}
+    `}
+                style={{ zIndex: 0 }}
               >
                 <div className="flex flex-col px-2 ">
                   {leisureSubItems.map((sub) => (
                     <button
                       key={sub.tab}
-                      className="text-left px-2 text-[12.5px] text-[#9A9A9A] hover:text-black whitespace-nowrap w-fit"
+                      className={`text-left px-2 text-[12.5px] whitespace-nowrap w-fit
+                        ${selectedTab === sub.tab
+                          ? "text-black"
+                          : "text-[#9A9A9A] hover:text-black"
+                        }
+                      `}
                       onClick={() => {
-                        router.push("/mypage/myleisure");
-                        localStorage.setItem("selectedTab", sub.tab);
+                        router.push({
+                          pathname: "/mypage/myleisure",
+                          query: { tab: sub.tab }
+                        });
                       }}
                     >
                       {sub.name}

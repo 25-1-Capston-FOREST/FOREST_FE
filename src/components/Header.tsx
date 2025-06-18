@@ -62,12 +62,12 @@ const Header = ({ headerHeight, setHeaderHeight }: HeaderProps) => {
 
   const chatbotButtonClick = () => router.push("/chatbot");
   const logoButtonClick = () => router.push("/main");
-  const mypageButtonClick = () => router.push("/mypage/profile");
+  const mypageButtonClick = () => router.push("/mypage/myleisure");
   const logoutButtonClick = () => router.push("/");
 
   return (
     <header
-      className="px-10 flex-col items-start fixed top-0 w-full z-10 bg-white"
+      className="px-10 flex-col items-start fixed top-0 w-full z-[50] bg-white"
       style={{
         height: `${headerHeight}px`,
         minHeight: `${headerHeight}px`,
