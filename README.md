@@ -3,6 +3,7 @@ AI 여가 추천 서비스 FOREST FrontEnd Repository입니다.
 
 
 
+
 ## 프론트엔드 주요 기능
 ```
 - 로그인 및 인증: Google OAuth 기반 로그인 구현
