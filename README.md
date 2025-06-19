@@ -58,6 +58,42 @@ FOREST_FE/
 ├── README.md 
 └── ...
 
+
+
+<details> <summary><strong>📁 프로젝트 구조 (펼치기)</strong></summary>
+text
+복사
+편집
+FOREST_FE/
+├── .next/                  # Next.js 빌드 결과물
+├── node_modules/           # 설치된 패키지 모듈
+├── public/                 # 정적 파일 경로
+│   ├── data/
+│   └── images/
+├── src/
+│   ├── components/         # 재사용 가능한 UI 컴포넌트
+│   │   ├── GoogleLoginButton.tsx
+│   │   ├── Header.tsx
+│   │   ├── KakaoMapImage.tsx
+│   │   ├── Leisure.tsx
+│   │   └── Mypagebar.tsx
+│   ├── lib/                # API 통신 및 유틸
+│   │   ├── api/            # 백엔드 API 통신 모듈
+│   │   │   ├── book.tsx
+│   │   │   ├── chatbot.tsx
+│   │   │   ├── detail.tsx
+│   │   │   ├── recommend.tsx
+│   │   │   ├── review.tsx
+│   │   │   ├── search.tsx
+│   │   │   ├── useractivities.tsx
+│   │   │   └── wish.tsx
+│   │   └── axios.tsx       # axios 설정
+│   └── pages/              # Next.js 페이지 라우팅
+├── .env.local              # 환경변수 파일
+├── package.json
+├── tsconfig.json
+└── README.md
+</details>
 ---
 
 ## 실행 방법
