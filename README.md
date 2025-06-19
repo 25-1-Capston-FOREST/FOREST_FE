@@ -1,7 +1,7 @@
 # FOREST_FE
 AI 여가 추천 서비스 FOREST FrontEnd Repository입니다.
 
----
+
 
 ## 프론트엔드 주요 기능
 ```
@@ -13,7 +13,6 @@ AI 여가 추천 서비스 FOREST FrontEnd Repository입니다.
 - 상세 페이지: 콘텐츠별 상세 정보 및 리뷰 확인
 ```
 
----
 
 ## 사용 기술 스택
 | 분야       | 기술                              |
@@ -25,7 +24,7 @@ AI 여가 추천 서비스 FOREST FrontEnd Repository입니다.
 | 스타일링   | Tailwind CSS                      |
 | 배포       | Vercel                            |
 
----
+
 
 ## 프로젝트 구조
 ```
@@ -62,7 +61,6 @@ FOREST_FE/
 └── ...
 ```
 
----
 
 ## 실행 방법
 1. **패키지 설치**  
@@ -80,12 +78,12 @@ FOREST_FE/
       npm run dev
       **주의: ** 로컬에서 `npm run dev`로 실행할 경우, `axios`가 기본적으로 배포된 서버 주소를 바라보므로 **API 연결 오류가 발생할 수 있습니다**.
 
----
+
 
 ## 현재 배포 주소
 https://forest-fe.vercel.app/
 
----
+
 
 ## 개발자 정보
 https://github.com/Physics-Computer
