@@ -26,6 +26,7 @@ AI 여가 추천 서비스 FOREST FrontEnd Repository입니다.
 ---
 
 ## 프로젝트 구조
+```
 FOREST_FE/
 ├── .next/                  # Next.js 빌드 결과물
 ├── node_modules/           # 설치된 패키지 모듈
@@ -57,7 +58,7 @@ FOREST_FE/
 ├── tsconfig.json
 ├── README.md 
 └── ...
-
+```
 
 
 <details> <summary><strong>📁 프로젝트 구조 (펼치기)</strong></summary>
